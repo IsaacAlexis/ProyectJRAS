@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtNoContrato"
+        android:id="@+id/txtUsuario"
         android:layout_width="241dp"
         android:layout_height="65dp"
         android:layout_marginStart="40dp"
@@ -57,7 +57,6 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bordes_redondos_rojo"
-        android:onClick="onClickIngresar"
         android:text="Ingresar"
         android:textColor="@android:color/black"
         android:textSize="20dp"

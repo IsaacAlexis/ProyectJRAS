@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/txtJRAS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="174dp"
+        android:gravity="center"
+        android:text="Junta Rural de Agua y Saneamiento"
+        android:textColor="#707070"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDe" />
+
+    <ImageView
+        android:id="@+id/imageLogoJ"
+        android:layout_width="185dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="53dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_jras2" />
+
+    <TextView
+        android:id="@+id/txtDe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="231dp"
+        android:layout_marginEnd="177dp"
+        android:text="De"
+        android:textColor="#707070"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLogoJ" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

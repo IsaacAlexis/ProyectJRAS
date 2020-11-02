@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.jras.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_fragmentViviendas"
+            app:destination="@id/fragmentViviendas" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentUsuarios"
+            app:destination="@id/fragmentUsuarios" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentPagos"
+            app:destination="@id/fragmentPagos" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentReportes"
+            app:destination="@id/fragmentReportes" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentUsuarios2"
+            app:destination="@id/fragmentUsuarios" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentPagos2"
+            app:destination="@id/fragmentPagos" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentReportes2"
+            app:destination="@id/fragmentReportes" />
+        <action
+            android:id="@+id/action_nav_home_to_fragmentGastos2"
+            app:destination="@id/fragmentGastos2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentViviendas"
+        android:name="com.example.jras.fragmentViviendas"
+        android:label="Viviendas"
+        tools:layout="@layout/fragment_viviendas" >
+        <action
+            android:id="@+id/action_fragmentViviendas_to_fragmentRegistrasViviendas"
+            app:destination="@id/fragmentRegistrasViviendas" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentUsuarios"
+        android:name="com.example.jras.fragmentUsuarios"
+        android:label="Usuarios"
+        tools:layout="@layout/fragment_usuarios" >
+        <action
+            android:id="@+id/action_fragmentUsuarios_to_fragmentRegistroUsuarios"
+            app:destination="@id/fragmentRegistroUsuarios" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPagos"
+        android:name="com.example.jras.fragmentPagos"
+        android:label="Pagos"
+        tools:layout="@layout/fragment_pagos" />
+    <fragment
+        android:id="@+id/fragmentReportes"
+        android:name="com.example.jras.fragmentReportes"
+        android:label="Reportes"
+        tools:layout="@layout/fragment_reportes" />
+    <fragment
+        android:id="@+id/fragmentGastos2"
+        android:name="com.example.jras.fragmentGastos"
+        android:label="Gastos"
+        tools:layout="@layout/fragment_gastos" />
+    <fragment
+        android:id="@+id/fragmentRegistrasViviendas"
+        android:name="com.example.jras.fragmentRegistrasViviendas"
+        android:label="Viviendas"
+        tools:layout="@layout/fragment_registras_viviendas" />
+    <fragment
+        android:id="@+id/fragmentRegistroUsuarios"
+        android:name="com.example.jras.fragmentRegistroUsuarios"
+        android:label="Usuarios"
+        tools:layout="@layout/fragment_registro_usuarios" />
+
+</navigation>

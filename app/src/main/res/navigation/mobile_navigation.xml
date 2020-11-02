@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.jras.ui.home.HomeFragment"
+        android:name="Presentacion.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
-        android:name="com.example.jras.fragmentViviendas"
+        android:name="Presentacion.fragmentViviendas"
         android:label="Viviendas"
         tools:layout="@layout/fragment_viviendas" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentUsuarios"
-        android:name="com.example.jras.fragmentUsuarios"
+        android:name="Presentacion.fragmentUsuarios"
         android:label="Usuarios"
         tools:layout="@layout/fragment_usuarios" >
         <action
@@ -55,27 +55,27 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentPagos"
-        android:name="com.example.jras.fragmentPagos"
+        android:name="Presentacion.fragmentPagos"
         android:label="Pagos"
         tools:layout="@layout/fragment_pagos" />
     <fragment
         android:id="@+id/fragmentReportes"
-        android:name="com.example.jras.fragmentReportes"
+        android:name="Presentacion.fragmentReportes"
         android:label="Reportes"
         tools:layout="@layout/fragment_reportes" />
     <fragment
         android:id="@+id/fragmentGastos2"
-        android:name="com.example.jras.fragmentGastos"
+        android:name="Presentacion.fragmentGastos"
         android:label="Gastos"
         tools:layout="@layout/fragment_gastos" />
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
-        android:name="com.example.jras.fragmentRegistrasViviendas"
+        android:name="Presentacion.fragmentRegistrasViviendas"
         android:label="Viviendas"
         tools:layout="@layout/fragment_registras_viviendas" />
     <fragment
         android:id="@+id/fragmentRegistroUsuarios"
-        android:name="com.example.jras.fragmentRegistroUsuarios"
+        android:name="Presentacion.fragmentRegistroUsuarios"
         android:label="Usuarios"
         tools:layout="@layout/fragment_registro_usuarios" />
 

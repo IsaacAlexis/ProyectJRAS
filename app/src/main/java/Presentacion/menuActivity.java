@@ -1,4 +1,4 @@
-package com.example.jras;
+package Presentacion;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.jras.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class menuActivity extends AppCompatActivity {

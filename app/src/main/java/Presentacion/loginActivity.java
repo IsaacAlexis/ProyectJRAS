@@ -1,4 +1,4 @@
-package com.example.jras;
+package Presentacion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jras.R;
 import com.google.android.material.snackbar.Snackbar;
 
 public class loginActivity extends AppCompatActivity {

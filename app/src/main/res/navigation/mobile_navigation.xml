@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_fragmentUsuarios_to_fragmentRegistroUsuarios"
             app:destination="@id/fragmentRegistroUsuarios" />
+        <action
+            android:id="@+id/action_fragmentUsuarios_to_fragementModificarUsuarios"
+            app:destination="@id/fragementModificarUsuarios" />
     </fragment>
     <fragment
         android:id="@+id/fragmentPagos"
@@ -78,5 +81,10 @@
         android:name="Presentacion.fragmentRegistroUsuarios"
         android:label="Usuarios"
         tools:layout="@layout/fragment_registro_usuarios" />
+    <fragment
+        android:id="@+id/fragementModificarUsuarios"
+        android:name="Presentacion.fragementModificarUsuarios"
+        android:label="Usuarios"
+        tools:layout="@layout/fragment_fragement_modificar_usuarios" />
 
 </navigation>

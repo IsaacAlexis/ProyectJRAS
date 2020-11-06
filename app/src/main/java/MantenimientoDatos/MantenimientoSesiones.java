@@ -19,7 +19,7 @@ public class MantenimientoSesiones {
         try{
             bd = new ConexionBD();
             sentenciaSQL = bd.ConexionConSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            sql = "select * from Test where username = '"+ini.getUsuario()+"' and password = '"+ini.getContraseña()+"'";
+            sql = "select * from Users where UserName = '"+ini.getUsuario()+"' and Passw = '"+ini.getContraseña()+"'";
             rs = sentenciaSQL.executeQuery(sql);
 
             if (rs.next()){

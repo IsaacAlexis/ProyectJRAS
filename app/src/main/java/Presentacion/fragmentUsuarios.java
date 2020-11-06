@@ -25,6 +25,7 @@ import static androidx.navigation.Navigation.findNavController;
 public class fragmentUsuarios extends Fragment {
 
     public FloatingActionButton fabUsuario;
+    public Button irModificar;
 
     public fragmentUsuarios() {
         // Required empty public constructor
@@ -38,6 +39,14 @@ public class fragmentUsuarios extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
 
         fabUsuario = view.findViewById(R.id.fabAgregarUsuario);
+
+        irModificar=view.findViewById(R.id.btnIrModificar);
+        irModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNavController(v).navigate(R.id.fragementModificarUsuarios);
+            }
+        });
 
         fabUsuario.setOnClickListener(new View.OnClickListener() {
             @Override

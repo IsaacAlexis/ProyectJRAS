@@ -28,8 +28,8 @@ public class DALog {
             callableStatement.registerOutParameter(3, Types.INTEGER);
             callableStatement.execute();
             callableStatement.getMoreResults();
-            int valor=callableStatement.getInt(3);
-            if (valor> 0) {
+            int value=callableStatement.getInt(3);
+            if (value> 0) {
                 Login.setStatus(true);
             } else {
                 Login.setStatus(false);

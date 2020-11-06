@@ -25,8 +25,6 @@ import static androidx.navigation.Navigation.findNavController;
 public class fragmentUsuarios extends Fragment {
 
     public FloatingActionButton fabUsuario;
-    public ImageView btnModificar, btnBuscar;
-    public EditText txtNombre;
 
     public fragmentUsuarios() {
         // Required empty public constructor
@@ -41,35 +39,6 @@ public class fragmentUsuarios extends Fragment {
 
         fabUsuario = view.findViewById(R.id.fabAgregarUsuario);
 
-        btnModificar=view.findViewById(R.id.btnModificarUsuario);
-
-        txtNombre=view.findViewById(R.id.txtBuscarUsuario);
-
-        txtNombre.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                btnModificar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        btnModificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                findNavController(v).navigate(R.id.fragementModificarUsuarios);
-            }
-        });
-
         fabUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,8 +49,6 @@ public class fragmentUsuarios extends Fragment {
             }
         });
         return view;
-
-
 
 
     }

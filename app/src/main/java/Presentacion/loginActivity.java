@@ -31,8 +31,8 @@ public class loginActivity extends AppCompatActivity {
         ConexionBD conexionBD = new ConexionBD();
 
         Button btnIngresar = findViewById(R.id.btnIngresar);
-        txtUser=findViewById(R.id.txtNoContrato);
-        txtPass=findViewById(R.id.txtDireccionViv);
+        txtUser=findViewById(R.id.txtUsuarioLogin);
+        txtPass=findViewById(R.id.txtPassLogin);
 
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override

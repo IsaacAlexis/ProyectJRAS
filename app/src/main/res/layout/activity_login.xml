@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtNoContrato"
+        android:id="@+id/txtUsuarioLogin"
         android:layout_width="241dp"
         android:layout_height="65dp"
         android:layout_marginStart="40dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/txtDireccionViv"
+        android:id="@+id/txtPassLogin"
         android:layout_width="241dp"
         android:layout_height="65dp"
         android:layout_marginStart="40dp"
@@ -54,7 +54,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="54dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bordes_redondos_rojo"
         android:text="Ingresar"
@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDireccionViv" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPassLogin" />
 
     <TextView
         android:id="@+id/txtDerechos"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/labelLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="216dp"

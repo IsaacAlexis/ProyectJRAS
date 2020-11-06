@@ -27,12 +27,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
         android:layout_width="402dp"
         android:layout_height="59dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginEnd="9dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintTop_toBottomOf="@+id/txtUsuario"
         app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
         app:passwordToggleEnabled="true">
 
@@ -41,81 +43,70 @@
             android:layout_width="311dp"
             android:layout_height="47dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="236dp"
             android:layout_marginEnd="40dp"
 
             android:hint="Contraseña"
             android:imeOptions="actionNext"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.65"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <Button
 
         android:id="@+id/btnregistrarUsuario"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="131dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Registrar"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <EditText
         android:id="@+id/txtUsuario"
         android:layout_width="311dp"
         android:layout_height="47dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
         android:drawableLeft="@drawable/user"
         android:hint="Nombre de Usuario"
         android:imeOptions="actionNext"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.42"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <EditText
-        android:id="@+id/txtNombreUsuario"
+        android:id="@+id/txtNombre"
         android:layout_width="311dp"
         android:layout_height="47dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="59dp"
         android:drawableLeft="@drawable/ic_baseline_face_24"
         android:hint="Nombre"
         android:imeOptions="actionNext"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/txtApellidos" />
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="304dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="311dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="2dp"
         android:stretchColumns="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombreUsuario">
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail">
 
-        <TableRow>
+        <TableRow
+            android:layout_width="288dp"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/lblTexto"
@@ -125,6 +116,9 @@
                 android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
                 android:text=" Rol      "
                 android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow>
 
             <RadioGroup
                 android:id="@+id/rolUsuario"
@@ -146,13 +140,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Empleado" />
+
+                <RadioButton
+                    android:id="@+id/rbInvitado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Invitado" />
             </RadioGroup>
+
         </TableRow>
+
+
     </TableLayout>
+
+    <EditText
+        android:id="@+id/txtApellidos"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="59dp"
+        android:drawableLeft="@drawable/ic_baseline_face_24"
+        android:hint="Apellidos"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
     <TextView
-        android:id="@+id/labelUsuario"
+        android:id="@+id/labelRegistrarUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
@@ -168,11 +185,10 @@
         android:id="@+id/textInputLayout"
         android:layout_width="402dp"
         android:layout_height="61dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginEnd="9dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
         app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
         app:passwordToggleEnabled="true">
 
@@ -195,19 +211,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/txtTelefonoUsuario"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="47dp"
-        android:drawableLeft="@drawable/ic_baseline_local_phone_24"
+        android:id="@+id/txtEmail"
+        android:layout_width="309dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="60dp"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
-        android:hint="Telefono"
-        android:inputType="phone"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

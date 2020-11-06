@@ -12,12 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
-        <activity android:name="Presentacion.loginActivity"></activity>
+        <activity android:name="Presentation.loginActivity"></activity>
         <activity
-            android:name="Presentacion.menuActivity"
+            android:name="Presentation.menuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="Presentacion.MainActivity">
+        <activity android:name="Presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package Presentacion;
+package Presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,22 +13,22 @@ import com.example.jras.R;
 
 import java.sql.SQLException;
 
-import Datos.ConexionBD;
-import Datos.InicioSesionesGETSET;
-import Negocios.NegocioSesiones;
+import Data.BDConnection;
+import Data.LoginUsersGETSET;
+import BusinessLogic.BusinessLog;
 
 public class loginActivity extends AppCompatActivity {
 
     public EditText txtUser;
     public EditText txtPass;
 
-    InicioSesionesGETSET ini = new InicioSesionesGETSET();
+    LoginUsersGETSET ini = new LoginUsersGETSET();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ConexionBD conexionBD = new ConexionBD();
+        BDConnection BDConnection = new BDConnection();
 
         Button btnIngresar = findViewById(R.id.btnIngresar);
         txtUser=findViewById(R.id.txtUsuarioLogin);
@@ -42,10 +42,10 @@ public class loginActivity extends AppCompatActivity {
                 }
                 else{
                     try {
-                        ini.setUsuario(txtUser.getText().toString());
-                        ini.setContraseña(txtPass.getText().toString());
+                        ini.setUser(txtUser.getText().toString());
+                        ini.setPass(txtPass.getText().toString());
 
-                        new NegocioSesiones().PuenteInicioSesion(ini);
+                        new BusinessLog().BridgeLogin(ini);
 
                         if (ini.isStatus() == true){
                             Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();

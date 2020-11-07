@@ -14,7 +14,7 @@ import com.example.jras.R;
 import java.sql.SQLException;
 
 import Data.BDConnection;
-import Data.LoginUsersGETSET;
+import Data.Models.UsersModel;
 import BusinessLogic.BusinessLog;
 
 public class loginActivity extends AppCompatActivity {
@@ -22,7 +22,11 @@ public class loginActivity extends AppCompatActivity {
     public EditText txtUser;
     public EditText txtPass;
 
-    LoginUsersGETSET ini = new LoginUsersGETSET();
+    UsersModel ini = new UsersModel();
+    protected boolean TextboxIsEmpty(EditText field){
+        return field.getText().length()==0;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,8 @@ public class loginActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtUser.getText().length() == 0 || txtPass.getText().length() == 0){
+
+                if (TextboxIsEmpty(txtUser) &&  TextboxIsEmpty(txtPass)){
                     Toast.makeText(loginActivity.this,"Ningun Campo puede estar vacio",Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -47,14 +52,14 @@ public class loginActivity extends AppCompatActivity {
 
                         new BusinessLog().BridgeLogin(ini);
 
-                        if (ini.isStatus() == true){
+                        if (ini.getUserLoggedIn() == true){
                             Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(loginActivity.this,menuActivity.class);
                             startActivity(intent);
                             finish();
                         }
                         else{
-                            Toast.makeText(loginActivity.this,"Usuario y/o Contraseña incorrectos",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(loginActivity.this,ini.getValidationMessage(),Toast.LENGTH_SHORT).show();
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

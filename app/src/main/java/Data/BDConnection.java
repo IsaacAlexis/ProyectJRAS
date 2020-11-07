@@ -11,10 +11,6 @@ import java.sql.Statement;
 public class BDConnection {
 
     public Connection connection = null;
-
-
-
-
     public Connection ConnectionwithSQL(){
         try{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

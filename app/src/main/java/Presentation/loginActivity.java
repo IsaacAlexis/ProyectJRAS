@@ -14,15 +14,20 @@ import com.example.jras.R;
 import java.sql.SQLException;
 
 import Data.BDConnection;
-import Data.LoginUsersGETSET;
+import Data.Models.UsersModel;
 import BusinessLogic.BusinessLog;
 
 public class loginActivity extends AppCompatActivity {
 
     public EditText txtUser;
     public EditText txtPass;
+    public boolean bUser=false,bPass=false;
 
-    LoginUsersGETSET ini = new LoginUsersGETSET();
+    UsersModel ini = new UsersModel();
+   /* public void ValidateEmptyFields(EditText field,boolean ){
+
+    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +52,14 @@ public class loginActivity extends AppCompatActivity {
 
                         new BusinessLog().BridgeLogin(ini);
 
-                        if (ini.isStatus() == true){
+                        if (ini.getUserLoggedIn() == true){
                             Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(loginActivity.this,menuActivity.class);
                             startActivity(intent);
                             finish();
                         }
                         else{
-                            Toast.makeText(loginActivity.this,"Usuario y/o Contraseña incorrectos",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(loginActivity.this,ini.getValidationMessage(),Toast.LENGTH_SHORT).show();
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

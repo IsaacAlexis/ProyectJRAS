@@ -30,8 +30,9 @@ public class UserAccess {
                 userData.setRole(userResultset.getString("UserRole"));
                 userData.setUserStatus(userResultset.getString("UserStatus"));
                 userData.setUserLoggedIn(!userData.getUserStatus().isEmpty());
+                userData.setExpirationDate(userResultset.getDate("ExpirationDate"));
                 Date today = new Date();
-                if(userData.getUserStatus().toUpperCase()!= "ACTIVO"){
+                if(!userData.getUserStatus().toUpperCase().equals("ACTIVO")){
                     userData.setUserLoggedIn(false);
                     userData.setValidationMessage("Usuario esta inactivo. Favor de contactar al administrador del sistema.");
                 }else if( userData.getExpirationDate().before(today)){

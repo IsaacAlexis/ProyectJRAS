@@ -21,12 +21,11 @@ public class loginActivity extends AppCompatActivity {
 
     public EditText txtUser;
     public EditText txtPass;
-    public boolean bUser=false,bPass=false;
 
     UsersModel ini = new UsersModel();
-   /* public void ValidateEmptyFields(EditText field,boolean ){
-
-    }*/
+    protected boolean TextboxIsEmpty(EditText field){
+        return field.getText().length()==0;
+    }
 
 
     @Override
@@ -42,7 +41,8 @@ public class loginActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtUser.getText().length() == 0 || txtPass.getText().length() == 0){
+
+                if (TextboxIsEmpty(txtUser) &&  TextboxIsEmpty(txtPass)){
                     Toast.makeText(loginActivity.this,"Ningun Campo puede estar vacio",Toast.LENGTH_SHORT).show();
                 }
                 else{

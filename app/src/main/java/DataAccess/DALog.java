@@ -21,4 +21,12 @@ public class DALog {
         login = userAccess.ValidateUser(login);
 
     }
+    public void BlockUsers(UsersModel login){
+        userAccess.BlocUser(login);
+
+    }
+
+    public void UserExist(UsersModel ini) {
+        userAccess.UserExist(ini);
+    }
 }

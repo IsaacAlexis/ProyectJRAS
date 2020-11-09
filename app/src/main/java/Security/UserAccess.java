@@ -7,12 +7,13 @@ import java.util.Date;
 
 import Data.BDConnection;
 import Data.Models.UsersModel;
+import Presentation.loginActivity;
 
 public class UserAccess {
     public UsersModel ValidateUser(UsersModel userData){
         BDConnection bd = new BDConnection();
         try{
-
+            loginActivity pErrorMessage=new loginActivity();
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call UsersLogin(?,?)}");
             callableStatement.setString(1, userData.getUserName());
@@ -33,15 +34,21 @@ public class UserAccess {
                 userData.setExpirationDate(userResultset.getDate("ExpirationDate"));
                 Date today = new Date();
                 if(!userData.getUserStatus().toUpperCase().equals("ACTIVO")){
+
                     userData.setUserLoggedIn(false);
-                    userData.setValidationMessage("Usuario esta inactivo. Favor de contactar al administrador del sistema.");
+                    userData.setFlagUser(true);
+                    userData.setValidationMessage("Usuario inactivo. Favor de contactar al administrador del sistema.");
+
                 }else if( userData.getExpirationDate().before(today)){
                     userData.setUserLoggedIn(false);
-                    userData.setValidationMessage("Subscripcion del usuario se encuentra expirada. Favor de ponerse en contacto con el administrador del sistema.");
+                    userData.setFlagUser(true);
+                    userData.setValidationMessage("Suscripción del usuario se encuentra expirada. Favor de ponerse en contacto con el administrador del sistema.");
+
                 }
 
             }
             if(!userAndPasswordIsValid){
+                userData.setFlagUser(false);
                 userData.setValidationMessage("Usuario y/o Contraseña es incorrecto");
             }
             callableStatement.close();
@@ -55,5 +62,52 @@ public class UserAccess {
             e.printStackTrace();
         }
         return userData;
+    }
+    public UsersModel BlocUser(UsersModel userData){
+        BDConnection bd = new BDConnection();
+        try{
+            loginActivity pErrorMessage=new loginActivity();
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call BlockUser(?)}");
+            callableStatement.setString(1, userData.getUserName());
+            callableStatement.executeUpdate();
+            userData.setValidationMessage("Cuenta desactivada. Para cualquier aclaracion consultar al administrador del sistema");
+            userData.setUserLoggedIn(true);
+            callableStatement.close();
+            bd.CloseConnection();
+        } catch (SQLException e) {
+            try {
+                if(!bd.connection.isClosed()){
+                    bd.CloseConnection();
+                }
+            } catch (SQLException e2) { }
+            e.printStackTrace();
+        }
+        return userData;
+    }
+
+    public void UserExist(UsersModel userData) {
+        BDConnection bd = new BDConnection();
+        try{
+            loginActivity pErrorMessage=new loginActivity();
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call UserExist(?)}");
+            callableStatement.setString(1, userData.getUserName());
+            ResultSet Result= callableStatement.executeQuery();
+            userData.setUserLoggedIn(false);
+            while (Result.next()){
+                userData.setUserLoggedIn(true);
+            }
+            callableStatement.close();
+            bd.CloseConnection();
+        } catch (SQLException e) {
+            try {
+                if(!bd.connection.isClosed()){
+                    bd.CloseConnection();
+                }
+            } catch (SQLException e2) { }
+            e.printStackTrace();
+        }
+
     }
 }

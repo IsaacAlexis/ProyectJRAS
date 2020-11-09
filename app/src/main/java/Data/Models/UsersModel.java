@@ -12,6 +12,15 @@ public class UsersModel {
     private String role;
     private String userStatus;
     private String validationMessage;
+    private Boolean flagUser;
+
+    public Boolean getFlagUser() {
+        return flagUser;
+    }
+
+    public void setFlagUser(Boolean flagUser) {
+        this.flagUser = flagUser;
+    }
 
     public Date getExpirationDate() {
         return expirationDate;

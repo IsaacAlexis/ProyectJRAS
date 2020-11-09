@@ -66,7 +66,7 @@ public class loginActivity extends AppCompatActivity {
                                     new BusinessLog().BridgeUserExist(ini);
                                     if(ini.getUserLoggedIn()){
                                         attemptsallowed--;
-                                        Toast.makeText(loginActivity.this,ini.getValidationMessage(),Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(loginActivity.this,"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
                                         if(attemptsallowed>0){ Toast.makeText(loginActivity.this,"Tienes solo: "+attemptsallowed+" intentos",
                                                 Toast.LENGTH_SHORT).show();}
                                         txtPass.setError("Contraseña invalida");

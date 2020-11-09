@@ -94,9 +94,26 @@ public class UserAccess {
             CallableStatement callableStatement=bd.connection.prepareCall("{call UserExist(?)}");
             callableStatement.setString(1, userData.getUserName());
             ResultSet Result= callableStatement.executeQuery();
+
             userData.setUserLoggedIn(false);
+            Date today = new Date();
             while (Result.next()){
+                userData.setUserStatus(Result.getString("UserStatus"));
+                userData.setExpirationDate(Result.getDate("ExpirationDate"));
                 userData.setUserLoggedIn(true);
+                if(!userData.getUserStatus().toUpperCase().equals("ACTIVO")){
+
+
+                    userData.setUserLoggedIn(false);
+                    userData.setFlagUser(true);
+                    userData.setValidationMessage("Usuario inactivo. Favor de contactar al administrador del sistema.");
+
+                }else if( userData.getExpirationDate().before(today)){
+                    userData.setUserLoggedIn(false);
+                    userData.setFlagUser(true);
+                    userData.setValidationMessage("Suscripción del usuario se encuentra expirada. Favor de ponerse en contacto con el administrador del sistema.");
+
+                }
             }
             callableStatement.close();
             bd.CloseConnection();

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -11,112 +20,80 @@
         android:layout_height="150dp"
         android:background="@drawable/encabezado_mostrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageFondo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/pie_usuarios"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
-        android:layout_width="402dp"
-        android:layout_height="59dp"
-        android:layout_marginEnd="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtPassUsuarioM"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="236dp"
-            android:layout_marginEnd="40dp"
-
-            android:hint="Contraseña"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-
-        android:id="@+id/btnConfirmarUsuario"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/lbModificacionUsuario"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/bordes_redondos_azul"
-        android:text="Confirmar"
-        android:textColor="@android:color/black"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="68dp"
+        android:text="Modificacion de Usuario"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
 
         android:id="@+id/btnModificarUsuario"
         android:layout_width="73dp"
         android:layout_height="43dp"
-        android:layout_marginTop="108dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Modificar"
         android:textColor="@android:color/black"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lbModificacionUsuario" />
 
     <EditText
-        android:id="@+id/txtUsuarioM"
+        android:id="@+id/txtApellidosM"
         android:layout_width="311dp"
         android:layout_height="47dp"
-        android:drawableLeft="@drawable/user"
-        android:hint="Nombre de Usuario"
+        android:layout_marginTop="3dp"
+        android:drawableLeft="@drawable/ic_baseline_face_24"
+        android:hint="Apellidos"
         android:imeOptions="actionNext"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.42"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/txtNombreM"
         android:layout_width="311dp"
         android:layout_height="47dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="59dp"
         android:drawableLeft="@drawable/ic_baseline_face_24"
         android:hint="Nombre"
         android:imeOptions="actionNext"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmailM"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtApellidosM" />
+
+    <EditText
+        android:id="@+id/txtEmailM"
+        android:layout_width="309dp"
+        android:layout_height="43dp"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreM" />
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="311dp"
         android:layout_height="58dp"
+        android:layout_marginTop="2dp"
         android:stretchColumns="1"
-        app:layout_constraintBottom_toTopOf="@+id/txtUsuarioM"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailM">
 
         <TableRow
             android:layout_width="288dp"
@@ -168,41 +145,49 @@
     </TableLayout>
 
     <EditText
-        android:id="@+id/txtApellidosM"
+        android:id="@+id/txtUsuarioM"
         android:layout_width="311dp"
         android:layout_height="47dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="59dp"
-        android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Apellidos"
+        android:drawableLeft="@drawable/user"
+        android:hint="Nombre de Usuario"
         android:imeOptions="actionNext"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/txtNombreM"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <TextView
-        android:id="@+id/lbModificacionUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="Modificacion de Usuario"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="391dp"
+        android:layout_height="58dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUsuarioM"
+        app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPassUsuarioM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="236dp"
+            android:layout_marginEnd="40dp"
+
+            android:hint="Contraseña"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="402dp"
-        android:layout_height="61dp"
-        android:layout_marginEnd="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtStatus"
+        android:layout_width="391dp"
+        android:layout_height="62dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
         app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
         app:passwordToggleEnabled="true">
 
@@ -225,35 +210,43 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/txtEmailM"
-        android:layout_width="309dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="2dp"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
         android:id="@+id/txtStatus"
         android:layout_width="310dp"
         android:layout_height="47dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="168dp"
         android:drawableLeft="@drawable/ic_baseline_status_on_24"
         android:ems="10"
         android:hint="Status"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <Button
+
+        android:id="@+id/btnConfirmarUsuario"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/bordes_redondos_azul"
+        android:text="Confirmar"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageFondo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="482dp"
+        android:background="@drawable/pie_usuarios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

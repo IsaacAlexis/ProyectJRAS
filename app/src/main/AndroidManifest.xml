@@ -12,12 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
-        <activity android:name="Presentation.loginActivity"></activity>
+        <activity android:name="Presentation.loginActivity"
+                   android:screenOrientation="portrait"></activity>
         <activity
             android:name="Presentation.menuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="Presentation.MainActivity">
+        <activity android:name="Presentation.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

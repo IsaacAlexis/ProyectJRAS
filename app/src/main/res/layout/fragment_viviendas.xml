@@ -77,7 +77,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="299dp"
             android:drawableLeft="@drawable/ic_baseline_face_24"
-            android:hint="Nombre"
+            android:hint="Nombre del Propietario"
             android:imeOptions="actionNext"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,6 +94,20 @@
             app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:srcCompat="@drawable/ic_baseline_search_24" />
+        <Button
+
+            android:id="@+id/btnIrModificar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="84dp"
+            android:background="@drawable/bordes_redondos_rojo"
+            android:text="Modificar"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

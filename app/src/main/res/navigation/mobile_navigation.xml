@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_fragmentViviendas_to_fragmentRegistrasViviendas"
             app:destination="@id/fragmentRegistrasViviendas" />
+        <action
+            android:id="@+id/action_fragmentViviendas_to_fragmentModificarViviendas"
+            app:destination="@id/fragmentModificarViviendas" />
     </fragment>
     <fragment
         android:id="@+id/fragmentUsuarios"
@@ -86,5 +89,10 @@
         android:name="Presentation.fragementModificarUsuarios"
         android:label="Usuarios"
         tools:layout="@layout/fragment_fragement_modificar_usuarios" />
+    <fragment
+        android:id="@+id/fragmentModificarViviendas"
+        android:name="com.example.jras.fragmentModificarViviendas"
+        android:label="Viviendas"
+        tools:layout="@layout/fragment_modificar_viviendas" />
 
 </navigation>

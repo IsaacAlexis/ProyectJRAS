@@ -7,6 +7,7 @@ public class UsersModel {
     //Declaracion de variables
     private boolean isUserLoggedIn;
     private Boolean flagUser;
+    private Boolean UserExist = false;
 
     private String userName;
     private String pass;
@@ -169,5 +170,13 @@ public class UsersModel {
 
     public void setExpDate(String expDate) {
         this.expDate = expDate;
+    }
+
+    public Boolean getUserExist() {
+        return UserExist;
+    }
+
+    public void setUserExist(Boolean userExist) {
+        UserExist = userExist;
     }
 }

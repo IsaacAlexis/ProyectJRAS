@@ -1,20 +1,22 @@
 package Security;
 
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
 
 import Data.BDConnection;
 import Data.Models.UsersModel;
 
 public class UserRegister {
 
+
     public void UserRegister(UsersModel userData){
         BDConnection bd = new BDConnection();
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement cs=bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs =bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?)}");
             cs.setString(1,userData.getLastName());
             cs.setString(2,userData.getFirstName());
             cs.setString(3,userData.getEmail());
@@ -24,9 +26,10 @@ public class UserRegister {
             cs.setString(7,userData.getExpDate());
             cs.setString(8,userData.getColony());
             cs.setString(9,userData.getUserStatus());
-            cs.setString(10,userData.getAddeddDate());
-            cs.setString(11,userData.getModifiedDate());
+            //cs.setString(10,userData.getAddeddDate());
+            //cs.setString(11,userData.getModifiedDate());
             cs.executeUpdate();
+
 
             cs.close();
             bd.CloseConnection();
@@ -34,6 +37,30 @@ public class UserRegister {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public void UserRegisterExist(UsersModel data){
+
+        BDConnection bd = new BDConnection();
+
+        try{
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call UserExist(?)}");
+            callableStatement.setString(1, data.getUserName());
+            ResultSet Result= callableStatement.executeQuery();
+
+            if (Result.next()){
+                data.setUserExist(true);
+            }
+            else{
+                data.setUserExist(false);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+
     }
 
 }

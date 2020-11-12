@@ -11,4 +11,8 @@ public class BusinessUserRegister {
         regist.DAUsersRegister(data);
     }
 
+    public void BridgeUserExist (UsersModel data){
+        regist.DAUserExist(data);
+    }
+
 }

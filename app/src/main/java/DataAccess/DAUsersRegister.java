@@ -12,4 +12,8 @@ public class DAUsersRegister {
     public void DAUsersRegister(UsersModel data){
         register.UserRegister(data);
     }
+
+    public void DAUserExist(UsersModel data){
+        register.UserRegisterExist(data);
+    }
 }

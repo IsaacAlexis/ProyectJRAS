@@ -12,9 +12,9 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/encabezado_mostrar"
+            android:layout_width="wrap_content"
+            android:layout_height="216dp"
+            android:background="@drawable/encabezado_formularios"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:id="@+id/labelRegistrarUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="56dp"
             android:text="Registro de Usuarios"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,8 +116,8 @@
 
                     <RadioButton
                         android:id="@+id/rbInvitado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="94dp"
+                        android:layout_height="match_parent"
                         android:text="Invitado" />
                 </RadioGroup>
 

@@ -40,58 +40,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <EditText
-        android:id="@+id/txtPassLogin"
-        android:layout_width="241dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/ic_baseline_lock_24"
-        android:hint="Contraseña"
-        android:imeOptions="actionNext"
-        android:inputType="textPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="323dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginEnd="9dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsuarioLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUsuarioLogin"
+        app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
+        app:passwordToggleEnabled="true">
 
-    <Button
+        <EditText
+            android:id="@+id/txtPassLogin"
+            android:layout_width="241dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:hint="Contraseña"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword" />
 
-        android:id="@+id/btnIngresar"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bordes_redondos_rojo"
-        android:text="Ingresar"
-        android:textColor="@android:color/black"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassLogin" />
-
-    <TextView
-        android:id="@+id/txtDerechos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:scrollHorizontally="true"
-        android:text="@string/derechos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnIngresar" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/labelLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
-        android:text="Login"
+        android:text="JRAS"
         android:textColor="#FFFFFF"
         android:textSize="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+
+        android:id="@+id/btnIngresar"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="133dp"
+        android:background="@drawable/bordes_redondos_rojo"
+        android:text="Ingresar"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
     <ImageView
         android:id="@+id/imageView3"

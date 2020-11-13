@@ -1,7 +1,7 @@
 package DataAccess;
 
 import Data.BDConnection;
-import Data.Models.UsersModel;
+import Data.Models.UsersDataModel;
 import Security.UserRegister;
 
 public class DAUsersRegister {
@@ -9,11 +9,11 @@ public class DAUsersRegister {
     private BDConnection bd;
     UserRegister register = new UserRegister();
 
-    public void DAUsersRegister(UsersModel data){
+    public void DAUsersRegister(UsersDataModel data){
         register.UserRegister(data);
     }
 
-    public void DAUserExist(UsersModel data){
+    public void DAUserExist(UsersDataModel data){
         register.UserRegisterExist(data);
     }
 }

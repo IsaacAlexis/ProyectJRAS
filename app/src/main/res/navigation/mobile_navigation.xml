@@ -82,12 +82,12 @@
     <fragment
         android:id="@+id/fragmentRegistroUsuarios"
         android:name="Presentation.fragmentRegistroUsuarios"
-        android:label="Usuarios"
+        android:label="Registro de Usuarios"
         tools:layout="@layout/fragment_registro_usuarios" />
     <fragment
         android:id="@+id/fragementModificarUsuarios"
         android:name="Presentation.fragementModificarUsuarios"
-        android:label="Usuarios"
+        android:label="Modificacion de Usuario"
         tools:layout="@layout/fragment_fragement_modificar_usuarios" />
     <fragment
         android:id="@+id/fragmentModificarViviendas"

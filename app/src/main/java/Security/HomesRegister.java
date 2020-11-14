@@ -6,11 +6,12 @@ import java.sql.SQLException;
 
 import Data.BDConnection;
 import Data.Models.HomesModel;
+import Data.Models.HouseModel;
 
 public class HomesRegister {
-
+    BDConnection bd = new BDConnection();
     public void HomeExist(HomesModel home){
-        BDConnection bd = new BDConnection();
+
 
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -31,7 +32,7 @@ public class HomesRegister {
     }
 
     public void HomeRegister(HomesModel home){
-        BDConnection bd = new BDConnection();
+
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement cs =bd.connection.prepareCall("{call HomeRegister(?,?,?,?,?,?,?,?,?,?,?)}");
@@ -57,4 +58,29 @@ public class HomesRegister {
         }
     }
 
+    public void HouseUpdate(HouseModel house) {
+        try {
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement cs =bd.connection.prepareCall("{call updateHouse(?,?,?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1,house.getBarCode());
+            cs.setString(2,house.getOwner());
+            cs.setLong(3,house.getPhoneNumber());
+            cs.setString(4,house.getEmail());
+            cs.setString(5,house.getStreet());
+            cs.setInt(6,house.getHouseNumber());
+            cs.setInt(7,house.getZipCode());
+            cs.setString(8,house.getColony());
+            cs.setString(9,house.getCity());
+            cs.setString(10,house.getState());
+            cs.setString(11,house.getStatusHouse());
+            cs.executeUpdate();
+            house.setStatusActivity(true);
+            cs.close();
+            bd.CloseConnection();
+
+        }catch (SQLException e){
+            house.setStatusActivity(false);
+
+        }
+    }
 }

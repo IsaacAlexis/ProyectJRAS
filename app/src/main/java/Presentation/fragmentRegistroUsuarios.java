@@ -145,7 +145,7 @@ public class fragmentRegistroUsuarios extends Fragment {
             }//fin onClick btnRegistrar
         });
         return view;
-    }
+    }//fin onCreateView
 
     public void LimpiarCampos(){
         txtApellidos.setText("");
@@ -163,12 +163,15 @@ public class fragmentRegistroUsuarios extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         //validar que los campos no esten vacios
-        if (validate.IsTextboxEmpty(txtApellidos,"Campo vacío")||
-                validate.IsTextboxEmpty(txtEmail,"Campo vacío")||
-                validate.IsTextboxEmpty(txtUsuario,"Campo vacío")||
-                validate.IsTextboxEmpty(txtPassUsuario,"Campo vacío")||
-                validate.IsTextboxEmpty(txtNombre,"Campo vacío")||
-                validate.IsTextboxEmpty(txtPassConfirm,"Campo vacío")){
+        if (txtApellidos.getText().length()<=2 || txtNombre.getText().length()<=2 || txtEmail.getText().length()<=2 ||
+        txtUsuario.getText().length()<=2 || txtPassUsuario.getText().length()<=2 || txtPassConfirm.getText().length()<=2){
+
+            validate.IsTextboxEmpty(txtApellidos,"Campo vacío");
+            validate.IsTextboxEmpty(txtEmail,"Campo vacío");
+            validate.IsTextboxEmpty(txtUsuario,"Campo vacío");
+            validate.IsTextboxEmpty(txtPassUsuario,"Campo vacío");
+            validate.IsTextboxEmpty(txtNombre,"Campo vacío");
+            validate.IsTextboxEmpty(txtPassConfirm,"Campo vacío");
 
             Toast.makeText(getContext(),"Llene todos los campos!!",Toast.LENGTH_SHORT).show();
             flagEmptyField=true;

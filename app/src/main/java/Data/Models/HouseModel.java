@@ -5,19 +5,27 @@ import android.provider.ContactsContract;
 import java.math.BigInteger;
 
 public class HouseModel {
-    public String barCode;
+    public String barCode="VIV-2020";
     public String owner="Adrian Dominguez";
-    public BigInteger phoneNumber=new BigInteger("6391722102");
+    public Long phoneNumber=Long.parseLong("6391722102");
     public String email="ebberdominguez@gmail.com";
     public String street="calle 24 de febrero";
     public Integer houseNumber=Integer.parseInt("203");
     public Integer zipCode=Integer.parseInt("33029");
-    public String  colony="Col. Obrera";
+    public String  colony="Tec";
     public String city="Delicias";
     public String state="Chihuahua";
-    public String statusHouse="Al corriente";
+    public String statusHouse="Sin adeudo";
+    public boolean statusActivity;
 
     public HouseModel() {
+    }
+    public boolean getStatusActivity() {
+        return statusActivity;
+    }
+
+    public void setStatusActivity(boolean statusActivity) {
+        this.statusActivity = statusActivity;
     }
 
     public String getBarCode() {
@@ -36,11 +44,11 @@ public class HouseModel {
         this.owner = owner;
     }
 
-    public BigInteger getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(BigInteger phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

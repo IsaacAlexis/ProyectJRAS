@@ -1,6 +1,7 @@
 package BusinessLogic;
 
 import Data.Models.HomesModel;
+import Data.Models.HouseModel;
 import DataAccess.DAHomesRegister;
 
 public class BusinessHomesRegister {
@@ -14,4 +15,6 @@ public class BusinessHomesRegister {
     public void BridgeHomeRegister(HomesModel home){
         DAH.HomeRegister(home);
     }
+
+    public void BridgeHouseUpdate(HouseModel house) { DAH.HouseUpdate(house); }
 }

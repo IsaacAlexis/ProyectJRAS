@@ -7,19 +7,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jras.R;
-
-import java.text.Normalizer;
 
 import BusinessLogic.BusinessHomesRegister;
 import Data.Models.HomesModel;
@@ -36,7 +31,7 @@ public class fragmentRegistrarViviendas extends Fragment {
     private boolean flagRegEx = false;
 
     //instancias de otras clases
-    HomesModel home = new HomesModel();
+    HomesModel house = new HomesModel();
     public Validations validate = new Validations();
 
     public fragmentRegistrarViviendas() {
@@ -53,12 +48,12 @@ public class fragmentRegistrarViviendas extends Fragment {
         txtPropietario = view.findViewById(R.id.txtPropietario);
         txtTelefonoViv = view.findViewById(R.id.txtTelefonoViv);
         txtEmail = view.findViewById(R.id.txtEmail);
-        txtCalleViv = view.findViewById(R.id.CalleViv);
-        txtNumViv = view.findViewById(R.id.NumViv);
+        txtCalleViv = view.findViewById(R.id.txtCalleViv);
+        txtNumViv = view.findViewById(R.id.txtNumViv);
         txtCPViv = view.findViewById(R.id.txtCPViv);
-        txtColViv= view.findViewById(R.id.ColViv);
-        txtCiudad= view.findViewById(R.id.CiudadViv);
-        txtEstadoViv= view.findViewById(R.id.EstadoViv);
+        txtColViv= view.findViewById(R.id.txtColViv);
+        txtCiudad= view.findViewById(R.id.txtCiudadViv);
+        txtEstadoViv= view.findViewById(R.id.txtEstadoViv);
         btnRegistrar= view.findViewById(R.id.btnregistrarVivienda);
         txtCodBarras.setEnabled(false);
 
@@ -74,26 +69,26 @@ public class fragmentRegistrarViviendas extends Fragment {
                 if (!flagEmptyFields && !flagRegEx){
                     String barcode = txtColViv.getText().toString().substring(0,3).toUpperCase()+"-"+txtCalleViv.getText().toString().substring(0,3).toUpperCase()+
                             "-"+txtNumViv.getText().toString().substring(0,3);
-                    home.setBarCode(barcode);
+                    house.setBarCode(barcode);
 
-                    new BusinessHomesRegister().BridgeHomeExist(home);
+                    new BusinessHomesRegister().BridgeHomeExist(house);
 
-                    if (!home.isHouseExist()){
+                    if (!house.isHouseExist()){
 
-                        home.setBarCode(barcode);
-                        home.setOwner(txtPropietario.getText().toString());
-                        home.setPhoneNum(txtTelefonoViv.getText().toString());
-                        home.setEmail(txtEmail.getText().toString());
-                        home.setStreet(txtCalleViv.getText().toString());
-                        home.setHouseHum(txtNumViv.getText().toString());
-                        home.setZipCode(txtCPViv.getText().toString());
-                        home.setColony(txtColViv.getText().toString());
-                        home.setCity(txtCiudad.getText().toString());
-                        home.setState(txtEstadoViv.getText().toString());
-                        home.setHouseStatus("AGREGADA");
+                        house.setBarCode(barcode);
+                        house.setOwner(txtPropietario.getText().toString());
+                        house.setPhoneNum(txtTelefonoViv.getText().toString());
+                        house.setEmail(txtEmail.getText().toString());
+                        house.setStreet(txtCalleViv.getText().toString());
+                        house.setHouseHum(txtNumViv.getText().toString());
+                        house.setZipCode(txtCPViv.getText().toString());
+                        house.setColony(txtColViv.getText().toString());
+                        house.setCity(txtCiudad.getText().toString());
+                        house.setState(txtEstadoViv.getText().toString());
+                        house.setHouseStatus("AGREGADA");
                         txtCodBarras.setText(barcode);
 
-                        new BusinessHomesRegister().BridgeHomeRegister(home);
+                        new BusinessHomesRegister().BridgeHomeRegister(house);
 
                         builder.setMessage("Vivienda "+txtCodBarras.getText().toString()+" registrada correctamente")
                                 .setIcon(android.R.drawable.ic_menu_save)

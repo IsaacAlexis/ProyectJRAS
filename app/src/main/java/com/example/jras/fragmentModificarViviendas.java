@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 public class fragmentModificarViviendas extends Fragment {
 
@@ -23,7 +24,10 @@ public class fragmentModificarViviendas extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_modificar_viviendas, container, false);
+         final View view= inflater.inflate(R.layout.fragment_modificar_viviendas, container, false);
+        EditText example=view.findViewById(R.id.txtPropietario);
+        example.setText("Hola");
+         return view;
     }
 
     @Override

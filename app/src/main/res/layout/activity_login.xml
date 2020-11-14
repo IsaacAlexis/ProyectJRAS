@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_width="410dp"
+        android:layout_height="415dp"
         android:background="@drawable/encabezado_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:id="@+id/txtUsuarioLogin"
         android:layout_width="241dp"
         android:layout_height="65dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="39dp"
         android:drawableLeft="@drawable/user"
         android:hint="Nombre de Usuario"
         android:imeOptions="actionNext"
@@ -67,12 +67,14 @@
 
     <TextView
         android:id="@+id/labelLogin"
+        style="@style/Widget.MaterialComponents.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
         android:text="JRAS"
         android:textColor="#FFFFFF"
         android:textSize="60dp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

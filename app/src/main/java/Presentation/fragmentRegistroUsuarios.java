@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import BusinessLogic.BusinessUserRegister;
+import Data.Models.UsersDataModel;
 import Data.Models.UsersModel;
 import Data.Utility.Validations;
 
@@ -34,7 +35,7 @@ public class fragmentRegistroUsuarios extends Fragment {
     private EditText txtUsuario,txtPassUsuario,txtPassConfirm;
     private RadioButton rolAdmin,rolEmpleado,rolInvitado;
     private Date dat= (Date) Calendar.getInstance().getTime();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ddHH:mm:ss");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Button btnRegistrar;
     private TextView tvDate;
 
@@ -45,7 +46,7 @@ public class fragmentRegistroUsuarios extends Fragment {
     private boolean flagPasswords = false;
 
     //instancias de otras clases
-    UsersModel data = new UsersModel();
+    UsersDataModel data = new UsersDataModel();
     Validations validate = new Validations();
 
     public fragmentRegistroUsuarios() {
@@ -88,30 +89,30 @@ public class fragmentRegistroUsuarios extends Fragment {
                     //verificar si las contraseñas coinciden
                     if (txtPassConfirm.getText().toString().equals(txtPassUsuario.getText().toString())){
 
-                        data.setUser(txtUsuario.getText().toString());
+                        data.setUserName(txtUsuario.getText().toString());
                         new BusinessUserRegister().BridgeUserExist(data);
 
                         //verificar si el usuario existe
-                        if (!data.getUserExist()){
+                        if (!data.isUserExist()){
 
                             //validar el rol del usuario
                             if (rolAdmin.isChecked())
-                                data.setRole("Admin");
+                                data.setUserRole("Admin");
                             if (rolEmpleado.isChecked())
-                                data.setRole("Empleado");
+                                data.setUserRole("Empleado");
                             if (rolInvitado.isChecked())
-                                data.setRole("Invitado");
+                                data.setUserRole("Invitado");
 
                             data.setFirstName(txtNombre.getText().toString());
                             data.setLastName(txtApellidos.getText().toString());
                             data.setEmail(txtEmail.getText().toString());
-                            data.setUser(txtUsuario.getText().toString());
+                            data.setUserName(txtUsuario.getText().toString());
                             data.setColony("Tec");
                             data.setUserStatus("ACTIVO");
-                            data.setExpDate("2020/12/07");
+                            data.setExpirationDate("2020/12/07");
                             //data.setAddeddDate(sdf.format(dat));
                             //data.setModifiedDate(sdf.format(dat));
-                            data.setPass(txtPassConfirm.getText().toString());
+                            data.setPassword(txtPassConfirm.getText().toString());
 
                             new BusinessUserRegister().BridgeUserRegister(data);
 

@@ -7,27 +7,28 @@ import java.sql.Statement;
 import java.util.Date;
 
 import Data.BDConnection;
+import Data.Models.UsersDataModel;
 import Data.Models.UsersModel;
 
 public class UserRegister {
 
 
-    public void UserRegister(UsersModel userData){
+    public void UserRegister(UsersDataModel data){
         BDConnection bd = new BDConnection();
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement cs =bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?)}");
-            cs.setString(1,userData.getLastName());
-            cs.setString(2,userData.getFirstName());
-            cs.setString(3,userData.getEmail());
-            cs.setString(4,userData.getUserName());
-            cs.setString(5,userData.getRole());
-            cs.setString(6,userData.getPass());
-            cs.setString(7,userData.getExpDate());
-            cs.setString(8,userData.getColony());
-            cs.setString(9,userData.getUserStatus());
-            //cs.setString(10,userData.getAddeddDate());
-            //cs.setString(11,userData.getModifiedDate());
+            cs.setString(1,data.getLastName());
+            cs.setString(2,data.getFirstName());
+            cs.setString(3,data.getEmail());
+            cs.setString(4,data.getUserName());
+            cs.setString(5,data.getUserRole());
+            cs.setString(6,data.getPassword());
+            cs.setString(7,data.getExpirationDate());
+            cs.setString(8,data.getColony());
+            cs.setString(9,data.getUserStatus());
+            //cs.setString(10,data.getAddeddDate());
+            //cs.setString(11,data.getModifiedDate());
             cs.executeUpdate();
 
 
@@ -39,7 +40,7 @@ public class UserRegister {
         }
     }
 
-    public void UserRegisterExist(UsersModel data){
+    public void UserRegisterExist(UsersDataModel data){
 
         BDConnection bd = new BDConnection();
 

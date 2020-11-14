@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv"/>
     <EditText
-        android:id="@+id/CalleViv"
+        android:id="@+id/txtCalleViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail"/>
     <EditText
-        android:id="@+id/NumViv"
+        android:id="@+id/txtNumViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -118,7 +118,7 @@
         tools:layout_editor_absoluteY="286dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CalleViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtCalleViv"/>
     <EditText
         android:id="@+id/txtCPViv"
         android:layout_width="311dp"
@@ -131,9 +131,9 @@
         tools:layout_editor_absoluteY="346dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtNumViv"/>
     <EditText
-        android:id="@+id/ColViv"
+        android:id="@+id/txtColViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -146,7 +146,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCPViv"/>
     <EditText
-        android:id="@+id/CiudadViv"
+        android:id="@+id/txtCiudadViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_city_24"
@@ -157,9 +157,9 @@
         tools:layout_editor_absoluteY="338dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ColViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtColViv"/>
     <EditText
-        android:id="@+id/EstadoViv"
+        android:id="@+id/txtEstadoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_apartment_24"
@@ -170,7 +170,7 @@
         tools:layout_editor_absoluteY="422dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CiudadViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtCiudadViv"/>
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="311dp"
@@ -179,14 +179,14 @@
         android:stretchColumns="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EstadoViv">
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv">
 
         <TableRow
             android:layout_width="288dp"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/lblTexto"
+                android:id="@+id/lbStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"

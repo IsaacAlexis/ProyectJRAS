@@ -33,26 +33,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Registro de Viviendas"
+        android:text="Modificacion de Viviendas"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/CodBarras"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:drawableLeft="@drawable/ic_baseline_report_24"
-        android:hint="Codigo de Barras"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="175dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/txtPropietario"
@@ -62,11 +48,10 @@
         android:hint="Nombre de Propieartio"
         android:imeOptions="actionNext"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="427dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CodBarras"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
     <EditText
         android:id="@+id/txtTelefonoViv"
         android:layout_width="311dp"
@@ -75,26 +60,23 @@
         android:hint="Telefono"
         android:imeOptions="actionNext"
         android:inputType="phone"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="486dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPropietario"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtPropietario" />
+
     <EditText
         android:id="@+id/txtEmail"
-        android:layout_width="309dp"
-        android:layout_height="43dp"
+        android:layout_width="320dp"
+        android:layout_height="46dp"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="533dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv" />
     <EditText
-        android:id="@+id/CalleViv"
+        android:id="@+id/txtCalleViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -107,7 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail"/>
     <EditText
-        android:id="@+id/NumViv"
+        android:id="@+id/txtNumViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -118,7 +100,7 @@
         tools:layout_editor_absoluteY="286dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CalleViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtCalleViv"/>
     <EditText
         android:id="@+id/txtCPViv"
         android:layout_width="311dp"
@@ -131,9 +113,9 @@
         tools:layout_editor_absoluteY="346dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtNumViv"/>
     <EditText
-        android:id="@+id/ColViv"
+        android:id="@+id/txtColViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
@@ -146,7 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCPViv"/>
     <EditText
-        android:id="@+id/CiudadViv"
+        android:id="@+id/txtCiudadViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_location_city_24"
@@ -157,9 +139,9 @@
         tools:layout_editor_absoluteY="338dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ColViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtColViv"/>
     <EditText
-        android:id="@+id/EstadoViv"
+        android:id="@+id/txtEstadoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_apartment_24"
@@ -170,7 +152,7 @@
         tools:layout_editor_absoluteY="422dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CiudadViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtCiudadViv"/>
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="311dp"
@@ -179,19 +161,19 @@
         android:stretchColumns="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EstadoViv">
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv">
 
         <TableRow
-            android:layout_width="288dp"
+            android:layout_width="173dp"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/lblTexto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/lbStatus"
+                android:layout_width="286dp"
+                android:layout_height="match_parent"
                 android:layout_column="0"
                 android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Estado de viv      "
+                android:text=" Estado de la vivienda     "
                 android:textSize="18sp" />
         </TableRow>
 
@@ -204,35 +186,21 @@
                 android:layout_column="0"
                 android:layout_span="2"
                 android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pagado" />
-
-                <RadioButton
-                    android:id="@+id/rbEmpleado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adeudo" />
-            </RadioGroup>
+                android:orientation="horizontal"/>
         </TableRow>
     </TableLayout>
+
     <Button
         android:id="@+id/btnregistrarVivienda"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bordes_redondos_azul"
-        android:text="Registrar"
+        android:text="Guardar"
         android:textColor="@android:color/black"
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="642dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 
 

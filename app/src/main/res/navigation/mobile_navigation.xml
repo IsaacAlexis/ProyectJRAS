@@ -76,19 +76,19 @@
         tools:layout="@layout/fragment_gastos" />
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
-        android:name="Presentation.fragmentRegistrarViviendas"
+        android:name="Presentation.fragmentRegistrasViviendas"
         android:label="Viviendas"
-        tools:layout="@layout/fragment_registrar_viviendas" />
+        tools:layout="@layout/fragment_registras_viviendas" />
     <fragment
         android:id="@+id/fragmentRegistroUsuarios"
         android:name="Presentation.fragmentRegistroUsuarios"
-        android:label="Usuarios"
+        android:label="Registro de Usuarios"
         tools:layout="@layout/fragment_registro_usuarios" />
     <fragment
         android:id="@+id/fragementModificarUsuarios"
         android:name="Presentation.fragementModificarUsuarios"
-        android:label="Usuarios"
-        tools:layout="@layout/fragement_modificar_usuarios" />
+        android:label="Modificacion de Usuario"
+        tools:layout="@layout/fragment_fragement_modificar_usuarios" />
     <fragment
         android:id="@+id/fragmentModificarViviendas"
         android:name="com.example.jras.fragmentModificarViviendas"

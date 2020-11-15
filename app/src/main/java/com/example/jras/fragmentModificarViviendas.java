@@ -93,16 +93,16 @@ public class fragmentModificarViviendas extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                if(validations.IsTextboxEmpty(owner,"Debes ingresar un nombre del propietario valido")|
-                        validations.IsTextboxEmpty(phoneNumber,"Debes ingresar un numero de telefono valido")|
-                        validations.IsTextboxEmpty(email,"Debes ingresar un correo de electronico valido")|
-                        validations.IsTextboxEmpty(street,"Debes ingresar la calle de la vivienda correctamente")|
-                        validations.IsTextboxEmpty(houseNumber,"Debes ingresar el numero de la vivienda")|
-                        validations.IsTextboxEmpty(zipCode,"Debes ingresar un codigo postal valido")|
-                        validations.IsTextboxEmpty(colony,"Debes ingresar la colonia de la vivienda")|
-                        validations.IsTextboxEmpty(city,"Debes ingresar la ciudad donde se ubica la vivienda")|
-                        validations.IsTextboxEmpty(state,"Debes ingresar el estado donde se encuentra la vivienda")){
-                    Toast.makeText(getContext(),"No debes dejar ningun campo vacio",Toast.LENGTH_LONG).show();
+                if(validations.IsValidTextbox(owner,"^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})?(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})?$","Debes ingresar un Nombre del propietario completo correctamente")|
+                validations.IsValidTextbox(phoneNumber,"^\\d{10,15}$","Debes ingresar un numero de telefono correctamente")|
+                validations.IsValidTextbox(email,"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$","Debes ingresar un correo electronico correctamente")|
+                validations.IsValidTextbox(street,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.0-9]{2,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ0-9]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?$","Debes ingresar una calle de la vivienda correctamente")|
+                validations.IsValidTextbox(houseNumber,"^\\d{1,8}$","Debes ingresar el numero de la vivienda correctamente")|
+                validations.IsValidTextbox(zipCode,"^\\d{5}$","Debes ingresar un codigo postal correctamente")|
+                validations.IsValidTextbox(colony,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?$","Debes ingresar la colonia de la vivienda correctamente")|
+                validations.IsValidTextbox(city,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?$","Debes ingresar el municipio donde se ubica la vivienda correctamente")|
+                validations.IsValidTextbox(state,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{2,10})?$","Debes ingresar el Estado donde se ubica la vivienda correctamente ")){
+                    Toast.makeText(getContext(),"Debes llenar los campos con los formatos establecidos",Toast.LENGTH_LONG).show();
 
                 }else{
                      assignValuesModificate();

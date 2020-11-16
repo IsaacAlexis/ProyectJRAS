@@ -118,7 +118,7 @@ public class fragmentModificarViviendas extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }else{
-                        Toast.makeText(getContext(),"Ocurrio un error al guardar los datos",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"Ocurrio un error al guardar los cambios",Toast.LENGTH_LONG).show();
                     }
 
                 }

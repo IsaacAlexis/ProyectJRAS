@@ -1,4 +1,4 @@
-package com.example.jras;
+package Presentation;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +23,9 @@ import Data.Utility.Validations;
 import BusinessLogic.BusinessHomesRegister;
 
 import static androidx.navigation.Navigation.findNavController;
+
+import com.example.jras.FragmentModificarViviendasViewModel;
+import com.example.jras.R;
 
 public class fragmentModificarViviendas extends Fragment {
 

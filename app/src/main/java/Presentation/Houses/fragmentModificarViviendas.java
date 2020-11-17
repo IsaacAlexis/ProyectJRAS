@@ -1,4 +1,4 @@
-package com.example.jras;
+package Presentation.Houses;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.jras.R;
 
 import Data.Models.HouseModel;
 import Data.Utility.Validations;

@@ -1,10 +1,9 @@
-package Presentation;
+package Presentation.Users;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.DrawableRes;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import java.util.Date;
 
 import BusinessLogic.BusinessUserRegister;
 import Data.Models.UsersDataModel;
-import Data.Models.UsersModel;
 import Data.Utility.Validations;
 
 public class fragmentRegistroUsuarios extends Fragment {

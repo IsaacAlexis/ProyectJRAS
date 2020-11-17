@@ -1,4 +1,4 @@
-package com.example.jras;
+package Presentation.Houses;
 
 import androidx.lifecycle.ViewModel;
 

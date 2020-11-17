@@ -1,4 +1,4 @@
-package Presentation.home;
+package Presentation.Home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

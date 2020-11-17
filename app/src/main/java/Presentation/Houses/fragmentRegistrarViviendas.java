@@ -1,4 +1,4 @@
-package Presentation;
+package Presentation.Houses;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

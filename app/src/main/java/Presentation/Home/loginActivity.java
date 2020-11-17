@@ -1,4 +1,4 @@
-package Presentation;
+package Presentation.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +57,7 @@ public class loginActivity extends AppCompatActivity {
                                 txtUser.setError(null);
                                 txtPass.setError(null);
                                 Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(loginActivity.this,menuActivity.class);
+                                Intent intent = new Intent(loginActivity.this, menuActivity.class);
                                 startActivity(intent);
                                 finish();
                             }

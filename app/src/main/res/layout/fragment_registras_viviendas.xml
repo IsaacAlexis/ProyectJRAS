@@ -60,7 +60,7 @@
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Nombre de Propieartio"
+        android:hint="Nombre de Propietario"
         android:imeOptions="actionNext"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="53dp"

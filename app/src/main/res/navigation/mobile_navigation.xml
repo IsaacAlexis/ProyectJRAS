@@ -91,7 +91,7 @@
         tools:layout="@layout/fragment_fragement_modificar_usuarios" />
     <fragment
         android:id="@+id/fragmentModificarViviendas"
-        android:name="com.example.jras.fragmentModificarViviendas"
+        android:name="Presentation.fragmentModificarViviendas"
         android:label="Viviendas"
         tools:layout="@layout/fragment_modificar_viviendas" />
 

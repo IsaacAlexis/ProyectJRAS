@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Registro de Viviendas"
+        android:text="Modificar de Viviendas"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -52,14 +52,14 @@
         tools:layout_editor_absoluteY="175dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/labelUsuario" />
 
     <EditText
         android:id="@+id/txtPropietario"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Nombre de Propieartio"
+        android:hint="Nombre de Propietario"
         android:imeOptions="actionNext"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="53dp"
@@ -171,55 +171,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CiudadViv"/>
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="311dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="2dp"
-        android:stretchColumns="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EstadoViv">
 
-        <TableRow
-            android:layout_width="288dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/lblTexto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Estado de viv      "
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <RadioGroup
-                android:id="@+id/rolUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_span="2"
-                android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pagado" />
-
-                <RadioButton
-                    android:id="@+id/rbEmpleado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adeudo" />
-            </RadioGroup>
-        </TableRow>
-    </TableLayout>
     <Button
         android:id="@+id/btnregistrarVivienda"
         android:layout_width="150dp"
@@ -232,8 +184,5 @@
         tools:layout_editor_absoluteY="642dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"/>
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/EstadoViv"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

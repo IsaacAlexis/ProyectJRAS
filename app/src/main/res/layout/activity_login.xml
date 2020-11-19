@@ -20,7 +20,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="415dp"
         android:background="@drawable/encabezado_login"
         app:layout_constraintEnd_toEndOf="parent"

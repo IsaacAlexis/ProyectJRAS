@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_nav_home_to_fragmentGastos2"
             app:destination="@id/fragmentGastos2" />
+        <action
+            android:id="@+id/action_nav_home_to_fagmentConsumo"
+            app:destination="@id/fagmentConsumo" />
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
@@ -95,5 +98,10 @@
         android:name="Presentation.Houses.fragmentModificarViviendas"
         android:label="Viviendas"
         tools:layout="@layout/fragment_modificar_viviendas" />
+    <fragment
+        android:id="@+id/fagmentConsumo"
+        android:name="Presentation.fragmentConsumo"
+        android:label="Consumo"
+        tools:layout="@layout/fragment_consumo" />
 
 </navigation>

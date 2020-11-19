@@ -1,4 +1,4 @@
-package Presentation;
+package Presentation.Houses;
 
 import android.os.Bundle;
 
@@ -14,47 +14,41 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static androidx.navigation.Navigation.findNavController;
 
+public class fragmentViviendas extends Fragment {
 
-public class fragmentUsuarios extends Fragment {
+    public FloatingActionButton fabViviendas;
+    public Button ModiViviendas;
 
-    public FloatingActionButton fabUsuario;
-    public Button irModificar;
-
-    public fragmentUsuarios() {
+    public fragmentViviendas() {
         // Required empty public constructor
     }
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
+        final View view= inflater.inflate(R.layout.fragment_viviendas, container, false);
 
-        fabUsuario = view.findViewById(R.id.fabAgregarUsuario);
-
-        irModificar=view.findViewById(R.id.btnIrModificar);
-        irModificar.setOnClickListener(new View.OnClickListener() {
+        fabViviendas= view.findViewById(R.id.fabAgregarVivienda);
+        ModiViviendas=view.findViewById(R.id.btnIrModificar);
+        ModiViviendas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(v).navigate(R.id.fragementModificarUsuarios);
+                findNavController(v).navigate(R.id.fragmentModificarViviendas);
             }
         });
 
-        fabUsuario.setOnClickListener(new View.OnClickListener() {
+        fabViviendas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                findNavController(view).navigate(R.id.fragmentRegistroUsuarios);
+                findNavController(view).navigate(R.id.fragmentRegistrasViviendas);
 
 
             }
         });
         return view;
-
-
     }
-
-
-
 }

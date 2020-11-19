@@ -1,4 +1,4 @@
-package Presentation;
+package Presentation.Users;
 
 import android.os.Bundle;
 
@@ -61,6 +61,6 @@ public class fragementModificarUsuarios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragement_modificar_usuarios, container, false);
+        return inflater.inflate(R.layout.fragement_modificar_usuarios, container, false);
     }
 }

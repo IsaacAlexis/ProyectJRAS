@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="Presentation.home.HomeFragment"
+        android:name="Presentation.Home.HomeFragment"
         android:label="Inicio"
         tools:layout="@layout/fragment_home">
         <action
@@ -37,16 +37,19 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
-        android:name="Presentation.fragmentViviendas"
+        android:name="Presentation.Houses.fragmentViviendas"
         android:label="Viviendas"
         tools:layout="@layout/fragment_viviendas" >
         <action
             android:id="@+id/action_fragmentViviendas_to_fragmentRegistrasViviendas"
             app:destination="@id/fragmentRegistrasViviendas" />
+        <action
+            android:id="@+id/action_fragmentViviendas_to_fragmentModificarViviendas"
+            app:destination="@id/fragmentModificarViviendas" />
     </fragment>
     <fragment
         android:id="@+id/fragmentUsuarios"
-        android:name="Presentation.fragmentUsuarios"
+        android:name="Presentation.Users.fragmentUsuarios"
         android:label="Usuarios"
         tools:layout="@layout/fragment_usuarios" >
         <action
@@ -58,33 +61,39 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentPagos"
-        android:name="Presentation.fragmentPagos"
+        android:name="Presentation.Payments.fragmentPagos"
         android:label="Pagos"
         tools:layout="@layout/fragment_pagos" />
     <fragment
         android:id="@+id/fragmentReportes"
-        android:name="Presentation.fragmentReportes"
+        android:name="Presentation.Reports.fragmentReportes"
         android:label="Reportes"
         tools:layout="@layout/fragment_reportes" />
     <fragment
         android:id="@+id/fragmentGastos2"
-        android:name="Presentation.fragmentGastos"
+        android:name="Presentation.Expenses.fragmentGastos"
         android:label="Gastos"
         tools:layout="@layout/fragment_gastos" />
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
-        android:name="Presentation.fragmentRegistrasViviendas"
+        android:name="Presentation.Houses.fragmentRegistrarViviendas"
         android:label="Viviendas"
-        tools:layout="@layout/fragment_registras_viviendas" />
+        tools:layout="@layout/fragment_registrar_viviendas" />
     <fragment
         android:id="@+id/fragmentRegistroUsuarios"
-        android:name="Presentation.fragmentRegistroUsuarios"
-        android:label="Usuarios"
+        android:name="Presentation.Users.fragmentRegistroUsuarios"
+        android:label="Registro de Usuarios"
         tools:layout="@layout/fragment_registro_usuarios" />
     <fragment
         android:id="@+id/fragementModificarUsuarios"
-        android:name="Presentation.fragementModificarUsuarios"
+        android:name="Presentation.Users.fragementModificarUsuarios"
         android:label="Usuarios"
-        tools:layout="@layout/fragment_fragement_modificar_usuarios" />
+        tools:layout="@layout/fragement_modificar_usuarios" />
+
+    <fragment
+        android:id="@+id/fragmentModificarViviendas"
+        android:name="Presentation.Houses.fragmentModificarViviendas"
+        android:label="Viviendas"
+        tools:layout="@layout/fragment_modificar_viviendas" />
 
 </navigation>

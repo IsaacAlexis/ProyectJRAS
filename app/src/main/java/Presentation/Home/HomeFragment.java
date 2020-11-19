@@ -1,4 +1,4 @@
-package Presentation.home;
+package Presentation.Home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

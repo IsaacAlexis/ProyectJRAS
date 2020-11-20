@@ -3,27 +3,27 @@ package Data.Models;
 public class HomesModel {
 
     //Declaracion de variables
-    private String BarCode;
-    private String Owner;
+    private static String BarCode;
+    private static String Owner;
     private String PhoneNum;
     private String Email;
     private String Street;
-    private String HouseHum;
+    private static String HouseNum;
     private String ZipCode;
     private String Colony;
     private String City;
     private String State;
     private String HouseStatus;
-    private boolean HouseExist;
+    private static boolean HouseExist = false;
 
     //Constructor
-    public HomesModel(String barCode, String owner, String phoneNum, String email, String street, String houseHum, String zipCode, String colony, String city, String state, String houseStatus, boolean houseExist) {
+    public HomesModel(String barCode, String owner, String phoneNum, String email, String street, String houseNum, String zipCode, String colony, String city, String state, String houseStatus, boolean houseExist) {
         BarCode = barCode;
         Owner = owner;
         PhoneNum = phoneNum;
         Email = email;
         Street = street;
-        HouseHum = houseHum;
+        HouseNum = houseNum;
         ZipCode = zipCode;
         Colony = colony;
         City = city;
@@ -77,12 +77,12 @@ public class HomesModel {
         Street = street;
     }
 
-    public String getHouseHum() {
-        return HouseHum;
+    public String getHouseNum() {
+        return HouseNum;
     }
 
-    public void setHouseHum(String houseHum) {
-        HouseHum = houseHum;
+    public void setHouseNum(String houseNum) {
+        HouseNum = houseNum;
     }
 
     public String getZipCode() {

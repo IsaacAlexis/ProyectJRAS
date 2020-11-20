@@ -12,14 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
-        <activity android:name="Presentation.Home.loginActivity"
-                   android:screenOrientation="portrait"></activity>
+        <activity android:name="Presentation.Houses.activityScanner"></activity>
+        <activity
+            android:name="Presentation.Home.loginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="Presentation.Home.menuActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="Presentation.Home.MainActivity"
+        <activity
+            android:name="Presentation.Home.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

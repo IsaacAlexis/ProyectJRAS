@@ -18,4 +18,12 @@ public class DAHomesRegister {
     public void HouseUpdate(HouseModel house) {
         HR.HouseUpdate(house);
     }
+
+    public void HouseScan(HomesModel home){
+        HR.HouseScan(home);
+    }
+
+    public void HouseScanExist(HomesModel home){
+        HR.HouseScanExist(home);
+    }
 }

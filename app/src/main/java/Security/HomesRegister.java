@@ -41,7 +41,7 @@ public class HomesRegister {
             cs.setLong(3,Long.parseLong(home.getPhoneNum()));
             cs.setString(4,home.getEmail());
             cs.setString(5,home.getStreet());
-            cs.setInt(6,Integer.parseInt(home.getHouseHum()));
+            cs.setInt(6,Integer.parseInt(home.getHouseNum()));
             cs.setInt(7,Integer.parseInt(home.getZipCode()));
             cs.setString(8,home.getColony());
             cs.setString(9,home.getCity());
@@ -83,4 +83,42 @@ public class HomesRegister {
 
         }
     }
+
+    public void HouseScan(HomesModel home){
+        try{
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeQueryScan(?)}");
+            callableStatement.setString(1, home.getBarCode());
+            ResultSet Result= callableStatement.executeQuery();
+
+            while (Result.next()){
+                home.setOwner(Result.getString("Owner"));
+                home.setHouseNum(Result.getString("HouseNum"));
+                home.setHouseExist(true);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void HouseScanExist(HomesModel home){
+        try{
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeQueryScan(?)}");
+            callableStatement.setString(1, home.getBarCode());
+            ResultSet Result= callableStatement.executeQuery();
+
+            if (Result.next()){
+                home.setHouseExist(true);
+            }
+            else{
+                home.setHouseExist(false);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }

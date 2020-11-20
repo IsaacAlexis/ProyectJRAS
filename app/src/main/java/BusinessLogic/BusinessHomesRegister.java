@@ -17,4 +17,12 @@ public class BusinessHomesRegister {
     }
 
     public void BridgeHouseUpdate(HouseModel house) { DAH.HouseUpdate(house); }
+
+    public void BridgeHouseScanner(HomesModel home){
+        DAH.HouseScan(home);
+    }
+
+    public void BridgeHouseScannerExist(HomesModel home){
+        DAH.HouseScanExist(home);
+    }
 }

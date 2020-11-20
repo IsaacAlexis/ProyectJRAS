@@ -20,15 +20,17 @@ import Data.Models.UsersModel;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     private List<UsersModel> mData;
-    private LayoutInflater mInflater;
     private OnItemClickListener onClickListener;
     private Context context;
+    private LayoutInflater mInflater;
+
     public UsersAdapter(List<UsersModel> Items, Context context, OnItemClickListener onClickListener){
         this.mInflater=LayoutInflater.from(context);
-        this.context=context;
         this.mData=Items;
         this.onClickListener=onClickListener;
+        this.context=context;
     }
+
 
     @NonNull
     @Override

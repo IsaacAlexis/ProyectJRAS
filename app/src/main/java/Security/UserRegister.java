@@ -1,10 +1,14 @@
 package Security;
 
+import android.widget.Toast;
+
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import Data.BDConnection;
 import Data.Models.UsersDataModel;
@@ -13,8 +17,9 @@ import Data.Models.UsersModel;
 public class UserRegister {
 
 
+    BDConnection bd = new BDConnection();
     public void UserRegister(UsersDataModel data){
-        BDConnection bd = new BDConnection();
+
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement cs =bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?)}");
@@ -42,7 +47,7 @@ public class UserRegister {
 
     public void UserRegisterExist(UsersDataModel data){
 
-        BDConnection bd = new BDConnection();
+
 
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -64,4 +69,32 @@ public class UserRegister {
 
     }
 
-}
+
+    public List<UsersModel> getallusers(UsersModel mUsers) {
+        List<UsersModel> users=new ArrayList<>();
+        try {
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement=bd.connection.prepareCall("{call getallusers}");
+            ResultSet result=callableStatement.executeQuery();
+            while (result.next()){
+                users.add(new UsersModel(result.getString("UserName"),result.getString("FirstName"),result.getString("LastName"),result.getString("Email"),result.getString("UserRole"),result
+                .getString("UserStatus")));
+            }
+            callableStatement.close();
+            bd.CloseConnection();
+
+        }catch (Exception e){
+            users=null;
+            try {
+                if(!bd.connection.isClosed()){
+                    bd.CloseConnection();
+                }
+            } catch (SQLException e2) { }
+            e.printStackTrace();
+        }
+        return users;
+
+        }
+
+    }
+

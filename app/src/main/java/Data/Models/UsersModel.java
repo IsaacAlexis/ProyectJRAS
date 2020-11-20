@@ -15,6 +15,16 @@ public class UsersModel {
     private String lastName;
     private String email;
     private String role;
+
+    public UsersModel(String userName, String firstName, String lastName, String email, String role, String userStatus) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.userStatus = userStatus;
+    }
+
     private String colony;
     private String userStatus;
     private String validationMessage;

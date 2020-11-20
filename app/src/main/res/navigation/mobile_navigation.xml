@@ -100,7 +100,7 @@
         tools:layout="@layout/fragment_modificar_viviendas" />
     <fragment
         android:id="@+id/fagmentConsumo"
-        android:name="Presentation.fragmentConsumo"
+        android:name="Presentation.Consumptions.fragmentConsumo"
         android:label="Consumo"
         tools:layout="@layout/fragment_consumo" />
 

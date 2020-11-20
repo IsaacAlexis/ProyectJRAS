@@ -3,6 +3,7 @@ package Presentation.Users;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,11 @@ public class fragmentUsuarios extends Fragment {
     public Button search;
     public EditText user;
     public ScrollView table;
+    private RecyclerView mRecycleView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager mLayoutManger;
+
+
 
     public fragmentUsuarios() {
         // Required empty public constructor

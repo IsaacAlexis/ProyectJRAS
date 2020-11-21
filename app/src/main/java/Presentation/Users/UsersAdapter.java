@@ -1,11 +1,9 @@
 package Presentation.Users;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,7 +64,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(users.getFirstName(),users.getLastName(),
+                    listener.OnItemClick(users.getIdUser(),users.getFirstName(),users.getLastName(),
                             users.getRole(),users.getEmail(),users.getUserName(),users.getUserStatus(),getAdapterPosition());
 
                 }
@@ -75,7 +73,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         }
     }
     public interface OnItemClickListener{
-        void OnItemClick(String firstName,String lastName,
+        void OnItemClick(Long idUser,String firstName,String lastName,
                          String role,String email,String username,String status,int position);
     }
 }

@@ -90,7 +90,7 @@ public class HomesRegister {
             CallableStatement callableStatement=bd.connection.prepareCall("{call HomeQueryScan(?)}");
             callableStatement.setString(1, home.getBarCode());
             ResultSet Result= callableStatement.executeQuery();
-
+            home.setHouseExist(false);
             while (Result.next()){
                 home.setOwner(Result.getString("Owner"));
                 home.setHouseNum(Result.getString("HouseNum"));

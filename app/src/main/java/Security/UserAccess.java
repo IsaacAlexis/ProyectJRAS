@@ -17,7 +17,7 @@ public class UserAccess {
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call UsersLogin(?,?)}");
             callableStatement.setString(1, userData.getUserName());
-            callableStatement.setString(2,userData.getPass());
+            callableStatement.setString(2,userData.getPassword());
 
             ResultSet userResultset = callableStatement.executeQuery();
 
@@ -25,20 +25,20 @@ public class UserAccess {
             boolean userAndPasswordIsValid = false;
             while (userResultset.next()) {
                 userAndPasswordIsValid = true;
-                userData.setFirstName(userResultset.getString("FirstName"));
-                userData.setLastName(userResultset.getString("LastName"));
-                userData.setEmail(userResultset.getString("Email"));
-                userData.setRole(userResultset.getString("UserRole"));
+                userData.setCurrentIdUser(userResultset.getLong("IDUser"));
+                userData.setCurrentFirstName(userResultset.getString("FirstName"));
+                userData.setCurrentLastName(userResultset.getString("LastName"));
+                userData.setCurrentUserName(userResultset.getString("Username"));
+                userData.setCurrentRole(userResultset.getString("UserRole"));
+                userData.setCurrentColony(userResultset.getString("Colony"));
                 userData.setUserStatus(userResultset.getString("UserStatus"));
                 userData.setUserLoggedIn(!userData.getUserStatus().isEmpty());
                 userData.setExpirationDate(userResultset.getDate("ExpirationDate"));
                 Date today = new Date();
                 if(!userData.getUserStatus().toUpperCase().equals("ACTIVO")){
-
                     userData.setUserLoggedIn(false);
                     userData.setFlagUser(true);
                     userData.setValidationMessage("Usuario inactivo. Favor de contactar al administrador del sistema.");
-
                 }else if( userData.getExpirationDate().before(today)){
                     userData.setUserLoggedIn(false);
                     userData.setFlagUser(true);

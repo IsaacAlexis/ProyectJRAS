@@ -1,10 +1,8 @@
 package DataAccess;
 
 
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
+import java.sql.SQLException;
 import Data.BDConnection;
 import Data.Models.UsersModel;
 import Security.UserAccess;

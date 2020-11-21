@@ -17,12 +17,13 @@ import android.widget.Toast;
 
 import com.example.jras.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import BusinessLogic.BusinessUserRegister;
-import Data.Models.UsersDataModel;
+import Data.Models.UsersModel;
 import Data.Utility.Validations;
 
 public class fragmentRegistroUsuarios extends Fragment {
@@ -44,8 +45,10 @@ public class fragmentRegistroUsuarios extends Fragment {
     private boolean flagPasswords = false;
 
     //instancias de otras clases
-    UsersDataModel data = new UsersDataModel();
+    UsersModel data = new UsersModel();
     Validations validate = new Validations();
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    Date date;
 
     public fragmentRegistroUsuarios() {
         // Required empty public constructor
@@ -91,15 +94,15 @@ public class fragmentRegistroUsuarios extends Fragment {
                         new BusinessUserRegister().BridgeUserExist(data);
 
                         //verificar si el usuario existe
-                        if (!data.isUserExist()){
+                        if (!data.getUserExist()){
 
                             //validar el rol del usuario
                             if (rolAdmin.isChecked())
-                                data.setUserRole("Admin");
+                                data.setRole("Admin");
                             if (rolEmpleado.isChecked())
-                                data.setUserRole("Empleado");
+                                data.setRole("Empleado");
                             if (rolInvitado.isChecked())
-                                data.setUserRole("Invitado");
+                                data.setRole("Invitado");
 
                             data.setFirstName(txtNombre.getText().toString());
                             data.setLastName(txtApellidos.getText().toString());
@@ -107,7 +110,12 @@ public class fragmentRegistroUsuarios extends Fragment {
                             data.setUserName(txtUsuario.getText().toString());
                             data.setColony("Tec");
                             data.setUserStatus("ACTIVO");
-                            data.setExpirationDate("2020/12/07");
+                            try {
+                                 date = format.parse("2020-12-07");
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            data.setExpirationDate(date);
                             //data.setAddeddDate(sdf.format(dat));
                             //data.setModifiedDate(sdf.format(dat));
                             data.setPassword(txtPassConfirm.getText().toString());

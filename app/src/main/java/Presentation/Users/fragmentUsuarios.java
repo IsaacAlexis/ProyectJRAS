@@ -10,16 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import BusinessLogic.BusinessUserRegister;
@@ -35,7 +30,7 @@ public class fragmentUsuarios extends Fragment {
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManger;
-    private UsersModel mUsers;
+    private UsersModel mUsers =new UsersModel() ;
 
 
 
@@ -55,9 +50,10 @@ public class fragmentUsuarios extends Fragment {
         mLayoutManger=new LinearLayoutManager(getContext());
         adapter=new UsersAdapter(users,getContext(), new UsersAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(String firstName, String lastName, String role, String email, String username, String status, int position) {
-                Toast.makeText(getContext(),firstName+" "+lastName,Toast.LENGTH_LONG).show();
-
+            public void OnItemClick(Long idUser, String firstName, String lastName,
+                                    String role, String email, String username, String status, int position) {
+                setvalues(idUser,firstName,lastName,role,email,username,status);
+                findNavController(view).navigate(R.id.fragementModificarUsuarios);
             }
         });
         mRecycleView.setHasFixedSize(true);
@@ -80,6 +76,15 @@ public class fragmentUsuarios extends Fragment {
 
     }
 
+    private void setvalues(Long idUser, String firstName, String lastName, String role, String email, String username, String status) {
+        mUsers.setModifyIdUser(idUser);
+        mUsers.setModifyFirstName(firstName);
+        mUsers.setModifyLastName(lastName);
+        mUsers.setModifyRole(role);
+        mUsers.setModifyEmail(email);
+        mUsers.setModifyUsername(username);
+        mUsers.setModifyStatus(status);
+    }
 
 
 }

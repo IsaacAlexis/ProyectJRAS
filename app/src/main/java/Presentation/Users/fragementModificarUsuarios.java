@@ -7,60 +7,103 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jras.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragementModificarUsuarios#newInstance} factory method to
- * create an instance of this fragment.
- */
+import Data.Models.UsersModel;
+
+import static androidx.navigation.Navigation.findNavController;
+
 public class fragementModificarUsuarios extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    EditText lastname,firstname,email,username,status;
+    TextView tag;
+    RadioButton roleAdmin,roleEmployer,roleInvited;
+    Button save;
+    private boolean edit;
+    UsersModel users=new UsersModel();
     public fragementModificarUsuarios() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragementModificarUsuarios.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragementModificarUsuarios newInstance(String param1, String param2) {
-        fragementModificarUsuarios fragment = new fragementModificarUsuarios();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void getvalues(View view){
+        lastname=view.findViewById(R.id.txtApellidosM);
+        firstname=view.findViewById(R.id.txtNombreM);
+        email=view.findViewById(R.id.txtEmailM);
+        username=view.findViewById(R.id.txtUsuarioM);
+        status=view.findViewById(R.id.txtStatusm);
+        tag=view.findViewById(R.id.lbRolm);
+        roleAdmin =view.findViewById(R.id.rbAdminM);
+        roleEmployer =view.findViewById(R.id.rbEmpleadoM);
+        roleInvited =view.findViewById(R.id.rbInvitadoM);
+        save=view.findViewById(R.id.btnConfirmarUsuario);
+        setvalues();
+    }
+    public void setvalues(){
+        firstname.setText(users.getModifyFirstName());
+        lastname.setText(users.getModifyLastName());
+        email.setText(users.getModifyEmail());
+        username.setText(users.getModifyUsername());
+        status.setText(users.getModifyStatus());
+        if(users.getModifyRole().toUpperCase().equals("ADMIN")){
+           roleAdmin.setChecked(true);
+        }else if(users.getModifyRole().toUpperCase().equals("EMPLEADO")){
+            roleEmployer.setChecked(true);
+        }else if(users.getModifyRole().toUpperCase().equals("INVITADO")){
+            roleInvited.setChecked(true);
+            }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+
+    public void fieldsavailability(boolean isAvailable){
+        if(!isAvailable){
+           firstname.setEnabled(true);
+           lastname.setEnabled(true);
+           email.setEnabled(true);
+           username.setEnabled(true);
+           status.setEnabled(true);
+           tag.setEnabled(true);
+           roleAdmin.setEnabled(true);
+           roleEmployer.setEnabled(true);
+           roleInvited.setEnabled(true);
+
+        }else{
+            firstname.setEnabled(false);
+            lastname.setEnabled(false);
+            email.setEnabled(false);
+            username.setEnabled(false);
+            status.setEnabled(false);
+            tag.setEnabled(false);
+            roleAdmin.setEnabled(false);
+            roleEmployer.setEnabled(false);
+            roleInvited.setEnabled(false);
+
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragement_modificar_usuarios, container, false);
+        final View view = inflater.inflate(R.layout.fragement_modificar_usuarios, container, false);
+        getvalues(view);
+        fieldsavailability(true);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!edit){
+                    fieldsavailability(false);
+                    save.setText("Guardar");
+                    edit=true;
+                }else{
+                    Toast.makeText(getContext(),"Se guardaron correctamente los cambios",Toast.LENGTH_LONG).show();
+                    findNavController(view).navigate(R.id.fragmentUsuarios);
+                }
+            }
+        });
+        return view;
     }
 }

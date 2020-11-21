@@ -1,24 +1,19 @@
 package Security;
 
-import android.widget.Toast;
-
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import Data.BDConnection;
-import Data.Models.UsersDataModel;
 import Data.Models.UsersModel;
 
 public class UserRegister {
 
 
     BDConnection bd = new BDConnection();
-    public void UserRegister(UsersDataModel data){
+    public void UserRegister(UsersModel data){
 
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -27,9 +22,9 @@ public class UserRegister {
             cs.setString(2,data.getFirstName());
             cs.setString(3,data.getEmail());
             cs.setString(4,data.getUserName());
-            cs.setString(5,data.getUserRole());
+            cs.setString(5,data.getRole());
             cs.setString(6,data.getPassword());
-            cs.setString(7,data.getExpirationDate());
+            cs.setString(7,data.getExpirationDate().toString());
             cs.setString(8,data.getColony());
             cs.setString(9,data.getUserStatus());
             //cs.setString(10,data.getAddeddDate());
@@ -45,7 +40,7 @@ public class UserRegister {
         }
     }
 
-    public void UserRegisterExist(UsersDataModel data){
+    public void UserRegisterExist(UsersModel data){
 
 
 
@@ -74,10 +69,12 @@ public class UserRegister {
         List<UsersModel> users=new ArrayList<>();
         try {
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call getallusers}");
+            CallableStatement callableStatement=bd.connection.prepareCall("{call GetAllUsers}");
             ResultSet result=callableStatement.executeQuery();
             while (result.next()){
-                users.add(new UsersModel(result.getString("UserName"),result.getString("FirstName"),result.getString("LastName"),result.getString("Email"),result.getString("UserRole"),result
+                users.add(new UsersModel(result.getLong("IDUser"),result.getString("UserName"),
+                        result.getString("FirstName"),result.getString("LastName"),
+                        result.getString("Email"),result.getString("UserRole"),result
                 .getString("UserStatus")));
             }
             callableStatement.close();

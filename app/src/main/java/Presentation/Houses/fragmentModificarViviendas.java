@@ -66,7 +66,7 @@ public class fragmentModificarViviendas extends Fragment {
         colony= view.findViewById(R.id.txtColViv);
         city= view.findViewById(R.id.txtCiudadViv);
         state= view.findViewById(R.id.txtEstadoViv);
-        statusHouse= view.findViewById(R.id.lbStatus);
+        statusHouse= view.findViewById(R.id.lbRolm);
         assignValues();
     }
     public void assignValuesModificate(){

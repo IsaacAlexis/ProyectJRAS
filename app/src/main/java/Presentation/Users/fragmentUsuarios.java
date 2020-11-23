@@ -44,6 +44,7 @@ public class fragmentUsuarios extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
+
         //Mostrar usuarios
         users= BusinessUserRegister.getallusers(mUsers);
         mRecycleView=(RecyclerView)view.findViewById(R.id.RecycleView);

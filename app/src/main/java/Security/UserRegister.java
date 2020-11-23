@@ -38,16 +38,13 @@ public class UserRegister {
             cs.setString(10,data.getAddedDate());
             cs.setString(11,data.getModDate());
             cs.executeUpdate();
-            data.setRegisterUser(true);
             data.setValidationMessage("Se registro correctamente el usuario");
-
-
             cs.close();
             bd.CloseConnection();
 
         }catch(SQLException e){
             e.printStackTrace();
-            data.setRegisterUser(false);
+            data.setRegisterUser(true);
             data.setValidationMessage("No se pude registrar el usuario intenta de nuevo");
             try {
                 if(!bd.connection.isClosed()){

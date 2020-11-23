@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
+<<<<<<< HEAD:app/src/main/res/layout/fragment_registras_viviendas.xml
         android:orientation="vertical">
 
         <ImageView
@@ -152,12 +152,26 @@
     </LinearLayout>
 =======
         android:layout_marginTop="60dp"
-        android:text="Modificacion de Viviendas"
+        android:text="Registro de Viviendas"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/CodBarras"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
+        android:drawableLeft="@drawable/ic_baseline_report_24"
+        android:hint="Codigo de Barras"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="175dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/txtPropietario"
@@ -167,10 +181,11 @@
         android:hint="Nombre de Propieartio"
         android:imeOptions="actionNext"
         android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="427dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+        app:layout_constraintTop_toBottomOf="@+id/CodBarras"/>
     <EditText
         android:id="@+id/txtTelefonoViv"
         android:layout_width="311dp"
@@ -179,21 +194,24 @@
         android:hint="Telefono"
         android:imeOptions="actionNext"
         android:inputType="phone"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="486dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPropietario" />
-
+        app:layout_constraintTop_toBottomOf="@+id/txtPropietario"/>
     <EditText
         android:id="@+id/txtEmail"
-        android:layout_width="320dp"
-        android:layout_height="46dp"
+        android:layout_width="309dp"
+        android:layout_height="43dp"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="533dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv"/>
     <EditText
         android:id="@+id/txtCalleViv"
         android:layout_width="311dp"
@@ -283,16 +301,16 @@
         app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv">
 
         <TableRow
-            android:layout_width="173dp"
+            android:layout_width="288dp"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/lbStatus"
-                android:layout_width="286dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Estado de la vivienda     "
+                android:text=" Estado de viv      "
                 android:textSize="18sp" />
         </TableRow>
 
@@ -305,28 +323,36 @@
                 android:layout_column="0"
                 android:layout_span="2"
                 android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pagado" />
+
+                <RadioButton
+                    android:id="@+id/rbEmpleado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adeudo" />
+            </RadioGroup>
         </TableRow>
     </TableLayout>
-
->>>>>>> master
+>>>>>>> master:app/src/main/res/layout/fragment_registrar_viviendas.xml
     <Button
         android:id="@+id/btnregistrarVivienda"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bordes_redondos_azul"
-        android:text="Guardar"
+        android:text="Registrar"
         android:textColor="@android:color/black"
         android:textSize="20dp"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="642dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
         app:layout_constraintTop_toBottomOf="@+id/EstadoViv"/>
 </ScrollView>
-=======
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> master

@@ -16,6 +16,7 @@ public class DALog {
 
     UserAccess userAccess = new UserAccess();
 
+    //Puente para acceder al User access - Procedures
     public void LoginUsers(UsersModel login) throws SQLException {
 
         login = userAccess.ValidateUser(login);

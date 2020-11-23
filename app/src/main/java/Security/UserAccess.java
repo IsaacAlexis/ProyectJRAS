@@ -7,7 +7,7 @@ import java.util.Date;
 
 import Data.BDConnection;
 import Data.Models.UsersModel;
-import Presentation.loginActivity;
+import Presentation.Home.loginActivity;
 
 public class UserAccess {
     public UsersModel ValidateUser(UsersModel userData){

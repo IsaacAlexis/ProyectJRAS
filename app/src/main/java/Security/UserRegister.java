@@ -1,9 +1,15 @@
 package Security;
 
+import android.icu.text.SimpleDateFormat;
+
+import net.sourceforge.jtds.jdbc.DateTime;
+
 import java.sql.CallableStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Data.BDConnection;
@@ -13,11 +19,13 @@ public class UserRegister {
 
 
     BDConnection bd = new BDConnection();
+
+
     public void UserRegister(UsersModel data){
 
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement cs =bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs =bd.connection.prepareCall("{call UsersRegister(?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1,data.getLastName());
             cs.setString(2,data.getFirstName());
             cs.setString(3,data.getEmail());
@@ -27,9 +35,11 @@ public class UserRegister {
             cs.setString(7,data.getExpirationDate().toString());
             cs.setString(8,data.getColony());
             cs.setString(9,data.getUserStatus());
-            //cs.setString(10,data.getAddeddDate());
-            //cs.setString(11,data.getModifiedDate());
+            cs.setString(10,data.getAddedDate());
+            cs.setString(11,data.getModDate());
             cs.executeUpdate();
+            data.setRegisterUser(true);
+            data.setValidationMessage("Se registro correctamente el usuario");
 
 
             cs.close();
@@ -37,6 +47,15 @@ public class UserRegister {
 
         }catch(SQLException e){
             e.printStackTrace();
+            data.setRegisterUser(false);
+            data.setValidationMessage("No se pude registrar el usuario intenta de nuevo");
+            try {
+                if(!bd.connection.isClosed()){
+                    bd.CloseConnection();
+                }
+            } catch (SQLException e2) { }
+            e.printStackTrace();
+
         }
     }
 

@@ -15,20 +15,22 @@ public class UsersModel {
     private Date expirationDate;
     private String colony;
     private String userStatus;
-    private DateTime addedDate;
-    private DateTime modDate;
+    private String addedDate;
+    private String modDate;
     //Banderas
     private boolean isUserLoggedIn;
     private Boolean flagUser;
     private Boolean UserExist;
     private String validationMessage;
-    //Datos del usuario que actualmente esta logeado
+    private boolean isRegisterUser;
+   //Datos del usuario que actualmente esta logeado
     private static long currentIdUser;
     private static String currentUserName;
     private static String currentRole;
     private static String currentFirstName;
     private static String currentLastName;
     private static String currentColony;
+    private static Date currentExpirationDate;
     //Datos para la modifiacion de algun usuario
     private static long modifyIdUser;
     private static String modifyFirstName;
@@ -40,8 +42,8 @@ public class UsersModel {
     private static String modifyColony;
     private static String modifyStatus;
     private static Date modifyExpirationDate;
-    private static DateTime modifyDateAdded;
-    private static DateTime modifyDateModify;
+    private static String modifyDateAdded;
+    private static String modifyDateModify;
 
     public UsersModel() {
     }
@@ -55,11 +57,25 @@ public class UsersModel {
         this.role=userRole;
         this.userStatus=userStatus;
     }
-    public DateTime getModDate() {
+    public boolean isRegisterUser() {
+        return isRegisterUser;
+    }
+
+    public void setRegisterUser(boolean registerUser) {
+        isRegisterUser = registerUser;
+    }
+    public static Date getCurrentExpirationDate() {
+        return currentExpirationDate;
+    }
+
+    public static void setCurrentExpirationDate(Date currentExpirationDate) {
+        UsersModel.currentExpirationDate = currentExpirationDate;
+    }
+    public String getModDate() {
         return modDate;
     }
 
-    public void setModDate(DateTime modDate) {
+    public void setModDate(String modDate) {
         this.modDate = modDate;
     }
     public static String getCurrentLastName() {
@@ -157,11 +173,11 @@ public class UsersModel {
         this.userStatus = userStatus;
     }
 
-    public DateTime getAddedDate() {
+    public String getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(DateTime addedDate) {
+    public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
     }
 
@@ -311,19 +327,19 @@ public class UsersModel {
         UsersModel.modifyExpirationDate = modifyExpirationDate;
     }
 
-    public static DateTime getModifyDateAdded() {
+    public static String getModifyDateAdded() {
         return modifyDateAdded;
     }
 
-    public static void setModifyDateAdded(DateTime modifyDateAdded) {
+    public static void setModifyDateAdded(String modifyDateAdded) {
         UsersModel.modifyDateAdded = modifyDateAdded;
     }
 
-    public static DateTime getModifyDateModify() {
+    public static String getModifyDateModify() {
         return modifyDateModify;
     }
 
-    public static void setModifyDateModify(DateTime modifyDateModify) {
+    public static void setModifyDateModify(String modifyDateModify) {
         UsersModel.modifyDateModify = modifyDateModify;
     }
 }

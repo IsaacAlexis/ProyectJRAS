@@ -33,13 +33,13 @@ public class UserAccess {
                 userData.setCurrentColony(userResultset.getString("Colony"));
                 userData.setUserStatus(userResultset.getString("UserStatus"));
                 userData.setUserLoggedIn(!userData.getUserStatus().isEmpty());
-                userData.setExpirationDate(userResultset.getDate("ExpirationDate"));
+                userData.setCurrentExpirationDate(userResultset.getDate("ExpirationDate"));
                 Date today = new Date();
                 if(!userData.getUserStatus().toUpperCase().equals("ACTIVO")){
                     userData.setUserLoggedIn(false);
                     userData.setFlagUser(true);
                     userData.setValidationMessage("Usuario inactivo. Favor de contactar al administrador del sistema.");
-                }else if( userData.getExpirationDate().before(today)){
+                }else if( userData.getCurrentExpirationDate().before(today)){
                     userData.setUserLoggedIn(false);
                     userData.setFlagUser(true);
                     userData.setValidationMessage("Suscripción del usuario se encuentra expirada. Favor de ponerse en contacto con el administrador del sistema.");

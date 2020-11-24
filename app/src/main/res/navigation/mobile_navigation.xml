@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_fragmentGastos2_to_fragmentModificarGastos"
             app:destination="@id/fragmentModificarGastos" />
+        <action
+            android:id="@+id/action_fragmentGastos2_to_fragmentRegistrarGastos"
+            app:destination="@id/fragmentRegistrarGastos" />
     </fragment>
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
@@ -112,5 +115,10 @@
         android:name="Presentation.Expenses.fragmentModificarGastos"
         android:label="fragment_modificar_gastos"
         tools:layout="@layout/fragment_modificar_gastos" />
+    <fragment
+        android:id="@+id/fragmentRegistrarGastos"
+        android:name="Presentation.Expenses.fragmentRegistrarGastos"
+        android:label="Gastos"
+        tools:layout="@layout/fragment_registrar_gastos" />
 
 </navigation>

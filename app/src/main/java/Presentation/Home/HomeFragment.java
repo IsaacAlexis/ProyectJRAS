@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import BusinessLogic.BusinessConsumptions;
 import BusinessLogic.BusinessHomesRegister;
 import Data.Models.HomesModel;
 import Presentation.Houses.activityScanner;
@@ -94,7 +95,7 @@ public class HomeFragment extends Fragment {
                     String codigo = data.getStringExtra("codigo");
                     home.setBarCode(codigo);
 
-                    new BusinessHomesRegister().BridgeHouseScannerExist(home);
+                    new BusinessConsumptions().BridgeHouseScanner(home);
 
 
                     if (!home.isHouseExist()){

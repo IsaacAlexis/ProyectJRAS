@@ -25,6 +25,8 @@ public class HomesRegister {
             else{
                 home.setHouseExist(false);
             }
+            callableStatement.close();
+            bd.CloseConnection();
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -84,41 +86,5 @@ public class HomesRegister {
         }
     }
 
-    public void HouseScan(HomesModel home){
-        try{
-            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeQueryScan(?)}");
-            callableStatement.setString(1, home.getBarCode());
-            ResultSet Result= callableStatement.executeQuery();
-            home.setHouseExist(false);
-            while (Result.next()){
-                home.setOwner(Result.getString("Owner"));
-                home.setHouseNum(Result.getString("HouseNum"));
-                home.setHouseExist(true);
-            }
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void HouseScanExist(HomesModel home){
-        try{
-            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeQueryScan(?)}");
-            callableStatement.setString(1, home.getBarCode());
-            ResultSet Result= callableStatement.executeQuery();
-
-            if (Result.next()){
-                home.setHouseExist(true);
-            }
-            else{
-                home.setHouseExist(false);
-            }
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
 
 }

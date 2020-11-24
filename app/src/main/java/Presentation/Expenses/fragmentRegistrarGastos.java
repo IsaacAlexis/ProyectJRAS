@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jras.R;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragmentRegistrarGastos#newInstance} factory method to

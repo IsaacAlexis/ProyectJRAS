@@ -73,7 +73,11 @@
         android:id="@+id/fragmentGastos2"
         android:name="Presentation.Expenses.fragmentGastos"
         android:label="Gastos"
-        tools:layout="@layout/fragment_gastos" />
+        tools:layout="@layout/fragment_gastos" >
+        <action
+            android:id="@+id/action_fragmentGastos2_to_fragmentRegistrarGastos"
+            app:destination="@id/fragmentRegistrarGastos" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
         android:name="Presentation.Houses.fragmentRegistrarViviendas"
@@ -94,7 +98,12 @@
         android:id="@+id/fragmentModificarViviendas"
 <<<<<<< HEAD
         android:name="Presentation.fragmentModificarViviendas"
-=======
+    <fragment
+        android:id="@+id/fragmentRegistrarGastos"
+        android:name="Presentation.Expenses.fragmentRegistrarGastos"
+        android:label="gastos"
+        tools:layout="@layout/fragment_registrar_gastos" />
+    =======
         android:name="Presentation.Houses.fragmentModificarViviendas"
 >>>>>>> master
         android:label="Viviendas"

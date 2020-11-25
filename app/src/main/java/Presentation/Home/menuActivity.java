@@ -1,6 +1,8 @@
 package Presentation.Home;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,9 +15,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.jras.R;
 import com.google.android.material.navigation.NavigationView;
 
+import Data.Models.UsersModel;
+
 public class menuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    TextView username;
+    TextView role;
+    UsersModel users=new UsersModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +31,14 @@ public class menuActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View hView=navigationView.getHeaderView(0);
+        username=hView.findViewById(R.id.txtNombreUsuarioMenu);
+        role=hView.findViewById(R.id.txtRolMenu);
+        username.setText(users.getCurrentLastName().toUpperCase()+" "+users.getCurrentFirstName().toUpperCase());
+        role.setText(users.getCurrentRole().toUpperCase());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -35,6 +48,7 @@ public class menuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
 
     }

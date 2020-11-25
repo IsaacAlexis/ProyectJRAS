@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Animation animacion2= AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo);
 
         TextView txtDe=findViewById(R.id.txtDe);
-        TextView txtJRAS=findViewById(R.id.txtJRAS);
+        TextView txtJRAS=findViewById(R.id.txtNombreUsuarioMenu);
         ImageView logoImage=findViewById(R.id.imageLogoJ);
 
         txtDe.setAnimation(animacion2);

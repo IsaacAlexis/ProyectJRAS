@@ -34,27 +34,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         this.mOriginal=new ArrayList<>();
         this.mOriginal.addAll(Items);
     }
-
-
-
-
-    @NonNull
-    @Override
-    public UsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=mInflater.inflate(R.layout.list_items,null);
-        return new UsersAdapter.ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull UsersAdapter.ViewHolder holder, int position) {
-        holder.bind(mData.get(position),onClickListener);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size();
-    }
     public static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView mImageView;
         TextView name,role,status;
@@ -90,23 +69,38 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 List<UsersModel> collect = mOriginal.stream()
                         .filter(i -> i.getUserName().toLowerCase().contains(svSearch.toLowerCase())||
                                 i.getLastName().toLowerCase().contains(svSearch.toLowerCase())||
-                                i.getFirstName().toLowerCase().contains(svSearch.toLowerCase()))
+                                i.getFirstName().toLowerCase().contains(svSearch.toLowerCase())||
+                                (i.getFirstName()+" "+i.getLastName()).toLowerCase().contains(svSearch.toLowerCase())||
+                                (i.getLastName()+" "+i.getFirstName()).toLowerCase().contains(svSearch.toLowerCase()))
                         .collect(Collectors.<UsersModel>toList());
                 mData.addAll(collect);
-            }else{
-                mData.clear();
-                for(int j = 0; j<mOriginal.size(); j++){
-                    if(mOriginal.get(j).getFirstName().equals(svSearch)){
-                        mData.add(mOriginal.get(j));
-                    }
-                }
-
             }
 
 
         }
         notifyDataSetChanged();
     }
+
+
+
+    @NonNull
+    @Override
+    public UsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=mInflater.inflate(R.layout.list_items,null);
+        return new UsersAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull UsersAdapter.ViewHolder holder, int position) {
+        holder.bind(mData.get(position),onClickListener);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
     public interface OnItemClickListener{
         void OnItemClick(Long idUser,String firstName,String lastName,
                          String role,String email,String username,String status,int position);

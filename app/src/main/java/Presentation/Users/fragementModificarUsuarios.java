@@ -20,7 +20,6 @@ import Data.Models.UsersModel;
 import static androidx.navigation.Navigation.findNavController;
 
 public class fragementModificarUsuarios extends Fragment {
-
     EditText lastname,firstname,email,username,status;
     TextView tag;
     RadioButton roleAdmin,roleEmployer,roleInvited;

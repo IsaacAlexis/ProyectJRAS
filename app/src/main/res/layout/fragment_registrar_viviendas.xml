@@ -157,7 +157,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtCiudadViv"/>
 
     <Button
-        android:id="@+id/btnregistrarVivienda"
+        android:id="@+id/btnregistrarViviendaM"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"

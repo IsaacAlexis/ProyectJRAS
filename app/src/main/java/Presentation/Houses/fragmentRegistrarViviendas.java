@@ -18,7 +18,10 @@ import com.example.jras.R;
 
 import BusinessLogic.BusinessHomesRegister;
 import Data.Models.HomesModel;
+import Data.Models.HousesModel;
 import Data.Utility.Validations;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class fragmentRegistrarViviendas extends Fragment {
 
@@ -31,7 +34,7 @@ public class fragmentRegistrarViviendas extends Fragment {
     private boolean flagRegEx = false;
 
     //instancias de otras clases
-    HomesModel house = new HomesModel();
+    HousesModel house = new HousesModel();
     public Validations validate = new Validations();
 
     public fragmentRegistrarViviendas() {
@@ -54,7 +57,7 @@ public class fragmentRegistrarViviendas extends Fragment {
         txtColViv= view.findViewById(R.id.txtColViv);
         txtCiudad= view.findViewById(R.id.txtCiudadViv);
         txtEstadoViv= view.findViewById(R.id.txtEstadoViv);
-        btnRegistrar= view.findViewById(R.id.btnregistrarVivienda);
+        btnRegistrar= view.findViewById(R.id.btnregistrarViviendaM);
         txtCodBarras.setEnabled(false);
 
 
@@ -73,19 +76,19 @@ public class fragmentRegistrarViviendas extends Fragment {
 
                     new BusinessHomesRegister().BridgeHomeExist(house);
 
-                    if (!house.isHouseExist()){
+                    if (!house.isExistHouse()){
 
                         house.setBarCode(barcode);
                         house.setOwner(txtPropietario.getText().toString());
-                        house.setPhoneNum(txtTelefonoViv.getText().toString());
+                        house.setPhoneNumber(Long.parseLong(txtTelefonoViv.getText().toString()) );
                         house.setEmail(txtEmail.getText().toString());
                         house.setStreet(txtCalleViv.getText().toString());
-                        house.setHouseNum(txtNumViv.getText().toString());
-                        house.setZipCode(txtCPViv.getText().toString());
+                        house.setHouseNumber(Integer.parseInt(txtNumViv.getText().toString()));
+                        house.setZipCode(Integer.getInteger(txtCPViv.getText().toString()));
                         house.setColony(txtColViv.getText().toString());
                         house.setCity(txtCiudad.getText().toString());
                         house.setState(txtEstadoViv.getText().toString());
-                        house.setHouseStatus("AGREGADA");
+                        house.setStatusHouse("SIN ADEUDO");
                         txtCodBarras.setText(barcode);
 
                         new BusinessHomesRegister().BridgeHomeRegister(house);
@@ -95,9 +98,7 @@ public class fragmentRegistrarViviendas extends Fragment {
                                 .setTitle("Registro Satisfactorio")
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
+                                    public void onClick(DialogInterface dialog, int which) {findNavController(view).navigate(R.id.fragmentViviendas);}
                                 });
                         AlertDialog dialog = builder.create();
                         dialog.show();

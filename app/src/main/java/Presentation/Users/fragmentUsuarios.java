@@ -29,7 +29,6 @@ public class fragmentUsuarios extends Fragment  {
     public FloatingActionButton fabUsuario;
     private List<UsersModel> users=new ArrayList<>();
     private RecyclerView mRecycleView;
-    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManger;
     private SearchView searchView;
     private UsersAdapter usersAdapter;

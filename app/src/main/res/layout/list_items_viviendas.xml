@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv"
+    android:id="@+id/cvItemViviendas"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -41,14 +41,14 @@
                 android:layout_marginLeft="4dp"
                 android:layout_toRightOf="@+id/iconimage">
                 <TextView
-                    android:id="@+id/BarCodeCV"
+                    android:id="@+id/lbNombrePropietarioV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Codigo de Barras"
                     android:textSize="23sp"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/OwnerCV"
+                    android:id="@+id/lbDireccionesV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Administrador"
@@ -56,7 +56,7 @@
                     android:textSize="18sp"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/StatusViviendaCV"
+                android:id="@+id/lbStatusV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Activo"

@@ -26,6 +26,7 @@
             android:layout_width="171dp"
             android:layout_height="63dp"
             android:layout_marginTop="224dp"
+            android:maxLength="3"
             android:drawableLeft="@drawable/ic_baseline_assessment_24"
             android:hint="Consumo en M3"
             android:imeOptions="actionNext"

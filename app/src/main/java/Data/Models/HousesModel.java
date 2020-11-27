@@ -15,6 +15,7 @@ public class HousesModel {
     //Banderas
     public boolean statusActivity;
     public boolean existHouse;
+    public String message;
     //Modificar viviendas
     public static String modifybarCode;
     public static String modifyowner;
@@ -59,6 +60,14 @@ public class HousesModel {
         this.setModifycity(city);
         this.setModifystate(state);
         this.setModifystatusHouse(statusHouse);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getBarCode() {

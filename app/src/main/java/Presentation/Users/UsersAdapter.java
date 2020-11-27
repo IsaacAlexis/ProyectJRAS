@@ -1,6 +1,7 @@
 package Presentation.Users;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +46,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             status=itemview.findViewById(R.id.Status);
         }
         void bind(final UsersModel users, final OnItemClickListener listener){
+            this.mImageView.setColorFilter(Color.parseColor("#FF006F"));
             this.name.setText(users.getLastName()+" "+users.getFirstName());
             this.role.setText(users.getRole());
             this.status.setText(users.getUserStatus());
+            if(status.getText().toString().toUpperCase().equals("INACTIVO")){
+                status.setTextColor(Color.rgb(255,0,0));
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

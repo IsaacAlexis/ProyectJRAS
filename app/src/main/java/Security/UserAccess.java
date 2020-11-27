@@ -91,7 +91,7 @@ public class UserAccess {
         try{
             loginActivity pErrorMessage=new loginActivity();
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call UserExist(?)}");
+            CallableStatement callableStatement=bd.connection.prepareCall("{call UserExistAccess(?)}");
             callableStatement.setString(1, userData.getUserName());
             ResultSet Result= callableStatement.executeQuery();
 

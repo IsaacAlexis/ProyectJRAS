@@ -2,11 +2,13 @@ package Presentation.Houses;
 
 import android.content.Context;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,17 +40,25 @@ public class AdapterHouses extends RecyclerView.Adapter<AdapterHouses.ViewHolder
                          String colony,String State,String city, String status);
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView iconView;
         TextView owner,address,status;
         public ViewHolder(View itemView) {
             super(itemView);
+            iconView=itemView.findViewById(R.id.iconimageV);
             owner=itemView.findViewById(R.id.lbNombrePropietarioV);
             address=itemView.findViewById(R.id.lbDireccionesV);
             status=itemView.findViewById(R.id.lbStatusV);
         }
         void bind(final HousesModel house,final OnItemClickListener listener){
+            iconView.setColorFilter(Color.BLUE);
             owner.setText(house.getOwner());
             address.setText(house.getStreet()+" #"+house.getHouseNumber());
             status.setText(house.getStatusHouse());
+            if(status.getText().toString().toUpperCase().equals("ADEUDO PARCIAL")){
+                status.setTextColor(Color.rgb(255,90,11));
+            }else if (status.getText().toString().toUpperCase().equals("ADEUDO TOTAL")){
+                status.setTextColor(Color.rgb(255,0,0));
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

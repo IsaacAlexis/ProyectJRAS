@@ -16,7 +16,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="216dp"
+        android:layout_height="270dp"
         android:background="@drawable/encabezado_formularios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -24,19 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <EditText
-        android:id="@+id/CodBarras"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:drawableLeft="@drawable/ic_baseline_report_24"
-        android:hint="Codigo de Barras"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="175dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
 
     <EditText
         android:id="@+id/txtPropietario"
@@ -46,17 +34,19 @@
         android:hint="Nombre de Propieartio"
         android:imeOptions="actionNext"
         android:inputType="textPersonName"
+        android:textSize="20dp"
         tools:layout_editor_absoluteX="53dp"
         tools:layout_editor_absoluteY="427dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CodBarras"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
     <EditText
         android:id="@+id/txtTelefonoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:hint="Telefono"
+        android:textSize="20dp"
         android:imeOptions="actionNext"
         android:inputType="phone"
         tools:layout_editor_absoluteX="53dp"
@@ -71,6 +61,7 @@
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
         android:hint="Email"
+        android:textSize="20dp"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="533dp"
@@ -85,6 +76,7 @@
         android:hint="Calle de la Vivienda"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:textSize="20dp"
         tools:layout_editor_absoluteX="53dp"
         tools:layout_editor_absoluteY="286dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,6 +86,7 @@
         android:id="@+id/txtNumViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:textSize="20dp"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Numero de vivienda"
         android:imeOptions="actionNext"
@@ -109,6 +102,7 @@
         android:layout_height="47dp"
         android:drawableLeft="@drawable/ic_baseline_pin_drop_24"
         android:hint="C.P."
+        android:textSize="20dp"
         android:imeOptions="actionNext"
         android:inputType="number"
         tools:layout_editor_absoluteX="229dp"
@@ -124,6 +118,7 @@
         android:hint="Colonia de vivienda"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:textSize="20dp"
         tools:layout_editor_absoluteX="53dp"
         tools:layout_editor_absoluteY="286dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +132,7 @@
         android:hint="Ciudad"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:textSize="20dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="338dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +145,7 @@
         android:drawableLeft="@drawable/ic_baseline_apartment_24"
         android:hint="Estado"
         android:imeOptions="actionNext"
+        android:textSize="20dp"
         android:inputType="text"
         tools:layout_editor_absoluteX="48dp"
         tools:layout_editor_absoluteY="422dp"
@@ -162,7 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="@drawable/bordes_redondos_azul"
-        android:text="Registrar"
+        android:text="REGISTRAR"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"

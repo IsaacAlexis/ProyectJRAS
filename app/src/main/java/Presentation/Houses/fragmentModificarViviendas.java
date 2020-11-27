@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.jras.R;
 
 import Data.Models.HousesModel;
+import Data.Utility.Messages;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessHomesRegister;
 
@@ -43,6 +44,7 @@ public class fragmentModificarViviendas extends Fragment {
 
     HousesModel house=new HousesModel();
     Validations validations=new Validations();
+    Messages messages=new Messages();
     public void assignValues(){
         owner.setText(house.getModifyowner());
         phoneNumber.setText(house.getModifyphoneNumber().toString());
@@ -105,23 +107,15 @@ public class fragmentModificarViviendas extends Fragment {
                 validations.IsValidTextbox(colony,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar la colonia de la vivienda correctamente")|
                 validations.IsValidTextbox(city,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el municipio donde se ubica la vivienda correctamente")|
                 validations.IsValidTextbox(state,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el Estado donde se ubica la vivienda correctamente ")){
-                    Toast.makeText(getContext(),"Debes llenar los campos con los formatos establecidos",Toast.LENGTH_LONG).show();
-
+                    messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
                 }else{
                      assignValuesModificate();
                     new BusinessHomesRegister().BridgeHouseUpdate(house);
                     if(house.isStatusActivity()){
-                        builder.setMessage("Los cambios se han guardado exitosamente")
-                                .setIcon(android.R.drawable.ic_menu_save)
-                                .setTitle("Cambios realizados con exito")
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {  findNavController(view).navigate(R.id.fragmentViviendas);}
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
                     }else{
-                        Toast.makeText(getContext(),"Ocurrio un error al guardar los cambios",Toast.LENGTH_LONG).show();
+                        messages.messageToast(getContext(),house.getMessage());
+                        findNavController(view).navigate(R.id.fragmentViviendas);
                     }
 
                 }

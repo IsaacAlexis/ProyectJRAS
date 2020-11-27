@@ -18,4 +18,5 @@ public class DAHomesRegister {
     public void HouseUpdate(HouseModel house) {
         HR.HouseUpdate(house);
     }
+
 }

@@ -12,9 +12,10 @@ import android.widget.Toast;
 import com.example.jras.R;
 
 import java.sql.SQLException;
+
+import Data.Models.UsersModel;
 import Data.Utility.Validations;
 import Data.BDConnection;
-import Data.Models.UsersModel;
 import BusinessLogic.BusinessLog;
 
 public class loginActivity extends AppCompatActivity {
@@ -48,12 +49,12 @@ public class loginActivity extends AppCompatActivity {
                 }
                 else{
                     try {
-                            ini.setUser(txtUser.getText().toString().trim());
-                            ini.setPass(txtPass.getText().toString().trim());
+                            ini.setUserName(txtUser.getText().toString().trim());
+                            ini.setPassword(txtPass.getText().toString().trim());
 
                             new BusinessLog().BridgeLogin(ini);
 
-                            if (ini.getUserLoggedIn() == true){
+                            if (ini.isUserLoggedIn() == true){
                                 txtUser.setError(null);
                                 txtPass.setError(null);
                                 Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
@@ -64,7 +65,7 @@ public class loginActivity extends AppCompatActivity {
                             else{
                                 if(ini.getFlagUser()==false){
                                     new BusinessLog().BridgeUserExist(ini);
-                                    if(ini.getUserLoggedIn()){
+                                    if(ini.isUserLoggedIn()){
                                         attemptsallowed--;
                                         Toast.makeText(loginActivity.this,"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
                                         if(attemptsallowed>0){ Toast.makeText(loginActivity.this,"Tienes solo: "+attemptsallowed+" intentos",
@@ -76,7 +77,7 @@ public class loginActivity extends AppCompatActivity {
 
                                         if(attemptsallowed==0){
                                             new BusinessLog().BridgeBlockLogin(ini);
-                                            if(ini.getUserLoggedIn()){
+                                            if(ini.isUserLoggedIn()){
                                                 Toast.makeText(loginActivity.this,ini.getValidationMessage(),Toast.LENGTH_SHORT).show();
                                                 txtUser.setEnabled(true);
                                                 txtUser.setText("");

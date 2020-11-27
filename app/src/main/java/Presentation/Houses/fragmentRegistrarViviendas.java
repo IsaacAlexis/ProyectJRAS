@@ -80,7 +80,7 @@ public class fragmentRegistrarViviendas extends Fragment {
                         house.setPhoneNum(txtTelefonoViv.getText().toString());
                         house.setEmail(txtEmail.getText().toString());
                         house.setStreet(txtCalleViv.getText().toString());
-                        house.setHouseHum(txtNumViv.getText().toString());
+                        house.setHouseNum(txtNumViv.getText().toString());
                         house.setZipCode(txtCPViv.getText().toString());
                         house.setColony(txtColViv.getText().toString());
                         house.setCity(txtCiudad.getText().toString());

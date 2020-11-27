@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_nav_home_to_fragmentGastos2"
             app:destination="@id/fragmentGastos2" />
+        <action
+            android:id="@+id/action_nav_home_to_fagmentConsumo"
+            app:destination="@id/fagmentConsumo" />
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
@@ -75,6 +78,9 @@
         android:label="Gastos"
         tools:layout="@layout/fragment_gastos" >
         <action
+            android:id="@+id/action_fragmentGastos2_to_fragmentModificarGastos"
+            app:destination="@id/fragmentModificarGastos" />
+        <action
             android:id="@+id/action_fragmentGastos2_to_fragmentRegistrarGastos"
             app:destination="@id/fragmentRegistrarGastos" />
     </fragment>
@@ -96,17 +102,23 @@
 
     <fragment
         android:id="@+id/fragmentModificarViviendas"
-<<<<<<< HEAD
-        android:name="Presentation.fragmentModificarViviendas"
+        android:name="Presentation.Houses.fragmentModificarViviendas"
+        android:label="Viviendas"
+        tools:layout="@layout/fragment_modificar_viviendas" />
+    <fragment
+        android:id="@+id/fagmentConsumo"
+        android:name="Presentation.Consumptions.fragmentConsumo"
+        android:label="Consumo"
+        tools:layout="@layout/fragment_consumo" />
+    <fragment
+        android:id="@+id/fragmentModificarGastos"
+        android:name="Presentation.Expenses.fragmentModificarGastos"
+        android:label="fragment_modificar_gastos"
+        tools:layout="@layout/fragment_modificar_gastos" />
     <fragment
         android:id="@+id/fragmentRegistrarGastos"
         android:name="Presentation.Expenses.fragmentRegistrarGastos"
-        android:label="gastos"
+        android:label="Gastos"
         tools:layout="@layout/fragment_registrar_gastos" />
-    =======
-        android:name="Presentation.Houses.fragmentModificarViviendas"
->>>>>>> master
-        android:label="Viviendas"
-        tools:layout="@layout/fragment_modificar_viviendas" />
 
 </navigation>

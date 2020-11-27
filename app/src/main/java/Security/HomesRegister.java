@@ -25,6 +25,8 @@ public class HomesRegister {
             else{
                 home.setHouseExist(false);
             }
+            callableStatement.close();
+            bd.CloseConnection();
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -41,7 +43,7 @@ public class HomesRegister {
             cs.setLong(3,Long.parseLong(home.getPhoneNum()));
             cs.setString(4,home.getEmail());
             cs.setString(5,home.getStreet());
-            cs.setInt(6,Integer.parseInt(home.getHouseHum()));
+            cs.setInt(6,Integer.parseInt(home.getHouseNum()));
             cs.setInt(7,Integer.parseInt(home.getZipCode()));
             cs.setString(8,home.getColony());
             cs.setString(9,home.getCity());
@@ -83,4 +85,6 @@ public class HomesRegister {
 
         }
     }
+
+
 }

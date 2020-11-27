@@ -1,17 +1,20 @@
 package BusinessLogic;
 
-import Data.Models.UsersDataModel;
+import java.util.ArrayList;
+import java.util.List;
+
+import Data.Models.UsersModel;
 import DataAccess.DAUsersRegister;
 
 public class BusinessUserRegister {
+    public static List<UsersModel> musers=new ArrayList<>();
+    public static DAUsersRegister regist = new DAUsersRegister();
 
-    DAUsersRegister regist = new DAUsersRegister();
-
-    public void BridgeUserRegister(UsersDataModel data){
+    public static List<UsersModel> getallusers(UsersModel mUsers) {musers=regist.getallusers(mUsers);return musers;}
+    public void BridgeUserRegister(UsersModel data){
         regist.DAUsersRegister(data);
     }
-
-    public void BridgeUserExist (UsersDataModel data){
+    public void BridgeUserExist (UsersModel data){
         regist.DAUserExist(data);
     }
 

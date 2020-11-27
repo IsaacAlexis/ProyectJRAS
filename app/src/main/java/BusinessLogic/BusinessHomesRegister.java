@@ -17,4 +17,5 @@ public class BusinessHomesRegister {
     }
 
     public void BridgeHouseUpdate(HouseModel house) { DAH.HouseUpdate(house); }
+
 }

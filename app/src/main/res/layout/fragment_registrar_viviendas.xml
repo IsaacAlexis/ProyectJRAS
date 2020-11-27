@@ -1,168 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD:app/src/main/res/layout/fragment_registras_viviendas.xml
-        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/encabezado_mostrar"   app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <EditText
-            android:id="@+id/CodBarras"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_report_24"
-            android:hint="Codigo de Barras"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="175dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-        <EditText
-            android:id="@+id/txtPropietario"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_face_24"
-            android:hint="Nombre de Propietario"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="427dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CodBarras"/>
-        <EditText
-            android:id="@+id/txtTelefonoViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_local_phone_24"
-            android:hint="Telefono"
-            android:imeOptions="actionNext"
-            android:inputType="phone"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="486dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPropietario"/>
-        <EditText
-            android:id="@+id/txtEmail"
-            android:layout_width="309dp"
-            android:layout_height="43dp"
-            android:drawableLeft="@drawable/ic_baseline_email_24"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            tools:layout_editor_absoluteX="42dp"
-            tools:layout_editor_absoluteY="533dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv"/>
-        <EditText
-            android:id="@+id/CalleViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_location_on_24"
-            android:hint="Calle de la Vivienda"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="286dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmail"/>
-        <EditText
-            android:id="@+id/NumViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_location_on_24"
-            android:hint="Numero de vivienda"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="286dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CalleViv"/>
-        <EditText
-            android:id="@+id/txtCPViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_pin_drop_24"
-            android:hint="C.P."
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            tools:layout_editor_absoluteX="229dp"
-            tools:layout_editor_absoluteY="346dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NumViv"/>
-        <EditText
-            android:id="@+id/ColViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_location_on_24"
-            android:hint="Colonia de vivienda"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="286dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCPViv"/>
-        <EditText
-            android:id="@+id/CiudadViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_location_city_24"
-            android:hint="Ciudad"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="338dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ColViv"/>
-        <EditText
-            android:id="@+id/EstadoViv"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableLeft="@drawable/ic_baseline_apartment_24"
-            android:hint="Estado"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="422dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CiudadViv"/>
-    </LinearLayout>
-=======
-        android:layout_marginTop="60dp"
-        android:text="Registro de Viviendas"
-        android:textSize="18sp"
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        android:background="@drawable/encabezado_formularios"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
         android:id="@+id/CodBarras"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="50"
         android:drawableLeft="@drawable/ic_baseline_report_24"
         android:hint="Codigo de Barras"
         android:imeOptions="actionNext"
@@ -177,6 +43,7 @@
         android:id="@+id/txtPropietario"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="80"
         android:drawableLeft="@drawable/ic_baseline_face_24"
         android:hint="Nombre de Propieartio"
         android:imeOptions="actionNext"
@@ -190,6 +57,7 @@
         android:id="@+id/txtTelefonoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="10"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:hint="Telefono"
         android:imeOptions="actionNext"
@@ -203,6 +71,7 @@
         android:id="@+id/txtEmail"
         android:layout_width="309dp"
         android:layout_height="43dp"
+        android:maxLength="50"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
         android:hint="Email"
@@ -216,6 +85,7 @@
         android:id="@+id/txtCalleViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Calle de la Vivienda"
         android:imeOptions="actionNext"
@@ -229,6 +99,7 @@
         android:id="@+id/txtNumViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="4"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Numero de vivienda"
         android:imeOptions="actionNext"
@@ -242,6 +113,7 @@
         android:id="@+id/txtCPViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="5"
         android:drawableLeft="@drawable/ic_baseline_pin_drop_24"
         android:hint="C.P."
         android:imeOptions="actionNext"
@@ -255,6 +127,7 @@
         android:id="@+id/txtColViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Colonia de vivienda"
         android:imeOptions="actionNext"
@@ -268,6 +141,7 @@
         android:id="@+id/txtCiudadViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_city_24"
         android:hint="Ciudad"
         android:imeOptions="actionNext"
@@ -281,6 +155,7 @@
         android:id="@+id/txtEstadoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_apartment_24"
         android:hint="Estado"
         android:imeOptions="actionNext"
@@ -290,69 +165,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCiudadViv"/>
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="311dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="2dp"
-        android:stretchColumns="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv">
 
-        <TableRow
-            android:layout_width="288dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/lbStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Estado de viv      "
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <RadioGroup
-                android:id="@+id/rolUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_span="2"
-                android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pagado" />
-
-                <RadioButton
-                    android:id="@+id/rbEmpleado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adeudo" />
-            </RadioGroup>
-        </TableRow>
-    </TableLayout>
->>>>>>> master:app/src/main/res/layout/fragment_registrar_viviendas.xml
     <Button
         android:id="@+id/btnregistrarVivienda"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Registrar"
         android:textColor="@android:color/black"
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="642dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EstadoViv"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-
-

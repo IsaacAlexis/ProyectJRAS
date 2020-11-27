@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv"
+    android:id="@+id/cvItemViviendas"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             android:padding="6dp">
             <ImageView
-                android:id="@+id/iconimage"
+                android:id="@+id/iconimageV"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentStart="true"
@@ -36,19 +36,19 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/iconimage"
+                android:layout_toEndOf="@+id/iconimageV"
                 android:orientation="vertical"
                 android:layout_marginLeft="4dp"
-                android:layout_toRightOf="@+id/iconimage">
+                android:layout_toRightOf="@+id/iconimageV">
                 <TextView
-                    android:id="@+id/BarCodeCV"
+                    android:id="@+id/lbNombrePropietarioV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Codigo de Barras"
                     android:textSize="23sp"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/OwnerCV"
+                    android:id="@+id/lbDireccionesV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Administrador"
@@ -56,10 +56,11 @@
                     android:textSize="18sp"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/StatusViviendaCV"
+                android:id="@+id/lbStatusV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Activo"
+                android:textColor="@color/colorVerde"
                 android:textSize="15sp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="6dp"

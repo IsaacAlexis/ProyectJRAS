@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +22,7 @@ import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import BusinessLogic.BusinessConsumptions;
-import BusinessLogic.BusinessHomesRegister;
-import Data.Models.HomesModel;
+import Data.Models.HousesModel;
 import Presentation.Houses.activityScanner;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -38,7 +36,7 @@ public class HomeFragment extends Fragment {
     private boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
 
-    HomesModel home = new HomesModel();
+    HousesModel home = new HousesModel();
 
     private HomeViewModel homeViewModel;
 
@@ -98,7 +96,7 @@ public class HomeFragment extends Fragment {
                     new BusinessConsumptions().BridgeHouseScanner(home);
 
 
-                    if (!home.isHouseExist()){
+                    if (!home.isExistHouse()){
                         Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
                     }
                     else{

@@ -13,10 +13,9 @@ import com.example.jras.R;
 
 import java.sql.SQLException;
 
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
 import Data.Utility.Validations;
-import Data.BDConnection;
-import BusinessLogic.BusinessLog;
 
 public class loginActivity extends AppCompatActivity {
 
@@ -32,8 +31,6 @@ public class loginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        BDConnection BDConnection = new BDConnection();
-
         Button btnUserLogIn = findViewById(R.id.btnIngresar);
         txtUser=findViewById(R.id.txtUsuarioLogin);
         txtPass=findViewById(R.id.txtPassLogin);
@@ -52,7 +49,7 @@ public class loginActivity extends AppCompatActivity {
                             ini.setUserName(txtUser.getText().toString().trim());
                             ini.setPassword(txtPass.getText().toString().trim());
 
-                            new BusinessLog().BridgeLogin(ini);
+                            new BusinessUser().BridgeLogin(ini);
 
                             if (ini.isUserLoggedIn() == true){
                                 txtUser.setError(null);
@@ -64,7 +61,7 @@ public class loginActivity extends AppCompatActivity {
                             }
                             else{
                                 if(ini.getFlagUser()==false){
-                                    new BusinessLog().BridgeUserExist(ini);
+                                    new BusinessUser().BridgeUserExist(ini);
                                     if(ini.isUserLoggedIn()){
                                         attemptsallowed--;
                                         Toast.makeText(loginActivity.this,"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
@@ -76,7 +73,7 @@ public class loginActivity extends AppCompatActivity {
                                         txtUser.setEnabled(false);
 
                                         if(attemptsallowed==0){
-                                            new BusinessLog().BridgeBlockLogin(ini);
+                                            new BusinessUser().BridgeBlockLogin(ini);
                                             if(ini.isUserLoggedIn()){
                                                 Toast.makeText(loginActivity.this,ini.getValidationMessage(),Toast.LENGTH_SHORT).show();
                                                 txtUser.setEnabled(true);

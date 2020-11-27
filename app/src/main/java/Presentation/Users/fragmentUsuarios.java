@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,19 +18,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import BusinessLogic.BusinessUserRegister;
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
 
 import static androidx.navigation.Navigation.findNavController;
 
 
-public class fragmentUsuarios extends Fragment {
+public class fragmentUsuarios extends Fragment  {
 
     public FloatingActionButton fabUsuario;
     private List<UsersModel> users=new ArrayList<>();
     private RecyclerView mRecycleView;
-    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager mLayoutManger;
+    private SearchView searchView;
+    private UsersAdapter usersAdapter;
     private UsersModel mUsers =new UsersModel() ;
 
 
@@ -46,21 +48,36 @@ public class fragmentUsuarios extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
 
         //Mostrar usuarios
-        users= BusinessUserRegister.getallusers(mUsers);
+        users= BusinessUser.getallusers(mUsers);
         mRecycleView=(RecyclerView)view.findViewById(R.id.RecycleView);
         mLayoutManger=new LinearLayoutManager(getContext());
-        adapter=new UsersAdapter(users,getContext(), new UsersAdapter.OnItemClickListener() {
+        searchView=view.findViewById(R.id.svSearch);
+        usersAdapter=new UsersAdapter(users, getContext(), new UsersAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(Long idUser, String firstName, String lastName,
-                                    String role, String email, String username, String status, int position) {
+            public void OnItemClick(Long idUser, String firstName, String lastName, String role, String email, String username, String status, int position) {
                 setvalues(idUser,firstName,lastName,role,email,username,status);
                 findNavController(view).navigate(R.id.fragementModificarUsuarios);
+            }
+        });
+
+       searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                usersAdapter.filterUser(s);
+
+
+                return false;
             }
         });
         mRecycleView.setHasFixedSize(true);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setLayoutManager(mLayoutManger);
-        mRecycleView.setAdapter(adapter);
+        mRecycleView.setAdapter(usersAdapter);
         //Registrar Usuarios
         fabUsuario = view.findViewById(R.id.fabAgregarUsuario);
         fabUsuario.setOnClickListener(new View.OnClickListener() {

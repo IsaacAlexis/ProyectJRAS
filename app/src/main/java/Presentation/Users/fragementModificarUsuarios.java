@@ -1,5 +1,6 @@
 package Presentation.Users;
 
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,22 +12,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jras.R;
 
+import java.util.Date;
+
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.Messages;
+import Data.Utility.Validations;
 
 import static androidx.navigation.Navigation.findNavController;
 
 public class fragementModificarUsuarios extends Fragment {
-
     EditText lastname,firstname,email,username,status;
     TextView tag;
     RadioButton roleAdmin,roleEmployer,roleInvited;
     Button save;
     private boolean edit;
     UsersModel users=new UsersModel();
+    Validations validations=new Validations();
+    Messages  messages=new Messages();
+    String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     public fragementModificarUsuarios() {
         // Required empty public constructor
     }
@@ -41,9 +48,9 @@ public class fragementModificarUsuarios extends Fragment {
         roleEmployer =view.findViewById(R.id.rbEmpleadoM);
         roleInvited =view.findViewById(R.id.rbInvitadoM);
         save=view.findViewById(R.id.btnConfirmarUsuario);
-        setvalues();
+        assignValues();
     }
-    public void setvalues(){
+    public void assignValues(){
         firstname.setText(users.getModifyFirstName());
         lastname.setText(users.getModifyLastName());
         email.setText(users.getModifyEmail());
@@ -85,6 +92,29 @@ public class fragementModificarUsuarios extends Fragment {
 
         }
     }
+    public void setValues(){
+        users.setIdUser(users.getModifyIdUser());
+        users.setFirstName(firstname.getText().toString());
+        users.setLastName(lastname.getText().toString());
+        users.setEmail(email.getText().toString());
+        users.setUserName(username.getText().toString());
+        users.setUserStatus(status.getText().toString());
+        if(roleAdmin.isChecked()){
+            users.setRole(roleAdmin.getText().toString());
+        }
+        if(roleEmployer.isChecked()){
+            users.setRole(roleEmployer.getText().toString());
+
+        }
+        if(roleInvited.isChecked()){
+            users.setRole(roleInvited.getText().toString());
+
+        }
+        users.setExpirationDate(users.getCurrentExpirationDate());
+        users.setColony(users.getCurrentColony());
+        users.setModDate(currentDateandTime);
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,8 +129,30 @@ public class fragementModificarUsuarios extends Fragment {
                     save.setText("Guardar");
                     edit=true;
                 }else{
-                    Toast.makeText(getContext(),"Se guardaron correctamente los cambios",Toast.LENGTH_LONG).show();
-                    findNavController(view).navigate(R.id.fragmentUsuarios);
+                    if (validations.IsValidTextbox(lastname, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$",
+                            "Debes ingresar un apellido") |
+                            validations.IsValidTextbox(firstname, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$",
+                                    "Debes ingresar un nombre") |
+                            validations.IsValidTextbox(email, "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$",
+                                    "Debes ingresar un correo electronico") |
+                            validations.IsValidTextbox(username, "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$",
+                                    "Debes ingresar un usuario que contengan letras y numeros(entre 8 y 16 caracteres ")){
+                        messages.messageToast(getContext(),"Debes llenar todo los campos correctamente");
+
+                    }else{
+                        setValues();
+                        new BusinessUser().BridgeUserUpdate(users);
+                        if(!users.isRegisterUser()){
+                            messages.messageAlert(getContext(),users.getValidationMessage(),"Los cambios se realizarion exito",view,R.id.fragmentUsuarios);
+                        }else{
+                            if(users.getUserExist()){
+                                messages.messageToast(getContext(),users.getValidationMessage());
+                            }else{
+                                messages.messageToast(getContext(),users.getValidationMessage());
+                                findNavController(view).navigate(R.id.fragmentUsuarios);
+                            }
+                        }
+                    }
                 }
             }
         });

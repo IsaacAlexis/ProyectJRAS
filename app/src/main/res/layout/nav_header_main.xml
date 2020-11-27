@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/user" />
 
     <TextView
-        android:id="@+id/txtJRAS"
+        android:id="@+id/txtNombreUsuarioMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -30,7 +30,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/txtRol"
+        android:id="@+id/txtRolMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Rol del Usuario" />

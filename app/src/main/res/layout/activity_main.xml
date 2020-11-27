@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/txtJRAS"
+        android:id="@+id/txtNombreUsuarioMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"

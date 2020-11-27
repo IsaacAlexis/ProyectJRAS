@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import Data.BDConnection;
 import Data.Models.ConsumptionsModel;
-import Data.Models.HomesModel;
+import Data.Models.HousesModel;
 
 public class Consumpitons {
     BDConnection bd = new BDConnection();
 
-    public void HouseScan(HomesModel home){
+    public void HouseScan(HousesModel home){
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call HomeExist(?)}");
@@ -19,17 +19,17 @@ public class Consumpitons {
             ResultSet Result= callableStatement.executeQuery();
             while (Result.next()){
                 home.setOwner(Result.getString("Owner"));
-                home.setHouseNum(Result.getString("HouseNum"));
-                home.setHouseExist(true);
+                home.setHouseNumber(Result.getInt("HouseNum"));
+                home.setExistHouse(true);
             }
 
 
             Result = callableStatement.executeQuery();
             if (Result.next()){
-                home.setHouseExist(true);
+                home.setExistHouse(true);
             }
             else{
-                home.setHouseExist(false);
+                home.setExistHouse(false);
             }
             callableStatement.close();
             bd.CloseConnection();

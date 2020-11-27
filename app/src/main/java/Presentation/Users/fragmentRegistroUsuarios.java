@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.support.v4.media.session.IMediaSession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,11 @@ import android.widget.RadioButton;
 
 import com.example.jras.R;
 
-import net.sourceforge.jtds.jdbc.DateTime;
-
 import java.util.Date;
 
-import BusinessLogic.BusinessUserRegister;
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.Messages;
 import Data.Utility.Validations;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -39,6 +37,7 @@ public class fragmentRegistroUsuarios extends Fragment {
     //instancias de otras clases
     UsersModel data = new UsersModel();
     Validations validate = new Validations();
+    Messages messages=new Messages();
     String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     public fragmentRegistroUsuarios() {
         // Required empty public constructor
@@ -59,14 +58,21 @@ public class fragmentRegistroUsuarios extends Fragment {
                         isPasswordEquals(txtPassConfirm, "Debes confirmar la contraseña ingresada") |
                         validate.IsValidTextbox(txtUsuario, "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$", "Debes ingresar un usuario que contengan letras y numeros(entre 8 y 16 caracteres ") |
                         isSelectedRole()) {
-                        message(getContext(),"Debes llenar todo los campos correctamente","ERROR CAMPOS INCOMPLETOS",false, 1,view);
+                    messages.messageToast(getContext(),"Debes llenar todo los campos correctamente");
+
                    } else {
                     setvalues();
-                    new BusinessUserRegister().BridgeUserRegister(data);
+                    new BusinessUser().BridgeUserRegister(data);
                     if(!data.isRegisterUser()){
-                        message(getContext(),data.getValidationMessage(),"Se completo con exito el registro",true,R.id.fragmentUsuarios,view);
+                        messages.messageAlert(getContext(),data.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentUsuarios);
                     }else{
-                        message(getContext(),data.getValidationMessage(),"ERROR AL REGISTRAR",true,R.id.fragmentUsuarios,view);
+                        if(data.getUserExist()){
+                            messages.messageToast(getContext(),data.getValidationMessage());
+                        }else{
+                            messages.messageToast(getContext(),data.getValidationMessage());
+                            findNavController(view).navigate(R.id.fragmentUsuarios);
+                        }
+
                     }
                 }
             }

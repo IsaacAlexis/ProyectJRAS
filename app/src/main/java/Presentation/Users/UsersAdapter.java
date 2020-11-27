@@ -50,7 +50,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             this.name.setText(users.getLastName()+" "+users.getFirstName());
             this.role.setText(users.getRole());
             this.status.setText(users.getUserStatus());
-            if(status.getText().toString().toUpperCase().equals("INACTIVO")){
+            if(status.getText().toString().toUpperCase().equals("INACTIVA")){
                 status.setTextColor(Color.rgb(255,0,0));
             }
             itemView.setOnClickListener(new View.OnClickListener() {

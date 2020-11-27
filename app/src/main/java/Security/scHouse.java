@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Data.BDConnection;
-import Data.Models.HomesModel;
 import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 
-public class HomesRegister {
+public class scHouse {
     BDConnection bd = new BDConnection();
     public void HomeExist(HousesModel home){
 
@@ -119,10 +118,12 @@ public class HomesRegister {
 
 
     public List<HousesModel> getallhouses(HousesModel mHouse) {
+        UsersModel users=new UsersModel();
         List<HousesModel> houses=new ArrayList<>();
         try {
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call GetAllHouses}");
+            CallableStatement callableStatement=bd.connection.prepareCall("{call GetAllHouses(?)}");
+            callableStatement.setString(1,users.getCurrentColony());
             ResultSet result=callableStatement.executeQuery();
             while (result.next()){
                 houses.add(new HousesModel(result.getString("BarCode"),result.getString("Owner"),

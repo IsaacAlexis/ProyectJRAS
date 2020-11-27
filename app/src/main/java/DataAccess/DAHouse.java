@@ -3,13 +3,12 @@ package DataAccess;
 import java.util.ArrayList;
 import java.util.List;
 
-import Data.Models.HomesModel;
 import Data.Models.HousesModel;
-import Security.HomesRegister;
+import Security.scHouse;
 
-public class DAHomesRegister {
+public class DAHouse {
     List<HousesModel> mhouses=new ArrayList<>();
-    HomesRegister HR = new HomesRegister();
+    scHouse HR = new scHouse();
 
     public  void HomeExist(HousesModel home){
         HR.HomeExist(home);

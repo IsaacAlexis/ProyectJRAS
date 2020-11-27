@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.support.v4.media.session.IMediaSession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,9 @@ import android.widget.RadioButton;
 
 import com.example.jras.R;
 
-import net.sourceforge.jtds.jdbc.DateTime;
-
 import java.util.Date;
 
-import BusinessLogic.BusinessUserRegister;
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
 import Data.Utility.Messages;
 import Data.Utility.Validations;
@@ -65,7 +62,7 @@ public class fragmentRegistroUsuarios extends Fragment {
 
                    } else {
                     setvalues();
-                    new BusinessUserRegister().BridgeUserRegister(data);
+                    new BusinessUser().BridgeUserRegister(data);
                     if(!data.isRegisterUser()){
                         messages.messageAlert(getContext(),data.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentUsuarios);
                     }else{

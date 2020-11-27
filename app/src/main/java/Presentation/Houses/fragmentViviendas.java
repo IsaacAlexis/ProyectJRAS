@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.SearchView;
 
 import com.example.jras.R;
@@ -20,10 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import BusinessLogic.BusinessHomesRegister;
+import BusinessLogic.BusinessHouse;
 import Data.Models.HousesModel;
-import Data.Models.UsersModel;
-import Presentation.Users.UsersAdapter;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -52,7 +48,7 @@ public class fragmentViviendas extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_viviendas, container, false);
-        house= BusinessHomesRegister.getallHouses(mHouse);
+        house= BusinessHouse.getallHouses(mHouse);
         mRecycleView=view.findViewById(R.id.RecycleViewViviendas);
         mLayoutManger= new LinearLayoutManager(getContext());
         searchView=view.findViewById(R.id.svSearchViviendas);

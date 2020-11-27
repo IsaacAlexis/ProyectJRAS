@@ -1,16 +1,15 @@
 package BusinessLogic;
 
 import Data.Models.ConsumptionsModel;
-import Data.Models.HomesModel;
+import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 import DataAccess.DAConsumptions;
-import Security.Consumpitons;
 
 public class BusinessConsumptions {
     DAConsumptions DAC = new DAConsumptions();
     UsersModel user = new UsersModel();
 
-    public void BridgeHouseScanner(HomesModel home){
+    public void BridgeHouseScanner(HousesModel home){
         DAC.HouseScan(home);
     }
 

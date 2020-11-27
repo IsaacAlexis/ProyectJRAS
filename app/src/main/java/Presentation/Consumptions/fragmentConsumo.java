@@ -18,9 +18,8 @@ import com.example.jras.R;
 import java.util.Date;
 
 import BusinessLogic.BusinessConsumptions;
-import BusinessLogic.BusinessHomesRegister;
 import Data.Models.ConsumptionsModel;
-import Data.Models.HomesModel;
+import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -34,7 +33,7 @@ public class fragmentConsumo extends Fragment {
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-    HomesModel home = new HomesModel();
+    HousesModel home = new HousesModel();
     ConsumptionsModel cm = new ConsumptionsModel();
     UsersModel user = new UsersModel();
 
@@ -75,7 +74,7 @@ public class fragmentConsumo extends Fragment {
 
     private void mostrarInfoViv(){
         tvBarCode.setText(home.getBarCode());
-        tvHouseNum.setText(home.getHouseNum());
+        tvHouseNum.setText(home.getHouseNumber());
         tvOwner.setText(home.getOwner());
     }
 

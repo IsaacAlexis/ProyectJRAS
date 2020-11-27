@@ -3,7 +3,6 @@ package Presentation.Houses;
 
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,14 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jras.R;
 
 import Data.Models.HousesModel;
 import Data.Utility.Messages;
 import Data.Utility.Validations;
-import BusinessLogic.BusinessHomesRegister;
+import BusinessLogic.BusinessHouse;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -50,9 +48,12 @@ public class fragmentModificarViviendas extends Fragment {
         phoneNumber.setText(house.getModifyphoneNumber().toString());
         email.setText(house.getModifyemail());
         street.setText(house.getModifystreet());
+        street.setEnabled(false);
         houseNumber.setText(house.getModifyhouseNumber().toString());
+        houseNumber.setEnabled(false);
         zipCode.setText(house.getModifyzipCode().toString());
         colony.setText(house.getModifycolony());
+        colony.setEnabled(false);
         city.setText(house.getModifycity());
         state.setText(house.getModifystate());
         statusHouse.setText(house.getModifystatusHouse());
@@ -104,13 +105,13 @@ public class fragmentModificarViviendas extends Fragment {
                 validations.IsValidTextbox(street,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.0-9]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ0-9]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar una calle de la vivienda correctamente")|
                 validations.IsValidTextbox(houseNumber,"^\\d{1,8}$","Debes ingresar el numero de la vivienda correctamente")|
                 validations.IsValidTextbox(zipCode,"^\\d{5}$","Debes ingresar un codigo postal correctamente")|
-                validations.IsValidTextbox(colony,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar la colonia de la vivienda correctamente")|
+                validations.IsValidTextbox(colony,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?$","Debes ingresar la colonia de la vivienda correctamente")|
                 validations.IsValidTextbox(city,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el municipio donde se ubica la vivienda correctamente")|
                 validations.IsValidTextbox(state,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el Estado donde se ubica la vivienda correctamente ")){
                     messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
                 }else{
                      assignValuesModificate();
-                    new BusinessHomesRegister().BridgeHouseUpdate(house);
+                    new BusinessHouse().BridgeHouseUpdate(house);
                     if(house.isStatusActivity()){
                         messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
                     }else{

@@ -3,15 +3,13 @@ package BusinessLogic;
 import java.util.ArrayList;
 import java.util.List;
 
-import Data.Models.HomesModel;
 import Data.Models.HousesModel;
-import Data.Models.UsersModel;
-import DataAccess.DAHomesRegister;
+import DataAccess.DAHouse;
 
-public class BusinessHomesRegister {
+public class BusinessHouse {
     public static List<HousesModel> mhouse=new ArrayList<>();
 
-    public static DAHomesRegister DAH = new DAHomesRegister();
+    public static DAHouse DAH = new DAHouse();
 
     public void BridgeHomeExist(HousesModel home){
         DAH.HomeExist(home);

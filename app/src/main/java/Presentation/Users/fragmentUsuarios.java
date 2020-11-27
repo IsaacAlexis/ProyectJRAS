@@ -18,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import BusinessLogic.BusinessUserRegister;
+import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -48,7 +48,7 @@ public class fragmentUsuarios extends Fragment  {
         final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
 
         //Mostrar usuarios
-        users= BusinessUserRegister.getallusers(mUsers);
+        users= BusinessUser.getallusers(mUsers);
         mRecycleView=(RecyclerView)view.findViewById(R.id.RecycleView);
         mLayoutManger=new LinearLayoutManager(getContext());
         searchView=view.findViewById(R.id.svSearch);

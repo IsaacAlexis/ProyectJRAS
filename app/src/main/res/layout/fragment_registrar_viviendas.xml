@@ -23,13 +23,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
     <EditText
         android:id="@+id/txtPropietario"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="80"
         android:drawableLeft="@drawable/ic_baseline_face_24"
         android:hint="Nombre de Propieartio"
         android:imeOptions="actionNext"
@@ -44,6 +42,7 @@
         android:id="@+id/txtTelefonoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="10"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:hint="Telefono"
         android:textSize="20dp"
@@ -58,6 +57,7 @@
         android:id="@+id/txtEmail"
         android:layout_width="309dp"
         android:layout_height="43dp"
+        android:maxLength="50"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:ems="10"
         android:hint="Email"
@@ -72,6 +72,7 @@
         android:id="@+id/txtCalleViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Calle de la Vivienda"
         android:imeOptions="actionNext"
@@ -87,6 +88,7 @@
         android:layout_width="311dp"
         android:layout_height="47dp"
         android:textSize="20dp"
+        android:maxLength="4"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Numero de vivienda"
         android:imeOptions="actionNext"
@@ -100,6 +102,7 @@
         android:id="@+id/txtCPViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="5"
         android:drawableLeft="@drawable/ic_baseline_pin_drop_24"
         android:hint="C.P."
         android:textSize="20dp"
@@ -114,6 +117,7 @@
         android:id="@+id/txtColViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:hint="Colonia de vivienda"
         android:imeOptions="actionNext"
@@ -128,6 +132,7 @@
         android:id="@+id/txtCiudadViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_location_city_24"
         android:hint="Ciudad"
         android:imeOptions="actionNext"
@@ -142,6 +147,7 @@
         android:id="@+id/txtEstadoViv"
         android:layout_width="311dp"
         android:layout_height="47dp"
+        android:maxLength="40"
         android:drawableLeft="@drawable/ic_baseline_apartment_24"
         android:hint="Estado"
         android:imeOptions="actionNext"

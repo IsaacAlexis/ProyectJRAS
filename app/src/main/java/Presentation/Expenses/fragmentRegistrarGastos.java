@@ -22,15 +22,19 @@ import android.widget.Toast;
 
 import com.example.jras.R;
 
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import Data.BDConnection;
 import Data.Models.ExpensesModel;
 import Data.Models.UsersModel;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessExpens;
+import Security.ExpensRegister;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -46,6 +50,10 @@ public class fragmentRegistrarGastos extends Fragment {
     public EditText total;
     public TextView DateExp;
     public Date fecha;
+    public String folio;
+    public long Folio;
+    public TextView FOLIO;
+    public int FolioReal;
     //String currenteDataandTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(new Date());
     String ActualyTime = new SimpleDateFormat("yyy-MM-dd").format(new Date());
 
@@ -67,12 +75,16 @@ public class fragmentRegistrarGastos extends Fragment {
 
         //Ejecucion del metodo para relacionar las variables con el componente
         getvalues(view);
+        ExpensExist();
+        NFolio();
+
         registerexp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Validations validate = new Validations();
-                if(validate.IsValidTextbox(NameExpens, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar un nombre de gasto")
-                |validate.IsValidTextbox(DescripExpens,"^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar una descripcion del gasto")
+
+                if(validate.IsValidTextbox(NameExpens, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,10}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,10})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar un nombre de gasto")
+                |validate.IsValidTextbox(DescripExpens,"^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar una descripcion del gasto")
                 |validate.IsValidTextbox(total,"^[0-9]{1,12}?$", "Debes ingresar un monto")
                 )
                 {
@@ -81,7 +93,9 @@ public class fragmentRegistrarGastos extends Fragment {
                 else {
 
                     setvalues();
-                    new BusinessExpens().BridgeExpenRegister(expens);
+
+                  new BusinessExpens().BridgeExpenRegister(expens);
+                  
                     if(!expens.isRegisterExpens())
                     {
                         message(getContext(), data.getValidationMessage(), "Se completo el registro", true, R.id.fragmentRegistrarGastos, view);
@@ -111,6 +125,11 @@ public class fragmentRegistrarGastos extends Fragment {
         total = view.findViewById(R.id.TxtTotalG) ;
         DateExp = view.findViewById(R.id.txtFechaGasto);
         DateExp.setText(ActualyTime);
+        FOLIO = view.findViewById(R.id.txtFolio);
+
+
+
+        
     }
 
     //Metodo para obtener lo que hay dentro de los EditText
@@ -158,5 +177,39 @@ public class fragmentRegistrarGastos extends Fragment {
         Date fecha = new Date();
         SimpleDateFormat FormatoFecha = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
         return FormatoFecha.format(fecha);
+    }
+
+    public void ExpensExist ()
+    {
+        BDConnection bd = new BDConnection();
+        try
+        {
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement callableStatement =  bd.connection.prepareCall("{call ExpenExist}");
+            ResultSet Result = callableStatement.executeQuery();
+            while(Result.next())
+            {
+                expens.setFolioExp(Result.getLong("FolioExp"));
+            }
+            Result = callableStatement.executeQuery();
+
+
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+
+    }
+    public void NFolio(){
+        expens.setFolioExp(expens.getFolioExp());
+        Folio = expens.getFolioExp();
+        folio = String.valueOf(Folio);
+        FolioReal = Integer.parseInt(folio);
+        FolioReal = FolioReal + 1;
+        folio = String.valueOf(FolioReal);
+        FOLIO.setText("Numero de Folio:" + folio);
     }
 }

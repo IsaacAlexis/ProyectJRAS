@@ -8,5 +8,5 @@ public class BusinessExpens {
     public static DAExpens exp = new DAExpens();
 
     public void BridgeExpenRegister(ExpensesModel expens ) { exp.DAExpensRegister(expens); }
-    //public void BridgeExpenExist(ExpensesModel expens) {}
+    public void BridgeExpenModify(ExpensesModel expens ) { exp.DAExpenModify(expens); }
 }

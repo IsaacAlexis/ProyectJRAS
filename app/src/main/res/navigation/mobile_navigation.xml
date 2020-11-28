@@ -87,7 +87,7 @@
     <fragment
         android:id="@+id/fragmentRegistrasViviendas"
         android:name="Presentation.Houses.fragmentRegistrarViviendas"
-        android:label="Viviendas"
+        android:label="Registrar viviendas"
         tools:layout="@layout/fragment_registrar_viviendas" />
     <fragment
         android:id="@+id/fragmentRegistroUsuarios"
@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/fragmentModificarViviendas"
         android:name="Presentation.Houses.fragmentModificarViviendas"
-        android:label="Viviendas"
+        android:label="Modificar viviendas"
         tools:layout="@layout/fragment_modificar_viviendas" />
     <fragment
         android:id="@+id/fagmentConsumo"

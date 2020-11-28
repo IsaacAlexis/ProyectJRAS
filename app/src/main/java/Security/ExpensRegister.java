@@ -12,10 +12,11 @@ import Data.Models.UsersModel;
 
 public class ExpensRegister {
 
-    BDConnection bd = new BDConnection();
+
+    String currenteDataandTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
     public void ExpenRegister(ExpensesModel expen){
-        String currenteDataandTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        BDConnection bd = new BDConnection();
         try
         {
             Date cal = (Date) Calendar.getInstance().getTime();
@@ -39,27 +40,31 @@ public class ExpensRegister {
         }
 
     }
-    public void ExpensExist (ExpensesModel expen)
+    public void ExpenModify(ExpensesModel expen)
     {
-        try
-        {
-            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement =  bd.connection.prepareCall("{call ExpenExist(?)}");
-            callableStatement.setLong(1,expen.getFolioExp());
-            ResultSet Result = callableStatement.executeQuery();
-            while(Result.next())
-            {
-                expen.setFolioExp(Result.getLong("FolioExp"));
-            }
-            Result = callableStatement.executeQuery();
+        BDConnection bd = new BDConnection();
+        String currenteDataandTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        try {
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            CallableStatement cs = bd.connection.prepareCall("{call ExpenModify(?,?,?,?,?,?)}");
+            cs.setInt(1,Integer.parseInt(String.valueOf(expen.getFolioExp())));
+            cs.setInt(2,Integer.parseInt(String.valueOf(expen.getIDUser() ) ) );
+            cs.setDate(3, java.sql.Date.valueOf(currenteDataandTime) );
+            cs.setString(4,expen.getNameExp());
+            cs.setString(5,expen.getDescript());
+            cs.setFloat(6,expen.getTotal());
+            cs.executeUpdate();
+            cs.close();
+            bd.CloseConnection();
+
 
         }
         catch (Exception e)
         {
-
+            e.printStackTrace();
+            expen.setRegisterExpens(true);
 
         }
-
     }
-
 }

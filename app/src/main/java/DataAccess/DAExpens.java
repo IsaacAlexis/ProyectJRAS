@@ -15,6 +15,7 @@ public class DAExpens {
 
     public void DAExpensRegister(ExpensesModel expen){
         expens.ExpenRegister(expen);
-
     }
+    public void DAExpenModify(ExpensesModel expen){ expens.ExpenModify(expen); }
+
 }

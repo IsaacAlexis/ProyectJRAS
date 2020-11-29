@@ -5,7 +5,7 @@ import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 import DataAccess.DAConsumptions;
 
-public class BusinessConsumptions {
+public class BusinessConsumption {
     DAConsumptions DAC = new DAConsumptions();
     UsersModel user = new UsersModel();
 

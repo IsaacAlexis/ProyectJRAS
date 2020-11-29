@@ -1,8 +1,5 @@
 package Presentation.Expenses;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,15 +13,13 @@ import android.widget.TextView;
 
 import com.example.jras.R;
 
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import BusinessLogic.BusinessExpens;
-import Data.BDConnection;
+import BusinessLogic.BusinessExpense;
 import Data.Models.ExpensesModel;
 import Data.Models.UsersModel;
+import Data.Utility.Messages;
 import Data.Utility.Validations;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -36,7 +31,7 @@ public class fragmentModificarGastos extends Fragment {
     public EditText NameExp;
     public EditText Descript;
     public EditText total;
-    public Button Modify;
+    public Button save;
     public TextView Folio;
     public TextView Fecha;
     public TextView IDUser;
@@ -50,6 +45,12 @@ public class fragmentModificarGastos extends Fragment {
     public fragmentModificarGastos() {
         // Required empty public constructor
     }
+    public void fieldsEnable(){
+        NameExp.setEnabled(true);
+        Descript.setEnabled(true);
+        total.setEnabled(true);
+        save.setText("Guardar");
+    }
 
 
     @Override
@@ -58,27 +59,30 @@ public class fragmentModificarGastos extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_modificar_gastos, container, false);
 
         getValues(view);
-        setValues();
-        PastValues();
-
-        Modify.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate.IsValidTextbox(NameExp, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,10}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,10})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar un nombre de gasto")
-                        | validate.IsValidTextbox(Descript, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12})?$", "Debes ingresar una descripcion del gasto")
-                        | validate.IsValidTextbox(total, "^[0-9]{1,12}?$", "Debes ingresar un monto")
-                ) {
-                    message(getContext(), "Debes llenar todos los campos correctamente", "ERROR CAMPOS INCOMPLETOS", false, 1, view);
-                } else {
-                    setValues();
-                    new BusinessExpens().BridgeExpenModify(expen);
-                    if (!expen.isRegisterExpens()) {
-                        message(getContext(), data.getValidationMessage(), "Se modifico con exito", true, R.id.fragmentModificarGastos, view);
+                if(!save.getText().toString().equals("Editar")){
+                    if (validate.IsValidTextbox(NameExp, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
+                            "Debes ingresar un nombre de gasto")
+                            | validate.IsValidTextbox(Descript, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
+                            "Debes ingresar una descripcion del gasto")
+                            | validate.IsValidTextbox(total, "^[0-9]+(\\.[0-9]{1,4})?$", "Debes ingresar un monto")) {
+                        new Messages().messageToast(getContext(), "Debes llenar todos los campos correctamente");
                     } else {
-                        message(getContext(), data.getValidationMessage(), "ERROR AL MODIFICAR", true, R.id.fragmentModificarGastos, view);
+                        setValues();
+                        new BusinessExpense().BridgeExpenModify(expen);
+                        if (!expen.isRegisterExpens()) {
+                            new Messages().messageAlert(getContext(), expen.getValidationMessage(), "Cambios guardados con exito", view, R.id.fragmentGastos2);
+                        } else {
+                            new Messages().messageAlert(getContext(), expen.getValidationMessage(), "Error en guardar los cambios", view, R.id.fragmentGastos2);
 
+                        }
                     }
+                }else{
+                    fieldsEnable();
                 }
+
             }
         });
 
@@ -91,53 +95,25 @@ public class fragmentModificarGastos extends Fragment {
         total = view.findViewById(R.id.txtTotal);
         Folio = view.findViewById(R.id.txtFolio);
         Fecha = view.findViewById(R.id.txtFechaGasto);
-        Modify = view.findViewById(R.id.btnConfirmarGasto);
+        save = view.findViewById(R.id.btnConfirmarGasto);
+        PastValues();
     }
 
     public void setValues() {
-        expen.setFolioExp(expen.getFolioExp());
-        expen.setIDUser(expen.getIDUser());
-        expen.setExpDate(expen.getExpDate());
-        expen.setNameExp(expen.getNameExp());
-        expen.setDescript(expen.getDescript());
-        expen.setTotal(expen.getTotal());
+        expen.setFolioExp(expen.getModifyFolioExp());
+        expen.setNameExp(NameExp.getText().toString());
+        expen.setDescript(Descript.getText().toString());
+        expen.setTotal(Float.parseFloat(total.getText().toString()));
+        expen.setDateModified(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
     }
 
     public void PastValues() {
-        Folio.setText(String.valueOf(expen.getFolioExp()));
-        Fecha.setText(String.valueOf(expen.getExpDate()));
-        NameExp.setText(expen.getNameExp());
-        Descript.setText(expen.getDescript());
-        total.setText(String.valueOf(expen.getTotal()));
+        Folio.setText("Folio: " + String.valueOf(expen.getModifyFolioExp()));
+        Fecha.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        NameExp.setText(expen.getModifyNameExp());
+        Descript.setText(expen.getModifyDescript());
+        total.setText(String.valueOf(expen.getModifyTotal()));
     }
 
-    public void message(Context context, String message, String title, boolean isMoveFrgment, final int fragment, final View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if (!isMoveFrgment) {
-            builder.setMessage(message)
-                    .setIcon(android.R.drawable.ic_menu_save)
-                    .setTitle(title)
-                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
-            builder.setMessage(message)
-                    .setIcon(android.R.drawable.ic_menu_save)
-                    .setTitle(title)
-                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            findNavController(v).navigate(fragment);
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-
-    }
 }

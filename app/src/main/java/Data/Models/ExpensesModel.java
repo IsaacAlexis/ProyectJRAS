@@ -1,5 +1,7 @@
 package Data.Models;
 
+import net.sourceforge.jtds.jdbc.DateTime;
+
 import java.util.Date;
 
 public class ExpensesModel {
@@ -9,7 +11,8 @@ public class ExpensesModel {
     private Date ExpDate;
     private String NameExp;
     private String Descript;
-    private float Total;
+    private Float Total;
+    private String DateModified;
     //Modificaciones gastos
     private static long modifyFolioExp;
     private static long modifyIDUser;
@@ -19,9 +22,22 @@ public class ExpensesModel {
     private static float modifyTotal;
     // Bandera
     private boolean isRegisterExpens;
+    //Mensajes
+    private String validationMessage;
+
+
 
     public ExpensesModel(){
 
+    }
+
+
+    public ExpensesModel(long folioExp, String nameExp, String descript, Float total,Date Expdate) {
+        FolioExp = folioExp;
+        NameExp = nameExp;
+        Descript = descript;
+        Total = total;
+        ExpDate=Expdate;
     }
 
     public ExpensesModel(long folioExp, long IDUser, Date expDate, String nameExp, String descript, float total, boolean isRegisterExpens) {
@@ -33,6 +49,28 @@ public class ExpensesModel {
         this.Total = total;
         this.isRegisterExpens = isRegisterExpens;
     }
+    public void assignValuesModify(Long folio,String title,String description, Float total){
+        setModifyFolioExp(folio);
+        setModifyNameExp(title);
+        setModifyDescript(description);
+        setModifyTotal(total);
+    }
+    public String getValidationMessage() {
+        return validationMessage;
+    }
+
+    public void setValidationMessage(String validationMessage) {
+        this.validationMessage = validationMessage;
+    }
+
+    public String getDateModified() {
+        return DateModified;
+    }
+
+    public void setDateModified(String dateModified) {
+        DateModified = dateModified;
+    }
+
     public static long getModifyFolioExp() {
         return modifyFolioExp;
     }

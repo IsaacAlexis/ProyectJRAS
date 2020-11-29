@@ -26,6 +26,10 @@
             android:layout_width="200dp"
             android:layout_height="47dp"
             android:layout_marginTop="76dp"
+            android:textAlignment="gravity"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:drawableLeft="@drawable/ic_baseline_edit_24"
             android:hint="Fecha del Gasto"
             android:imeOptions="actionNext"
@@ -38,6 +42,10 @@
             android:layout_width="200dp"
             android:layout_height="47dp"
             android:layout_marginTop="76dp"
+            android:textAlignment="gravity"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:drawableLeft="@drawable/ic_baseline_report_24"
             android:hint="Folio"
             android:imeOptions="actionNext"
@@ -50,9 +58,10 @@
             android:layout_width="311dp"
             android:layout_height="47dp"
             android:maxLength="30"
+            android:textSize="25dp"
             android:layout_marginTop="76dp"
             android:drawableLeft="@drawable/ic_baseline_edit_24"
-            android:hint="Nombre de Gasto"
+            android:hint="Nombre del gasto"
             android:imeOptions="actionNext"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,12 +71,15 @@
         <EditText
             android:id="@+id/TxtDescripcionG"
             android:layout_width="311dp"
-            android:layout_height="47dp"
+            android:layout_height="100dp"
             android:maxLength="50"
-            android:drawableLeft="@drawable/ic_baseline_edit_24"
-            android:hint="Descripcion del Gasto"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/ic_baseline_add_24"
+            android:hint="Descripción del gasto"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:lines="5"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TxtNombreG" />
@@ -76,11 +88,12 @@
             android:id="@+id/TxtTotalG"
             android:layout_width="311dp"
             android:layout_height="47dp"
+            android:textSize="25dp"
             android:maxLength="8"
             android:drawableLeft="@drawable/ic_baseline_attach_money_24"
             android:hint="Total"
             android:imeOptions="actionNext"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TxtDescripcionG" />
@@ -99,5 +112,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TxtTotalG" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

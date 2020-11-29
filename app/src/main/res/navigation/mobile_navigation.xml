@@ -97,7 +97,7 @@
     <fragment
         android:id="@+id/fragementModificarUsuarios"
         android:name="Presentation.Users.fragementModificarUsuarios"
-        android:label="Usuarios"
+        android:label="Modificar usuarios"
         tools:layout="@layout/fragement_modificar_usuarios" />
 
     <fragment
@@ -113,12 +113,12 @@
     <fragment
         android:id="@+id/fragmentModificarGastos"
         android:name="Presentation.Expenses.fragmentModificarGastos"
-        android:label="fragment_modificar_gastos"
+        android:label="Modificar gastos"
         tools:layout="@layout/fragment_modificar_gastos" />
     <fragment
         android:id="@+id/fragmentRegistrarGastos"
         android:name="Presentation.Expenses.fragmentRegistrarGastos"
-        android:label="Gastos"
+        android:label="Registrar gastos"
         tools:layout="@layout/fragment_registrar_gastos" />
 
 </navigation>

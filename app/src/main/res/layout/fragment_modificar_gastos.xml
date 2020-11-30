@@ -47,14 +47,14 @@
             android:layout_width="200dp"
             android:layout_height="47dp"
             android:layout_marginTop="76dp"
-            android:textAlignment="gravity"
+            android:drawableLeft="@drawable/ic_baseline_date_range_24"
             android:gravity="center_vertical"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:drawableLeft="@drawable/ic_baseline_edit_24"
             android:hint="Fecha del Gasto"
             android:imeOptions="actionNext"
             android:inputType="textPersonName"
+            android:textAlignment="gravity"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

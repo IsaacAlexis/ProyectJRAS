@@ -48,9 +48,9 @@ public class fragmentConsumo extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
 
-        tvBarCode = view.findViewById(R.id.txtBarCode);
+        tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
-        tvHouseNum = view.findViewById(R.id.txtNumeroCasa);
+        tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
         btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
 
@@ -73,9 +73,9 @@ public class fragmentConsumo extends Fragment {
 
 
     private void mostrarInfoViv(){
-        tvBarCode.setText(home.getBarCode());
-        tvHouseNum.setText(home.getHouseNumber());
-        tvOwner.setText(home.getOwner());
+        tvBarCode.setText(home.getModifybarCode());
+        tvHouseNum.setText(home.getModifyhouseNumber().toString());
+        tvOwner.setText(home.getModifyowner());
     }
 
     private void registrar(){

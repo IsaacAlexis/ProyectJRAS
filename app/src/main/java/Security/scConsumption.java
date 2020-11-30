@@ -8,7 +8,7 @@ import Data.BDConnection;
 import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
 
-public class Consumpitons {
+public class scConsumption {
     BDConnection bd = new BDConnection();
 
     public void HouseScan(HousesModel home){

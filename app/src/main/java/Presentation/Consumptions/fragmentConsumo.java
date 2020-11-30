@@ -17,7 +17,7 @@ import com.example.jras.R;
 
 import java.util.Date;
 
-import BusinessLogic.BusinessConsumptions;
+import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
 import Data.Models.UsersModel;
@@ -61,7 +61,7 @@ public class fragmentConsumo extends Fragment {
             @Override
             public void onClick(View v) {
                 registrar();
-                new BusinessConsumptions().BridgeConsumptionReading(cm);
+                new BusinessConsumption().BridgeConsumptionReading(cm);
                 Toast.makeText(getContext(), "Consumo registrado correctamente", Toast.LENGTH_SHORT).show();
                 findNavController(view).navigate(R.id.nav_home);
             }

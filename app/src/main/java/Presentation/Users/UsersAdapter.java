@@ -40,7 +40,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         TextView name,role,status;
         ViewHolder(View itemview){
             super(itemview);
-            mImageView=itemview.findViewById(R.id.iconimage);
+            mImageView=itemview.findViewById(R.id.iconimageG);
             name=itemview.findViewById(R.id.Name);
             role=itemview.findViewById(R.id.Role);
             status=itemview.findViewById(R.id.Status);

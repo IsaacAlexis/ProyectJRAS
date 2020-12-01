@@ -2,10 +2,10 @@ package DataAccess;
 
 import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
-import Security.Consumpitons;
+import Security.scConsumption;
 
 public class DAConsumptions {
-    Consumpitons C = new Consumpitons();
+    scConsumption C = new scConsumption();
 
     public void HouseScan(HousesModel home){
         C.HouseScan(home);

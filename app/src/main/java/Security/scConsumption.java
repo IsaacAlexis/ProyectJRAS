@@ -8,29 +8,25 @@ import Data.BDConnection;
 import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
 
-public class Consumpitons {
+public class scConsumption {
     BDConnection bd = new BDConnection();
 
     public void HouseScan(HousesModel home){
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeExist(?)}");
+            CallableStatement callableStatement=bd.connection.prepareCall("{call HomeExistConsumption(?)}");
             callableStatement.setString(1, home.getBarCode());
             ResultSet Result= callableStatement.executeQuery();
+            home.setExistHouse(false);
             while (Result.next()){
-                home.setOwner(Result.getString("Owner"));
-                home.setHouseNumber(Result.getInt("HouseNum"));
+                home.setModifybarCode(Result.getString("BarCode"));
+                home.setModifyowner(Result.getString("Owner"));
+                home.setModifyhouseNumber(Result.getInt("HouseNum"));
                 home.setExistHouse(true);
             }
 
 
-            Result = callableStatement.executeQuery();
-            if (Result.next()){
-                home.setExistHouse(true);
-            }
-            else{
-                home.setExistHouse(false);
-            }
+
             callableStatement.close();
             bd.CloseConnection();
 

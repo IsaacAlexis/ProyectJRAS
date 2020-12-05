@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_nav_home_to_fagmentConsumo"
             app:destination="@id/fagmentConsumo" />
+        <action
+            android:id="@+id/action_nav_home_to_recibosFragment"
+            app:destination="@id/recibosFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
@@ -120,5 +123,10 @@
         android:name="Presentation.Expenses.fragmentRegistrarGastos"
         android:label="Registrar gastos"
         tools:layout="@layout/fragment_registrar_gastos" />
+    <fragment
+        android:id="@+id/recibosFragment"
+        android:name="Presentation.recibosFragment"
+        android:label="Recibos de Consumo"
+        tools:layout="@layout/fragment_recibos" />
 
 </navigation>

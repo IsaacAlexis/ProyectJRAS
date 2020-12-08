@@ -108,7 +108,6 @@ public class fragmentRegistrarGastos extends Fragment {
             expens.setExpDate(new Date());
             expens.setIDUser(data.getCurrentIdUser());
             expens.setDateModified( new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-
     }
 
 

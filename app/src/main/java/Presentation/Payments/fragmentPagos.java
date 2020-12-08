@@ -7,60 +7,66 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.jras.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragmentPagos#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import Data.Models.PaysModel;
+
+
 public class fragmentPagos extends Fragment {
+    // variables
+    public TextView Propietario;
+    public TextView NumeroCasa;
+    public TextView CodigoBarras;
+    public TextView FechaPago;
+    public TextView FolioPago;
+    public EditText Pago;
+    public Button RegistrarPago;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //instancias a otras clases
+    PaysModel pays = new PaysModel();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public fragmentPagos() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragmentPagos.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragmentPagos newInstance(String param1, String param2) {
-        fragmentPagos fragment = new fragmentPagos();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pagos, container, false);
+        final View view = inflater.inflate(R.layout.fragment_registrar_gastos, container, false);
+        getValues(view);
+
+
+        return view;
     }
+
+    // Relacionar las variables con los componentes
+    public void getValues(View view)
+    {
+        Propietario = view.findViewById(R.id.txtPropietarioCasa);
+        NumeroCasa = view.findViewById(R.id.txtNumeroCasaPago);
+        CodigoBarras = view.findViewById(R.id.txtBarCodePagos);
+        FechaPago = view.findViewById(R.id.txtFechaPago);
+        FolioPago = view.findViewById(R.id.txtFolioPago);
+        Pago = view.findViewById(R.id.txtPago);
+        RegistrarPago = view.findViewById(R.id.btnRegistrarPago);
+        FechaPago.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+    }
+
+    public void setValues()
+    {
+        pays.setOwner(Propietario.getText().toString());
+        pays.setHouseNum(Integer.parseInt(NumeroCasa.getText().toString()));
+        pays.setBarCodePay(CodigoBarras.getText().toString());
+
+
+    }
+
 }

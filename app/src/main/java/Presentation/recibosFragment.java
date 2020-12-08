@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jras.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static androidx.navigation.Navigation.findNavController;
 
 
 public class recibosFragment extends Fragment {
 
 
+    public FloatingActionButton fabrecibo;
     public recibosFragment() {
         // Required empty public constructor
     }
@@ -24,6 +28,15 @@ public class recibosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recibos, container, false);
+        final View view=inflater.inflate(R.layout.fragment_recibos, container, false);
+
+        fabrecibo=view.findViewById(R.id.fabInfoRecibo);
+        fabrecibo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNavController(view).navigate(R.id.fragmentInfoRecibo);
+            }
+        });
+        return view;
     }
 }

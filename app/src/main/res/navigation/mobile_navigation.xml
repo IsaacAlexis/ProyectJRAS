@@ -127,6 +127,15 @@
         android:id="@+id/recibosFragment"
         android:name="Presentation.recibosFragment"
         android:label="Recibos de Consumo"
-        tools:layout="@layout/fragment_recibos" />
+        tools:layout="@layout/fragment_recibos" >
+        <action
+            android:id="@+id/action_recibosFragment_to_fragmentInfoRecibo"
+            app:destination="@id/fragmentInfoRecibo" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentInfoRecibo"
+        android:name="Presentation.FragmentInfoRecibo"
+        android:label="Informacion del Consumo"
+        tools:layout="@layout/fragment_info_recibo" />
 
 </navigation>

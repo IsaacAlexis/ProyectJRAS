@@ -42,6 +42,10 @@
         android:id="@+id/navigation_subheader2"
         android:title="Otros">
         <menu>
+            <item
+                android:id="@+id/recibosFragment"
+                android:icon="@drawable/ic_baseline_assessment_24"
+                android:title="Recibo Consumo" />
         <item
             android:id="@+id/fragmentReportes"
             android:icon="@drawable/ic_baseline_report_24"

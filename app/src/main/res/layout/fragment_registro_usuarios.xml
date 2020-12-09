@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,54 +21,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/txtApellidos"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:maxLength="25"
-            android:drawableLeft="@drawable/ic_baseline_face_24"
-            android:hint="Apellidos"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-        <EditText
-            android:id="@+id/txtNombre"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:maxLength="25"
-            android:drawableLeft="@drawable/ic_baseline_face_24"
-            android:hint="Nombre"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtApellidos" />
-
-        <EditText
-            android:id="@+id/txtEmail"
-            android:layout_width="309dp"
-            android:layout_height="43dp"
-            android:maxLength="50"
-            android:drawableLeft="@drawable/ic_baseline_email_24"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
 
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="311dp"
             android:layout_height="58dp"
-            android:layout_marginTop="2dp"
             android:stretchColumns="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmail">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
             <TableRow
                 android:layout_width="288dp"
@@ -118,65 +80,49 @@
 
         </TableLayout>
 
-
-        <EditText
-            android:id="@+id/txtUsuario"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:maxLength="15"
-            android:drawableLeft="@drawable/user"
-            android:hint="Nombre de Usuario"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout4"
-            android:layout_width="402dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            app:endIconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtUsuario"
-            app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtPassUsuario"
                 android:layout_width="311dp"
                 android:layout_height="47dp"
-                android:layout_marginStart="40dp"
                 android:layout_marginTop="236dp"
-                android:layout_marginEnd="40dp"
 
+                android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:hint="Contraseña"
                 android:imeOptions="actionNext"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:paddingRight="40dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
-            android:layout_width="402dp"
-            android:layout_height="61dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            app:endIconTintMode="multiply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
-            app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
             <EditText
                 android:id="@+id/txtPassConfirm"
                 android:layout_width="311dp"
                 android:layout_height="47dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="244dp"
-                android:layout_marginEnd="40dp"
-                android:drawableLeft="@drawable/ic_baseline_remove_red_eye_24"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawableTintMode="multiply"
                 android:hint="Confirmar Contraseña"
                 android:imeOptions="actionNext"
                 android:inputType="text"
+                android:paddingRight="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +135,7 @@
             android:id="@+id/btnregistrarUsuario"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bordes_redondos_azul"
             android:text="Registrar"
             android:textColor="@android:color/black"
@@ -197,7 +143,73 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtApellidos"
+                android:layout_width="311dp"
+                android:layout_height="47dp"
+                android:drawableLeft="@drawable/ic_baseline_face_24"
+                android:hint="Apellidos"
+                android:maxLength="25" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtNombre"
+                android:layout_width="311dp"
+                android:layout_height="47dp"
+                android:drawableLeft="@drawable/ic_baseline_face_24"
+                android:hint="Nombre(s)"
+                android:maxLength="25" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtEmail"
+                android:layout_width="311dp"
+                android:layout_height="47dp"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtUsuario"
+                android:layout_width="311dp"
+                android:layout_height="47dp"
+                android:drawableStart="@drawable/ic_baseline_account_circle_24"
+                android:hint="Nombre de Usuario" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

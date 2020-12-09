@@ -10,38 +10,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="215dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/encabezado_formularios"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <EditText
             android:id="@+id/txtConsumo"
             android:layout_width="171dp"
             android:layout_height="63dp"
-            android:layout_marginTop="224dp"
-            android:maxLength="3"
+            android:layout_marginTop="72dp"
             android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Consumo en M3"
+            android:hint="Consumo en m³"
             android:imeOptions="actionNext"
             android:inputType="number"
-            app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/txtBarCodeConsumo" />
+            android:maxLength="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
 
         <Button
 
             android:id="@+id/btnRegistrarConsumo"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/bordes_redondos_rojo"
             android:text="Registrar"
             android:textColor="@android:color/black"
@@ -51,38 +51,112 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtConsumo" />
 
-        <TextView
-            android:id="@+id/txtBarCodeConsumo"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="20dp"
-            android:text="codigo de barras"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtConsumo"
-            app:layout_constraintStart_toStartOf="@+id/txtConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+            <EditText
+                android:id="@+id/txtBarCodeConsumo"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:clickable="false"
+                android:drawableLeft="@drawable/ic_baseline_addchart_24"
+                android:hint="No. Medidor"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout5"
+            android:layout_width="284dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtNumeroCasaConsumo"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:clickable="false"
+                android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                android:hint="No. Casa"
+                android:editable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout6"
+            android:layout_width="284dp"
+            android:layout_height="83dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPropietarioC"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:clickable="false"
+                android:drawableLeft="@drawable/ic_baseline_face_24"
+                android:hint="Propietario"
+                android:editable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/txtNumeroCasaConsumo"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="84dp"
-            android:text="No de Casa"
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="104dp"
+            android:text="Fecha:"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtConsumo"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="@+id/txtConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/txtPropietarioC"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="148dp"
-            android:text="Propietario"
+            android:id="@+id/txFechaConsumo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtConsumo"
-            app:layout_constraintStart_toStartOf="@+id/txtConsumo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.156"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <Button
+            android:id="@+id/btnEscanearConsumo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/bordes_redondos_rojo"
+            android:text="Escanear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <Button
+            android:id="@+id/btnBuscarConsumo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/bordes_redondos_rojo"
+            android:text="Buscar"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 

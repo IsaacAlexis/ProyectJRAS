@@ -71,5 +71,9 @@ public class scConsumption {
         }
     }
 
+    public void HomeList(HousesModel house){
+
+    }
+
 
 }

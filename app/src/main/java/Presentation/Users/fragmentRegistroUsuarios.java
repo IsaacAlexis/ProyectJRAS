@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.example.jras.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Date;
 
@@ -34,6 +37,7 @@ public class fragmentRegistroUsuarios extends Fragment {
     private EditText txtUsuario,txtPassUsuario,txtPassConfirm;
     private RadioButton rolAdmin,rolEmpleado,rolInvitado;
     private Button btnRegistrar;
+    private TextInputLayout tilApellidos,tilNombre,tilEmail,tilUsuario,tilPass,tilConfirmPass;
     //instancias de otras clases
     UsersModel data = new UsersModel();
     Validations validate = new Validations();
@@ -48,6 +52,139 @@ public class fragmentRegistroUsuarios extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_registro_usuarios, container, false);
         getvalues(view);
+
+        txtApellidos.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(validate.IsValidTextboxMessage(txtApellidos, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25})?$")) {
+                    tilApellidos.setError("Ingresa un apellido correctamente");
+                }
+                else {
+                    tilApellidos.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(validate.IsValidTextboxMessage(txtNombre, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25})?$")) {
+                    tilNombre.setError("Ingresa un nombre correctamente");
+
+                }
+                else
+                    tilNombre.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        txtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(validate.IsValidTextboxMessage(txtEmail, "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$")) {
+                    tilEmail.setError("Ingresa un correo electronico valido");
+                }
+                else {
+                    tilEmail.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        txtUsuario.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(validate.IsValidTextboxMessage(txtUsuario, "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$")) {
+                    tilUsuario.setError("Ingresa un usuario valido (entre 8 y 16 caracteres incluidas letras y números)");
+                }
+                else {
+                    tilUsuario.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        txtPassUsuario.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(validate.IsValidTextboxMessage(txtPassUsuario, "^(?=.*\\d)(?=.*[\\u0021-\\u002b\\u003c-\\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$")) {
+                    tilPass.setError("Ingresar una contraseña valida(entre 8 y 16 caracteres, una mayuscula, numeros y un simbolo)");
+                }
+                else {
+                    tilPass.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        txtPassConfirm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //isPasswordEquals(txtPassConfirm, "Las contraseñas deben coincidir")
+
+                if(isPasswordEquals(txtPassConfirm, "")) {
+                    tilConfirmPass.setError("Las contraseñas deben coincidir");
+
+                }
+                else{
+                    tilConfirmPass.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +299,14 @@ public class fragmentRegistroUsuarios extends Fragment {
         rolEmpleado= view.findViewById(R.id.rbEmpleado);
         rolInvitado= view.findViewById(R.id.rbInvitado);
         btnRegistrar=view.findViewById(R.id.btnregistrarUsuario);
+
+        //TextInputLayout's
+        tilApellidos=view.findViewById(R.id.textInputLayout7);
+        tilNombre=view.findViewById(R.id.textInputLayout8);
+        tilEmail=view.findViewById(R.id.textInputLayout9);
+        tilUsuario=view.findViewById(R.id.textInputLayout10);
+        tilPass=view.findViewById(R.id.textInputLayout4);
+        tilConfirmPass=view.findViewById(R.id.textInputLayout);
     }
 
 

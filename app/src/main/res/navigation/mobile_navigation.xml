@@ -125,7 +125,7 @@
         tools:layout="@layout/fragment_registrar_gastos" />
     <fragment
         android:id="@+id/recibosFragment"
-        android:name="Presentation.recibosFragment"
+        android:name="Presentation.WaterBills.recibosFragment"
         android:label="Recibos de Consumo"
         tools:layout="@layout/fragment_recibos" >
         <action
@@ -134,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentInfoRecibo"
-        android:name="Presentation.FragmentInfoRecibo"
+        android:name="Presentation.WaterBills.FragmentInfoRecibo"
         android:label="Informacion del Consumo"
         tools:layout="@layout/fragment_info_recibo" />
 

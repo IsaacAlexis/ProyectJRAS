@@ -34,16 +34,7 @@ public class Validations {
                     field.setError(errorMessage);
                 }
                 return false;
-
             }
         });
-
-
     }
-
-
-
-
-
-
 }

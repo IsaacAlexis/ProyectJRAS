@@ -2,20 +2,17 @@ package Presentation.Payments;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.jras.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import Data.Models.PaysModel;
 
 
@@ -33,9 +30,11 @@ public class fragmentPagos extends Fragment {
     PaysModel pays = new PaysModel();
 
 
+
     public fragmentPagos() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -60,13 +59,13 @@ public class fragmentPagos extends Fragment {
         FechaPago.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
     }
 
-    public void setValues()
-    {
+    public void setValues() {
         pays.setOwner(Propietario.getText().toString());
         pays.setHouseNum(Integer.parseInt(NumeroCasa.getText().toString()));
         pays.setBarCodePay(CodigoBarras.getText().toString());
-
-
     }
+
+
+
 
 }

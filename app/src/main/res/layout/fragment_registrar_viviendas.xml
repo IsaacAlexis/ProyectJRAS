@@ -163,7 +163,7 @@
         android:id="@+id/btnregistrarViviendaM"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="REGISTRAR"
         android:textColor="@android:color/black"
@@ -171,7 +171,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

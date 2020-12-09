@@ -51,16 +51,7 @@ public class Validations {
                     btn.setEnabled(true);
                     return false;
                 }
-
             }
         });
-
-
     }
-
-
-
-
-
-
 }

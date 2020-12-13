@@ -22,19 +22,35 @@
 
 
         <EditText
-            android:id="@+id/txtConsumo"
+            android:id="@+id/txtConsumoAnterior"
             android:layout_width="171dp"
             android:layout_height="63dp"
-            android:layout_marginTop="224dp"
-            android:maxLength="3"
+            android:layout_marginTop="30dp"
             android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Consumo en M3"
+            android:hint="Anterior consumo"
             android:imeOptions="actionNext"
             android:inputType="number"
+            android:maxLength="5"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/txtBarCodeConsumo" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPropietarioC" />
+
+        <EditText
+            android:id="@+id/txtConsumo"
+            android:layout_width="171dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="18dp"
+            android:drawableLeft="@drawable/ic_baseline_assessment_24"
+            android:hint="Consumo actual"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="5"
+            app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintTop_toBottomOf="@+id/txtConsumoAnterior" />
 
         <Button
 

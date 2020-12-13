@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import BusinessLogic.BusinessConsumption;
 import Data.Models.HousesModel;
+import Data.Models.WaterBillsModel;
 import Presentation.Houses.activityScanner;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
     private boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
 
-    HousesModel home = new HousesModel();
+    WaterBillsModel billsModel = new WaterBillsModel();
 
     private HomeViewModel homeViewModel;
 
@@ -91,13 +92,13 @@ public class HomeFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK){
                 if (data != null){
                     String codigo = data.getStringExtra("codigo");
-                    home.setBarCode(codigo);
+                    new WaterBillsModel().setBarCode(codigo);
 
-                    new BusinessConsumption().BridgeHouseScanner(home);
+                    new BusinessConsumption().BridgeHouseScanner(billsModel);
 
 
-                    if (!home.isExistHouse()){
-                        Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
+                    if (!billsModel.isCorrectHouse()){
+                        Toast.makeText(getContext(), billsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
                     }
                     else{
                         btnAbrirConsumo.callOnClick();

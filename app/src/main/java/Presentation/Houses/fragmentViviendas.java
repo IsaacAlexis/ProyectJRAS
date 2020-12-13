@@ -48,6 +48,7 @@ public class fragmentViviendas extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_viviendas, container, false);
+
         house= BusinessHouse.getallHouses(mHouse);
         mRecycleView=view.findViewById(R.id.RecycleViewViviendas);
         mLayoutManger= new LinearLayoutManager(getContext());

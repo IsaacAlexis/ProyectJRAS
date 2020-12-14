@@ -287,7 +287,7 @@ public class GenaratorPDF {
                 mypaint.setTextAlign(Paint.Align.LEFT);
                 mypaint.setColor(Color.BLACK);
                 mypaint.setTextSize(8.0f);
-                canvas.drawText("REZAGO AGUA ["+new SimpleDateFormat("yyyy/MM").format(debit.getbReadDate())+"]",220,valueY,mypaint);
+                canvas.drawText("REZAGO AGUA ["+new Dates().getLastBill(debit.getbReadDate())+"]",220,valueY,mypaint);
 
                 mypaint.setTextAlign(Paint.Align.LEFT);
                 mypaint.setColor(Color.BLACK);

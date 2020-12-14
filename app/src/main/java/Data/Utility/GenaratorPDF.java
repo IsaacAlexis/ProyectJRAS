@@ -9,7 +9,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+
+import android.util.Base64;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.jras.R;
@@ -26,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
@@ -276,7 +280,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText("$"+new WaterBillsModel().getNowRate(),330,268,mypaint);
+            canvas.drawText("$"+new WaterBillsModel().getNowRate()+"0",330,268,mypaint);
             total+=new WaterBillsModel().getNowRate();
             int valueY=283;
             for(WaterBillsModel debit : debits){
@@ -345,20 +349,35 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
-            File file=new File(context.getExternalFilesDir("/"),"/ReciboDeAgua.pdf");
+            String test=""+new WaterBillsModel().getOwner().toString().toUpperCase()+" PERIODO "+SpellNumber(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
+            new ConsumptionsModel().setPdf(test);
+
+
+
+
+            File file=new File(context.getExternalFilesDir("/"),"/"+test);
             mypdfDocument.writeTo(new  FileOutputStream(file));
             mypdfDocument.close();
-            /*byte[] buffer=new byte[(int) file.length()];
-            ByteArrayOutputStream os =new ByteArrayOutputStream();
-            FileInputStream fls=new FileInputStream(file);
-            int read;
-            while((read=fls.read(buffer))!=-1){
-                os.write(buffer,0,read);
+            return false;
+            /*FileInputStream fileInputStreamReader = new FileInputStream(file);
+            byte[] bytes = new byte[(int)file.length()];
+            fileInputStreamReader.read(bytes);
+            encodedBase64 = new String(Base64.encodeToString(bytes,Base64.DEFAULT));
+            byte[] fl=encodedBase64.getBytes(StandardCharsets.UTF_8);*/
+//            byte[] bytes = loadFile(file);
+//
+//            String encodedString = new String(encoded);
+//            /*byte[] buffer=new byte[(int) file.length()];
+//            ByteArrayOutputStream os =new ByteArrayOutputStream();
+//            FileInputStream fls=new FileInputStream(file);
+//            int read;
+//            while((read=fls.read(buffer))!=-1){
+//                os.write(buffer,0,read);
 
-            }
-            fls.close();
-            os.close();
-            new ConsumptionsModel().setPdf(os.toByteArray());*/
+//            }
+//            fls.close();
+//            os.close();
+//            new ConsumptionsModel().setPdf(os.toByteArray());*/
 
             /*InputStream input=new FileInputStream(file);
             input.read(files);*/
@@ -366,12 +385,63 @@ public class GenaratorPDF {
 
 
 
-            return false;
+
+
         } catch (IOException e) {
-            e.printStackTrace();
+            new ConsumptionsModel().setValidationMessage("Ocurrio un error al generar Recibo de agua");
             return true;
         }
     }
+
+     public String SpellNumber(int number){
+        number-=1;
+        if(number==0){
+            number=12;
+        }
+        String Name="";
+         switch(number){
+             case 1:
+                 Name="ENERO";
+                 break;
+             case 2:
+                 Name="FEBRERO";
+                 break;
+             case 3:
+                 Name="MARZO";
+                 break;
+             case 4:
+                 Name="ABRIL";
+                 break;
+             case 5:
+                 Name="MAYO";
+                 break;
+             case 6:
+                 Name="JUNIO";
+                 break;
+             case 7:
+                 Name="JULIO";
+                 break;
+             case 8:
+                 Name="AGOSTO";
+                 break;
+             case 9:
+                 Name="SEPTIEMBRE";
+                 break;
+             case 10:
+                 Name="OCTUBRE";
+                 break;
+             case 11:
+                 Name="NOVIEMBRE";
+                 break;
+             case 12:
+                 Name="DICIEMBRE";
+                 break;
+             default:
+
+         }
+         return  Name;
+     }
+
     private Bitmap converterBitmap(int image,Context context){
         Bitmap bmp;
         bmp= BitmapFactory.decodeResource(context.getResources(),image);
@@ -413,5 +483,28 @@ public class GenaratorPDF {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
+    }
+    private static byte[] loadFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        long length = file.length();
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        byte[] bytes = new byte[(int)length];
+
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length
+                && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+            offset += numRead;
+        }
+
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file "+file.getName());
+        }
+
+        is.close();
+        return bytes;
     }
 }

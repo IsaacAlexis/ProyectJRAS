@@ -19,15 +19,13 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
         <EditText
             android:id="@+id/txtConsumoAnterior"
             android:layout_width="171dp"
             android:layout_height="63dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Anterior consumo"
+            android:hint="Consumo anterior"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="5"
@@ -37,11 +35,28 @@
             app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
             app:layout_constraintTop_toBottomOf="@+id/txtPropietarioC" />
 
+
+        <EditText
+            android:id="@+id/txtPagoAnterior"
+            android:layout_width="171dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_baseline_assessment_24"
+            android:hint="Pago anterior"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="5"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintTop_toBottomOf="@+id/txtConsumoAnterior" />
+
         <EditText
             android:id="@+id/txtConsumo"
             android:layout_width="171dp"
             android:layout_height="63dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_baseline_assessment_24"
             android:hint="Consumo actual"
             android:imeOptions="actionNext"
@@ -50,14 +65,14 @@
             app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/txtConsumoAnterior" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPagoAnterior" />
 
         <Button
 
             android:id="@+id/btnRegistrarConsumo"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bordes_redondos_rojo"
             android:text="Registrar"
             android:textColor="@android:color/black"

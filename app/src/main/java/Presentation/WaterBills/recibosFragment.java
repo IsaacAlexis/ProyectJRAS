@@ -1,5 +1,7 @@
 package Presentation.WaterBills;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,18 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import BusinessLogic.BusinessBills;
 import BusinessLogic.BusinessHouse;
+import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
 import Data.Models.WaterBillsModel;
+import Data.Utility.Messages;
 import Presentation.Houses.AdapterHouses;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -55,11 +61,13 @@ public class recibosFragment extends Fragment {
         searchView=view.findViewById(R.id.svSearchRecibos);
         waterBillsAdapter=new WaterBillsAdapter(bills, getContext(), new WaterBillsAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(String barCode, String owner, String street, String colony,
-                                    Integer houseNumber, Date readDate, Float readNow, Float nowRate) {
-
+            public void OnItemClick(String barCode, String owner, String street, String colony, Integer houseNumber,
+                                    Date readDate, Float readNow, Float nowRate, String nameFile) {
+                new ConsumptionsModel().setPdf(nameFile);
+                findNavController(view).navigate(R.id.fragmentInfoRecibo);
             }
         });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class fragmentConsumo extends Fragment {
     private TextView tvHouseNum;
     private EditText etConsumption;
     private EditText etLastConsumption;
+    private EditText etLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -62,6 +64,7 @@ public class fragmentConsumo extends Fragment {
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
         etLastConsumption=view.findViewById(R.id.txtConsumoAnterior);
+        etLastRate=view.findViewById(R.id.txtPagoAnterior);
         btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
 
         mostrarInfoViv(view);
@@ -72,19 +75,18 @@ public class fragmentConsumo extends Fragment {
             public void onClick(View v) {
                 if(!waterBillsModel.isExistFirstRegister()){
                     registrar(false);
+                    new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList);
 
 
                 }else {
                     registrar(true);
                     if(!(new GenaratorPDF().createPDFexample(getContext(),bill))){
                         new BusinessConsumption().BridgeConsumptionReading(cm);
-                    }else{
-                        cm.setValidationMessage("Ocurrio un error al generar Recibo de agua");
                     }
                 }
 
 
-                Toast.makeText(getContext(), "cm.getValidationMessage()", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), cm.getValidationMessage(), Toast.LENGTH_SHORT).show();
                 findNavController(view).navigate(R.id.nav_home);
             }
         });
@@ -100,6 +102,8 @@ public class fragmentConsumo extends Fragment {
             tvBarCode.setText(waterBillsModel.getBarCode());
             tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
             tvOwner.setText(waterBillsModel.getOwner());
+            etLastConsumption.setVisibility(View.VISIBLE);
+            etLastRate.setVisibility(View.VISIBLE);
 
 
         }else{
@@ -115,7 +119,7 @@ con normalidad*/
         if(!activity){
             cm.setIDUser(user.getCurrentIdUser());
             cm.setBarCode(tvBarCode.getText().toString());
-            cm.setReadDate(currentDate);
+            cm.setRate(Float.parseFloat(etLastRate.getText().toString()));
             consumptionsModelList.add(new ConsumptionsModel(currentDate,Float.parseFloat(etConsumption.getText().toString())));
             consumptionsModelList.add(new ConsumptionsModel(new Dates().getLastDate(),Float.parseFloat(etLastConsumption.getText().toString())));
 

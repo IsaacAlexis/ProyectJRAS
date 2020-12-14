@@ -3,6 +3,7 @@ package Security;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,10 +11,8 @@ import java.util.List;
 
 import Data.BDConnection;
 import Data.Models.ConsumptionsModel;
-import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
-import Data.Utility.Dates;
 
 public class scConsumption {
     BDConnection bd = new BDConnection();
@@ -51,19 +50,14 @@ public class scConsumption {
     public void ConsumptionReading(ConsumptionsModel cm){
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement cs2 = bd.connection.prepareCall("{call ConsumptionReading(?,?,?,?,?,?)}");
+            CallableStatement cs2 = bd.connection.prepareCall("{call ConsumptionReading(?,?,?,?,?)}");
             cs2.setLong(1,cm.getIDUser());
             cs2.setString(2,cm.getBarCode());
             cs2.setString(3,cm.getReadDate());
-            cs2.setString(4,new Dates().getLastDate());
-            cs2.setFloat(5,cm.getM3());
-            cs2.setBytes(6,cm.getPdf());
-
+            cs2.setFloat(4,cm.getM3());
+            cs2.setString(5,cm.getPdf());
             cs2.executeUpdate();
-
             cm.setValidationMessage("Registro realizado correctamente");
-
-
             cs2.close();
             bd.CloseConnection();
 
@@ -72,7 +66,7 @@ public class scConsumption {
         }
     }
     public void getDataBills(WaterBillsModel billsModel) {
-        long Folio=0;
+        long IdConsumption =0;
         try{
 
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -83,25 +77,35 @@ public class scConsumption {
 
             billsModel.setExistFirstRegister(false);
             while (Result.next()){
-               Folio=Result.getLong("IDConsu");
-               billsModel.setPreviousRate(Result.getFloat("LastRate"));
-               billsModel.setReadLast(Result.getFloat("LastRead"));
-               if(billsModel.getPreviousRate()==0){
+                Date readDate;
+                readDate=Result.getDate("ReadDate");
+                int Month=Integer.parseInt(new SimpleDateFormat("MM").format(readDate));
+                if(Integer.parseInt(new SimpleDateFormat("MM").format(new Date()))==Month){
+                    billsModel.setCorrectHouse(false);
+                    billsModel.setExistFirstRegister(false);
+                    billsModel.setValidationMessage("No se encuentra en tiempo de realizar el consumo");
+                }else{
+                    IdConsumption =Result.getLong("IDConsu");
+                    billsModel.setPreviousRate(Result.getFloat("LastRate"));
+                    billsModel.setReadLast(Result.getFloat("LastRead"));
+                    if(billsModel.getPreviousRate()==0){
 
-                    callableStatement = bd.connection.prepareCall("{call getRateConsumptions(?)}");
-                    callableStatement.setLong(1, Folio);
-                    ResultSet resultSet=callableStatement.executeQuery();
-                    while(resultSet.next()){
-                        billsModel.setPreviousRate(resultSet.getFloat("LastRate"));
+                        callableStatement = bd.connection.prepareCall("{call getRateConsumptions(?)}");
+                        callableStatement.setLong(1, IdConsumption);
+                        ResultSet resultSet=callableStatement.executeQuery();
+                        while(resultSet.next()){
+                            billsModel.setPreviousRate(resultSet.getFloat("LastRate"));
+                        }
+                    }
+                    billsModel.setCorrectHouse(true);
+                    billsModel.setExistFirstRegister(true);
+                    if(billsModel.getStatus().equals("SIN SERVICIO")){
+                        billsModel.setCorrectHouse(false);
+                        billsModel.setExistFirstRegister(false);
+                        billsModel.setValidationMessage("La vivienda se encuentra sin servicio de agua");
                     }
                 }
-               billsModel.setCorrectHouse(true);
-               billsModel.setExistFirstRegister(true);
-               if(billsModel.getStatus().equals("SIN SERVICIO")){
-                   billsModel.setCorrectHouse(false);
-                   billsModel.setExistFirstRegister(false);
-                   billsModel.setValidationMessage("La vivienda se encuentra sin servicio de agua");
-               }
+
             }
 
 
@@ -135,7 +139,7 @@ public class scConsumption {
         return billsModels;
     }
     public Float getRateNow(Float totalReadWater) {
-        Float RateNow =null;
+        float RateNow =0;
         try{
 
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -149,8 +153,29 @@ public class scConsumption {
             bd.CloseConnection();
 
         }catch(SQLException e){
-            RateNow =null;
+            RateNow =0;
         }
         return RateNow;
+    }
+
+    public boolean FirstConsumptionReading(ConsumptionsModel cm, List<ConsumptionsModel> consumptionsModelList) {
+        try{
+            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            CallableStatement cs2 = bd.connection.prepareCall("{call FirstConsumptionReading(?,?,?,?,?)}");
+            cs2.setLong(1,cm.getIDUser());
+            cs2.setString(2,cm.getBarCode());
+            cs2.setFloat(3,cm.getRate());
+            cs2.setFloat(4,consumptionsModelList.get(1).getM3());
+            cs2.setString(5,consumptionsModelList.get(1).getReadDate());
+            cs2.executeUpdate();
+            cm.setValidationMessage("Registro realizado correctamente");
+            cs2.close();
+            bd.CloseConnection();
+            return true;
+
+        }catch(SQLException e){
+            cm.setValidationMessage("Ocurrio un error al intentar registrar");
+            return false;
+        }
     }
 }

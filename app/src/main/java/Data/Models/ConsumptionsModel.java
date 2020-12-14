@@ -8,7 +8,7 @@ public class ConsumptionsModel {
     private String ReadDate;
     private float M3;
     private float Rate;
-    private static byte [] pdf;
+    private static String pdf;
     private String validationMessage;
 
     public ConsumptionsModel(long IDUser, long IDCost, String barCode, String readDate, float m3, float rate, String validationMessage) {
@@ -29,11 +29,11 @@ public class ConsumptionsModel {
         M3 = m3;
     }
 
-    public static byte[] getPdf() {
+    public static String getPdf() {
         return pdf;
     }
 
-    public static void setPdf(byte[] pdf) {
+    public static void setPdf(String pdf) {
         ConsumptionsModel.pdf = pdf;
     }
 

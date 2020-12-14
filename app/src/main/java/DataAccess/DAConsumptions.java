@@ -34,4 +34,7 @@ public class DAConsumptions {
     }
 
 
+    public boolean FirstConsumptionReading(ConsumptionsModel cm, List<ConsumptionsModel> consumptionsModelList) {
+        return C.FirstConsumptionReading(cm,consumptionsModelList);
+    }
 }

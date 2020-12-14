@@ -27,6 +27,7 @@ public class WaterBillsModel {
     private Date bReadDate;
     private Float bReadNow;
     private Float bNowRate;
+    private String bNameFile;
 
 
 
@@ -40,7 +41,7 @@ public class WaterBillsModel {
     public WaterBillsModel() {
     }
 
-    public WaterBillsModel(String bBarCode, String bOwner, String bStreet, String bColony, Integer bHouseNumber, Date bReadDate, Float bReadNow, Float bNowRate) {
+    public WaterBillsModel(String bBarCode, String bOwner, String bStreet, String bColony, Integer bHouseNumber, Date bReadDate, Float bReadNow, Float bNowRate,String bNameFile) {
         this.bBarCode = bBarCode;
         this.bOwner = bOwner;
         this.bStreet = bStreet;
@@ -49,6 +50,7 @@ public class WaterBillsModel {
         this.bReadDate = bReadDate;
         this.bReadNow = bReadNow;
         this.bNowRate = bNowRate;
+        this.bNameFile=bNameFile;
     }
 
 
@@ -238,5 +240,13 @@ public class WaterBillsModel {
 
     public void setbReadNow(Float bReadNow) {
         this.bReadNow = bReadNow;
+    }
+
+    public String getbNameFile() {
+        return bNameFile;
+    }
+
+    public void setbNameFile(String nameFile) {
+        bNameFile = nameFile;
     }
 }

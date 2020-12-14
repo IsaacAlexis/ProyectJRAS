@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Data.BDConnection;
+import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
 
 public class scBills {
@@ -15,12 +16,13 @@ public class scBills {
         List<WaterBillsModel> bill = new ArrayList<>();
         try {
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement = bd.connection.prepareCall("{call GetAllConsumptions}");
+            CallableStatement callableStatement = bd.connection.prepareCall("{call GetAllConsumptions(?)}");
+            callableStatement.setString(1,new UsersModel().getCurrentColony());
             ResultSet Result = callableStatement.executeQuery();
             while (Result.next()) {
                 bill.add(new WaterBillsModel(Result.getString("BarCode"), Result.getString("Owner"),
                         Result.getString("Street"), Result.getString("Colony"), Result.getInt("HouseNum"),
-                        Result.getDate("ReadDate"), Result.getFloat("M3"), Result.getFloat("Rate")));
+                        Result.getDate("ReadDate"), Result.getFloat("M3"), Result.getFloat("Rate"),Result.getString("FileBill")));
 
             }
 

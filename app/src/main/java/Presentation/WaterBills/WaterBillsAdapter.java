@@ -39,7 +39,7 @@ public class WaterBillsAdapter  extends RecyclerView.Adapter<WaterBillsAdapter.V
     }
     public  interface OnItemClickListener{
         void OnItemClick(String barCode, String owner, String street, String colony,
-                         Integer houseNumber, Date readDate, Float readNow, Float nowRate);
+                         Integer houseNumber, Date readDate, Float readNow, Float nowRate,String nameFile);
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconView;
@@ -62,7 +62,7 @@ public class WaterBillsAdapter  extends RecyclerView.Adapter<WaterBillsAdapter.V
                 public void onClick(View v) {
                     listener.OnItemClick(bills.getbBarCode(),bills.getbOwner(),
                             bills.getbStreet(),bills.getbColony(),bills.getbHouseNumber(),bills.getbReadDate(),
-                            bills.getbReadNow(),bills.getbNowRate());
+                            bills.getbReadNow(),bills.getbNowRate(),bills.getbNameFile());
                 }
             });
         }

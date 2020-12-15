@@ -1,11 +1,18 @@
 package Data.Utility;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.jras.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Validations {
    public boolean isInvalid;
+   public boolean finalValidation = false;
     public boolean IsTextboxEmpty(EditText field, String errorMessage){
         if(field.getText().toString().trim().equals("")){
             field.setError(errorMessage);
@@ -26,14 +33,67 @@ public class Validations {
             return false;
         }
     }
-    public void IsValidTextboxOnClick(EditText field, String parameterstovalidate,String errorMessage){
-        field.setOnKeyListener(new View.OnKeyListener() {
+
+    public boolean IsValidTextboxMessage(EditText field, String parameterstovalidate){
+        if(!field.getText().toString().matches(parameterstovalidate)){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void IsValidTextboxOnClick(EditText field, TextInputLayout til, String parameterstovalidate, String errorMessage, Button btn){
+//        field.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if(!field.getText().toString().matches(parameterstovalidate)){
+//                    til.setError(errorMessage);
+//                    btn.setEnabled(false);
+//                    return true;
+//                }
+//                else{
+//                    til.setErrorEnabled(false);
+//                    btn.setEnabled(true);
+//                    return false;
+//                }
+//            }
+//        });
+
+        if (finalValidation){
+            if(!field.getText().toString().matches(parameterstovalidate) || field.getText().length()==0){
+                til.setError(errorMessage);
+                isInvalid = true;
+            }
+            else{
+                til.setErrorEnabled(false);
+                isInvalid = false;
+            }
+        }
+
+        field.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!field.getText().toString().matches(parameterstovalidate)){
-                    field.setError(errorMessage);
+                    til.setError(errorMessage);
+                    btn.setEnabled(false);
+                    btn.setBackgroundResource(R.drawable.boton_desabilitado);
+                    isInvalid = true;
                 }
-                return false;
+                else{
+                    til.setErrorEnabled(false);
+                    btn.setEnabled(true);
+                    btn.setBackgroundResource(R.drawable.bordes_redondos_azul);
+                    isInvalid=false;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

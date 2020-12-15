@@ -24,55 +24,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txtApellidosM"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="3dp"
-        android:maxLength="25"
-        android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Apellidos"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/txtNombreM"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:maxLength="25"
-        android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Nombres"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtApellidosM" />
-
-    <EditText
-        android:id="@+id/txtEmailM"
-        android:layout_width="309dp"
-        android:layout_height="43dp"
-        android:maxLength="50"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombreM" />
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="311dp"
         android:layout_height="58dp"
-        android:layout_marginTop="2dp"
         android:stretchColumns="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailM">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout17">
 
         <TableRow
             android:layout_width="288dp"
@@ -123,39 +83,12 @@
 
     </TableLayout>
 
-    <EditText
-        android:id="@+id/txtUsuarioM"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:maxLength="15"
-        android:drawableLeft="@drawable/user"
-        android:hint="Nombre de Usuario"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
-
-
-    <EditText
-        android:id="@+id/txtStatusm"
-        android:layout_width="310dp"
-        android:layout_height="47dp"
-        android:maxLength="20"
-        android:drawableLeft="@drawable/ic_baseline_status_on_24"
-        android:ems="10"
-        android:hint="Status"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsuarioM" />
-
     <Button
 
         android:id="@+id/btnConfirmarUsuario"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Editar"
         android:textColor="@android:color/black"
@@ -163,7 +96,87 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStatusm" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtApellidosM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_face_24"
+            android:hint="Apellidos" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout11">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNombreM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_face_24"
+            android:hint="Nombre(s)" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmailM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtUsuarioM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:hint="Nombre de Usuario" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtStatusm"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_status_on_24"
+            android:hint="Estatus" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

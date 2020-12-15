@@ -215,7 +215,7 @@
                 android:layout_height="47dp"
                 android:drawableStart="@drawable/ic_baseline_addchart_24"
                 android:hint="No. Medidor"
-                android:maxLength="8" />
+                android:maxLength="9" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

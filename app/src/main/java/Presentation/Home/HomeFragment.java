@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import BusinessLogic.BusinessConsumption;
 import Data.Models.HousesModel;
+import Data.Models.WaterBillsModel;
 import Presentation.Houses.activityScanner;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -30,10 +31,6 @@ import static androidx.navigation.Navigation.findNavController;
 public class HomeFragment extends Fragment {
 
     public FloatingActionButton fabConsumo;
-
-
-    HousesModel home = new HousesModel();
-
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -45,7 +45,7 @@
                     android:id="@+id/BarCodeRecibo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Codigo de Barras"
+                    android:text="Recibo de agua"
                     android:textSize="23sp"
                     android:textStyle="bold"/>
 

@@ -8,6 +8,7 @@ public class ConsumptionsModel {
     private String ReadDate;
     private float M3;
     private float Rate;
+    private static String pdf;
     private String validationMessage;
 
     public ConsumptionsModel(long IDUser, long IDCost, String barCode, String readDate, float m3, float rate, String validationMessage) {
@@ -21,6 +22,19 @@ public class ConsumptionsModel {
     }
 
     public ConsumptionsModel() {
+    }
+
+    public ConsumptionsModel(String readDate, float m3) {
+        ReadDate = readDate;
+        M3 = m3;
+    }
+
+    public static String getPdf() {
+        return pdf;
+    }
+
+    public static void setPdf(String pdf) {
+        ConsumptionsModel.pdf = pdf;
     }
 
     public long getIDUser() {

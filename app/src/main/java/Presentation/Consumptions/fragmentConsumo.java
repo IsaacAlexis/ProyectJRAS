@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ import android.widget.Toast;
 
 import com.example.jras.R;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
@@ -35,6 +38,10 @@ import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 import Presentation.Home.HomeFragment;
 import Presentation.Houses.activityScanner;
+import Data.Models.WaterBillsModel;
+import Data.Utility.Dates;
+import Data.Utility.GenaratorPDF;
+import Data.Utility.Messages;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -47,6 +54,8 @@ public class fragmentConsumo extends Fragment {
     private TextView tvFechaConsumo;
     private Button btnEscanear;
     private Button btnBuscar;
+    private EditText etLastConsumption;
+    private EditText etLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
@@ -56,9 +65,13 @@ public class fragmentConsumo extends Fragment {
     private static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     private boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
-    HousesModel home = new HousesModel();
+    WaterBillsModel waterBillsModel = new WaterBillsModel();
     ConsumptionsModel cm = new ConsumptionsModel();
     UsersModel user = new UsersModel();
+    List<WaterBillsModel> bill=new ArrayList<>();
+    List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
+
+
 
     public fragmentConsumo() {
         // Required empty public constructor
@@ -76,6 +89,8 @@ public class fragmentConsumo extends Fragment {
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
         tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
+        etLastConsumption=view.findViewById(R.id.txtConsumoAnterior);
+        etLastRate=view.findViewById(R.id.txtPagoAnterior);
         btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
         btnEscanear = view.findViewById(R.id.btnEscanearConsumo);
         btnBuscar = view.findViewById(R.id.btnBuscarConsumo);
@@ -125,17 +140,30 @@ public class fragmentConsumo extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manualText();
+//                manualText();
             }
         });
+
+        mostrarInfoViv(view);
 
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar();
-                new BusinessConsumption().BridgeConsumptionReading(cm);
-                Toast.makeText(getContext(), "Consumo registrado correctamente", Toast.LENGTH_SHORT).show();
+                if(!waterBillsModel.isExistFirstRegister()){
+                    registrar(false);
+                    new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList);
+
+
+                }else {
+                    registrar(true);
+                    if(!(new GenaratorPDF().createPDFexample(getContext(),bill))){
+                        new BusinessConsumption().BridgeConsumptionReading(cm);
+                    }
+                }
+
+
+                Toast.makeText(getContext(), cm.getValidationMessage(), Toast.LENGTH_SHORT).show();
                 findNavController(view).navigate(R.id.nav_home);
             }
         });
@@ -144,31 +172,59 @@ public class fragmentConsumo extends Fragment {
         return view;
     }
 
-    private void manualText(){
-        home.setBarCode(tvBarCode.getText().toString());
-        new BusinessConsumption().BridgeHouseScanner(home);
+//    private void manualText(){
+//        waterBillsModel.setBarCode(tvBarCode.getText().toString());
+//        new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
+//
+//        if (!home.isExistHouse()){
+//            Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
+//            tvHouseNum.setText("");
+//            tvOwner.setText("");
+//        }
+//        else{
+//            mostrarInfoViv();
+//        }
+//    }
 
-        if (!home.isExistHouse()){
-            Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
-            tvHouseNum.setText("");
-            tvOwner.setText("");
+    private void mostrarInfoViv(View view){
+        if(!waterBillsModel.isExistFirstRegister()){
+            new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
+            tvBarCode.setText(waterBillsModel.getBarCode());
+            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+            tvOwner.setText(waterBillsModel.getOwner());
+            etLastConsumption.setVisibility(View.VISIBLE);
+            etLastRate.setVisibility(View.VISIBLE);
+
+
+        }else{
+            tvBarCode.setText(waterBillsModel.getBarCode());
+            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+            tvOwner.setText(waterBillsModel.getOwner());
         }
-        else{
-            mostrarInfoViv();
+
+    }
+/*activity-> se refiere al camino que va tomar si seria el primer registro o realizar el registro con
+con normalidad*/
+    private void registrar(Boolean activity){
+        if(!activity){
+            cm.setIDUser(user.getCurrentIdUser());
+            cm.setBarCode(tvBarCode.getText().toString());
+            cm.setRate(Float.parseFloat(etLastRate.getText().toString()));
+            consumptionsModelList.add(new ConsumptionsModel(currentDate,Float.parseFloat(etConsumption.getText().toString())));
+            consumptionsModelList.add(new ConsumptionsModel(new Dates().getLastDate(),Float.parseFloat(etLastConsumption.getText().toString())));
+
+        }else{
+            cm.setIDUser(user.getCurrentIdUser());
+            cm.setBarCode(tvBarCode.getText().toString());
+            cm.setReadDate(currentDate);
+            cm.setM3(Float.parseFloat(etConsumption.getText().toString()));
+            waterBillsModel.setReadNow(Float.parseFloat(etConsumption.getText().toString()));
+            waterBillsModel.setReadDate(new Dates().getDateBills());
+            waterBillsModel.setNowRate(new BusinessConsumption().BridgeGetRateNow(waterBillsModel.getReadNow()-
+                    waterBillsModel.getReadLast()));
+            bill=new BusinessConsumption().BridgeWaterBills(cm);
         }
-    }
 
-    private void mostrarInfoViv(){
-        tvBarCode.setText(home.getModifybarCode());
-        tvHouseNum.setText(home.getModifyhouseNumber().toString());
-        tvOwner.setText(home.getModifyowner());
-    }
-
-    private void registrar(){
-        cm.setIDUser(user.getCurrentIdUser());
-        cm.setBarCode(tvBarCode.getText().toString());
-        cm.setReadDate(currentDate);
-        cm.setM3(Float.parseFloat(etConsumption.getText().toString()));
     }
 
     public void clearFields(){
@@ -190,20 +246,32 @@ public class fragmentConsumo extends Fragment {
             if (resultCode == Activity.RESULT_OK){
                 if (data != null){
                     codigo = data.getStringExtra("codigo");
-                    home.setBarCode(codigo);
+                    new WaterBillsModel().setBarCode(codigo);
 
-                    new BusinessConsumption().BridgeHouseScanner(home);
+                    new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
 
 
-                    if (!home.isExistHouse()){
-                        Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
-                        clearFields();
+                    if (!waterBillsModel.isCorrectHouse()){
+                        Toast.makeText(getContext(), waterBillsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        mostrarInfoViv();
-                        btnEscanear.setVisibility(View.VISIBLE);
-                        btnBuscar.setVisibility(View.INVISIBLE);
-                    }
+
+
+                    //*****************************Mio
+//                    codigo = data.getStringExtra("codigo");
+//                    waterBillsModel.setBarCode(codigo);
+//
+//                    new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
+//
+//
+//                    if (!home.isExistHouse()){
+//                        Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
+//                        clearFields();
+//                    }
+//                    else{
+//                        mostrarInfoViv();
+//                        btnEscanear.setVisibility(View.VISIBLE);
+//                        btnBuscar.setVisibility(View.INVISIBLE);
+//                    }
                 }
             }
         }

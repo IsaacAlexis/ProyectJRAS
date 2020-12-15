@@ -26,4 +26,16 @@ public class Messages {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    public  void messageAlert(Context context, String messageDescription, String messageTitle, View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(messageDescription)
+                .setIcon(android.R.drawable.ic_menu_save)
+                .setTitle(messageTitle)
+                .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

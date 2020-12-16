@@ -125,6 +125,7 @@ public class fragmentConsumo extends Fragment {
                 if (tvBarCode.getText().length()!=0){
                     btnEscanear.setVisibility(View.INVISIBLE);
                     btnBuscar.setVisibility(View.VISIBLE);
+                    waterBillsModel.setBarCode(tvBarCode.getText().toString());
                 }else{
                     btnEscanear.setVisibility(View.VISIBLE);
                     btnBuscar.setVisibility(View.INVISIBLE);
@@ -139,12 +140,10 @@ public class fragmentConsumo extends Fragment {
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                manualText();
+            public void onClick(View view) {
+                mostrarInfoViv(view);
             }
         });
-
-        mostrarInfoViv(view);
 
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -187,21 +186,26 @@ public class fragmentConsumo extends Fragment {
 //    }
 
     private void mostrarInfoViv(View view){
-        if(!waterBillsModel.isExistFirstRegister()){
-            new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
-            tvBarCode.setText(waterBillsModel.getBarCode());
-            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
-            tvOwner.setText(waterBillsModel.getOwner());
-            etLastConsumption.setVisibility(View.VISIBLE);
-            etLastRate.setVisibility(View.VISIBLE);
+        new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
 
-
+        if (!waterBillsModel.isCorrectHouse()){
+            new Messages().messageToast(getContext(),waterBillsModel.getValidationMessage());
         }else{
-            tvBarCode.setText(waterBillsModel.getBarCode());
-            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
-            tvOwner.setText(waterBillsModel.getOwner());
-        }
+            if(!waterBillsModel.isExistFirstRegister()){
+                new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
+                tvBarCode.setText(waterBillsModel.getBarCode());
+                tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+                tvOwner.setText(waterBillsModel.getOwner());
+                etLastConsumption.setVisibility(View.VISIBLE);
+                etLastRate.setVisibility(View.VISIBLE);
 
+
+            }else{
+                tvBarCode.setText(waterBillsModel.getBarCode());
+                tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+                tvOwner.setText(waterBillsModel.getOwner());
+            }
+        }
     }
 /*activity-> se refiere al camino que va tomar si seria el primer registro o realizar el registro con
 con normalidad*/
@@ -234,7 +238,7 @@ con normalidad*/
     }
 
 
-    //Metodos para el scaner
+    //*************************************************Metodos para el scaner******************************************************************************
     private void escanear(){
         Intent i = new Intent(fragmentConsumo.this.getContext(), activityScanner.class);
         startActivityForResult(i,CODIGO_INTENT);
@@ -246,9 +250,10 @@ con normalidad*/
             if (resultCode == Activity.RESULT_OK){
                 if (data != null){
                     codigo = data.getStringExtra("codigo");
-                    new WaterBillsModel().setBarCode(codigo);
+                    waterBillsModel.setBarCode(codigo);
 
-                    new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
+                    btnBuscar.callOnClick();
+                    btnBuscar.setVisibility(View.INVISIBLE);
 
 
                     if (!waterBillsModel.isCorrectHouse()){

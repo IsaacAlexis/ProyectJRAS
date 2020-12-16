@@ -16,7 +16,9 @@ import java.sql.SQLException;
 
 import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Validations;
+import Presentation.Users.fragmentRegistroUsuarios;
 
 public class loginActivity extends AppCompatActivity {
 
@@ -26,6 +28,7 @@ public class loginActivity extends AppCompatActivity {
 
     UsersModel ini = new UsersModel();
     Validations validations=new Validations();
+    LoadingDialog loadingDialog = new LoadingDialog(loginActivity.this);
 
 
     @Override
@@ -41,13 +44,16 @@ public class loginActivity extends AppCompatActivity {
         btnUserLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loadingDialog.startLoadingDialogActivity();
                 if (validations.IsValidTextbox(txtUser,"^[0-9a-zA-Z]+$","Usuario invalido")|
                         validations.IsTextboxEmpty(txtPass,"Contraseña invalida")){
                     Toast.makeText(loginActivity.this,"Los datos ingresados son incorrectos",Toast.LENGTH_LONG).show();
+                    loadingDialog.dismissDialog();
+
                 }
                 else{
                     try {
+
                             ini.setUserName(txtUser.getText().toString().trim());
                             ini.setPassword(txtPass.getText().toString().trim());
 
@@ -56,6 +62,7 @@ public class loginActivity extends AppCompatActivity {
                             if (ini.isUserLoggedIn() == true){
                                 txtUser.setError(null);
                                 txtPass.setError(null);
+                                loadingDialog.dismissDialog();
                                 Toast.makeText(loginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(loginActivity.this, menuActivity.class);
                                 startActivity(intent);

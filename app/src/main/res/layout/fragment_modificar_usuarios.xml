@@ -25,70 +25,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="311dp"
-        android:layout_height="58dp"
-        android:stretchColumns="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout17">
-
-        <TableRow
-            android:layout_width="288dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/lbRolm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Rol      "
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <RadioGroup
-                android:id="@+id/rolUsuarioM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_span="3"
-                android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbAdminM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Administrador" />
-
-                <RadioButton
-                    android:id="@+id/rbEmpleadoM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Empleado" />
-
-                <RadioButton
-                    android:id="@+id/rbInvitadoM"
-                    android:layout_width="97dp"
-                    android:layout_height="match_parent"
-                    android:text="Invitado" />
-            </RadioGroup>
-
-        </TableRow>
-
-
-    </TableLayout>
-
     <Button
 
         android:id="@+id/btnConfirmarUsuario"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Editar"
         android:textColor="@android:color/black"
@@ -96,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRolEditUser" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout11"
@@ -162,21 +104,25 @@
             android:hint="Nombre de Usuario" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/spinnerStatusEditUser"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtStatusm"
-            android:layout_width="311dp"
-            android:layout_height="47dp"
-            android:drawableStart="@drawable/ic_baseline_status_on_24"
-            android:hint="Estatus" />
-    </com.google.android.material.textfield.TextInputLayout>
+    />
+
+    <Spinner
+        android:id="@+id/spinnerRolEditUser"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="81dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnConfirmarUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerStatusEditUser" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

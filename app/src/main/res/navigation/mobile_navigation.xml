@@ -101,7 +101,7 @@
         android:id="@+id/fragementModificarUsuarios"
         android:name="Presentation.Users.fragementModificarUsuarios"
         android:label="Modificar usuarios"
-        tools:layout="@layout/fragement_modificar_usuarios" />
+        tools:layout="@layout/fragment_modificar_usuarios" />
 
     <fragment
         android:id="@+id/fragmentModificarViviendas"

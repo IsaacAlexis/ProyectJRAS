@@ -1,9 +1,5 @@
 package Presentation.Users;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
@@ -18,9 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.jras.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -29,6 +23,7 @@ import java.util.Date;
 
 import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
@@ -43,8 +38,10 @@ public class fragmentRegistroUsuarios extends Fragment {
     private EditText txtUsuario, txtPassUsuario, txtPassConfirm;
     private Button btnRegistrar;
     private TextInputLayout tilApellidos, tilNombre, tilEmail, tilUsuario, tilPass, tilConfirmPass;
+
     //Spinner
     private Spinner spinnerRol;
+    private String spnSeleccion;
     String[] opciones = {"Seleccione un Rol de Usuario:","Administrador","Empleado"};
 
     //instancias de otras clases
@@ -64,18 +61,17 @@ public class fragmentRegistroUsuarios extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_registro_usuarios, container, false);
 
         getvalues(view);
-        ValidateFields();
-//
-//        btnRegistrar.setEnabled(false);
-//        btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+        validateFields();
+        selectedRole();
+
+        btnRegistrar.setEnabled(false);
+        btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
 
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validate.finalValidation=true;
-                ValidateFields();
-                selectedRole();
+                textboxEmpty();
 
                 if (!validate.isInvalid){
                     setvalues();
@@ -89,46 +85,15 @@ public class fragmentRegistroUsuarios extends Fragment {
                             messages.messageToast(getContext(),data.getValidationMessage());
                             findNavController(view).navigate(R.id.fragmentUsuarios);
                         }
-
                     }
-                }else{
-                    ValidateFields();
-                    messages.messageToast(getContext(),"Debes llenar todos los campos correctamente");
-                }
-//                if (validate.IsValidTextbox(txtApellidos, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar un apellido") |
-//                        validate.IsValidTextbox(txtNombre, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$", "Debes ingresar un nombre") |
-//                        validate.IsValidTextbox(txtEmail, "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$", "Debes ingresar un correo electronico") |
-//                        validate.IsValidTextbox(txtPassUsuario, "^(?=.*\\d)(?=.*[\\u0021-\\u002b\\u003c-\\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$", "Debes ingresar una contraseña valida(entre 8 y 16 caracteres, una mayuscula,numeros y un simbolo)") |
-//                        isPasswordEquals(txtPassConfirm, "Debes confirmar la contraseña ingresada") |
-//                        validate.IsValidTextbox(txtUsuario, "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$", "Debes ingresar un usuario que contengan letras y numeros(entre 8 y 16 caracteres ") |
-//                        isSelectedRole()) {
-//                    messages.messageToast(getContext(),"Debes llenar todos los campos correctamente");
-//
-//                   } else {
-//                    setvalues();
-//                    new BusinessUser().BridgeUserRegister(data);
-//                    if(!data.isRegisterUser()){
-//                        messages.messageAlert(getContext(),data.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentUsuarios);
-//                    }else{
-//                        if(data.getUserExist()){
-//                            messages.messageToast(getContext(),data.getValidationMessage());
-//                        }else{
-//                            messages.messageToast(getContext(),data.getValidationMessage());
-//                            findNavController(view).navigate(R.id.fragmentUsuarios);
-//                        }
-//
-//                    }
-//                }
+                }//fin de if(!validate.isInvalid)
             }
-
-
-
-
-        });
-
-
+        });//fin de OnClick btnRegistrar
         return view;
     }//fin onCreateView
+
+    // ****************************************************************Metodos***********************************************************
+
     public void setvalues(){
         data.setLastName(txtApellidos.getText().toString());
         data.setFirstName(txtNombre.getText().toString());
@@ -140,40 +105,33 @@ public class fragmentRegistroUsuarios extends Fragment {
         data.setUserStatus("ACTIVO");
         data.setAddedDate(currentDateandTime);
         data.setModDate(currentDateandTime);
+    }//fin de setValues()
 
-    }
     private void selectedRole() {
         spinnerRol.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.spinner_item_jraspinners, opciones));
 
         spinnerRol.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String seleccion = spinnerRol.getSelectedItem().toString();
+                spnSeleccion = spinnerRol.getSelectedItem().toString();
 
-                switch (seleccion){
+                switch (spnSeleccion){
                     case "Administrador":
                     case "Empleado":
-                        data.setRole(seleccion);
-                        messages.messageToast(getContext(),seleccion);
+                        data.setRole(spnSeleccion);
+                        messages.messageToast(getContext(),spnSeleccion);
                         btnRegistrar.setEnabled(true);
+                        btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_azul);
                         validate.isInvalid = false;
                         break;
-                    case "Seleccione un Rol de Usuario":
-                        messages.messageToast(getContext(),"Debes seleccionar un rol de usuario");
-                        btnRegistrar.setEnabled(false);
-                        validate.isInvalid = true;
-                        break;
-                }
-            }
+                }//fin de switch
+            }//fin onItemSelected Spinner
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                messages.messageToast(getContext(),"Debes seleccionar un rol de usuario");
-                btnRegistrar.setEnabled(false);
-                validate.isInvalid = true;
             }
-        });
-    }
+        });//fin setOnItemSelectedListener Spinner
+    }//fin de selectedRole()
 
     private void isPasswordEquals(EditText field) {
         txtPassConfirm.addTextChangedListener(new TextWatcher() {
@@ -198,7 +156,8 @@ public class fragmentRegistroUsuarios extends Fragment {
 
             }
         });
-    }
+    }//fin de isPasswordEquals()
+
     private void getvalues(View view) {
         txtApellidos= view.findViewById(R.id.txtApellidos);
         txtNombre= view.findViewById(R.id.txtNombre);
@@ -208,7 +167,7 @@ public class fragmentRegistroUsuarios extends Fragment {
         txtUsuario= view.findViewById(R.id.txtUsuario);
         btnRegistrar=view.findViewById(R.id.btnregistrarUsuario);
 
-        spinnerRol = (Spinner)view.findViewById(R.id.spnRolUser);
+        spinnerRol = view.findViewById(R.id.spnRolUser);
 
         //TextInputLayout's
         tilApellidos=view.findViewById(R.id.textInputLayout7);
@@ -217,17 +176,33 @@ public class fragmentRegistroUsuarios extends Fragment {
         tilUsuario=view.findViewById(R.id.textInputLayout10);
         tilPass=view.findViewById(R.id.textInputLayout4);
         tilConfirmPass=view.findViewById(R.id.textInputLayout);
-    }
+    }//fin de getValues()
 
-    private void ValidateFields(){
+    private void validateFields(){
         validate.IsValidTextboxOnClick(txtApellidos,    tilApellidos,   regEx.validNameLstName, "Ingresa un apellido correctamente",btnRegistrar);
         validate.IsValidTextboxOnClick(txtNombre,       tilNombre,      regEx.validNameLstName, "Ingresa un nombre correctamente",btnRegistrar);
         validate.IsValidTextboxOnClick(txtEmail,        tilEmail,       regEx.validEmail,       "Ingresa un correo electronico valido",btnRegistrar);
         validate.IsValidTextboxOnClick(txtUsuario,      tilUsuario,     regEx.validUser,        "Ingresa un usuario valido (entre 8 y 16 caracteres incluidas letras y números)",btnRegistrar);
         validate.IsValidTextboxOnClick(txtPassUsuario,  tilPass,        regEx.validPassword,    "Ingresar una contraseña valida(entre 8 y 16 caracteres, una mayuscula, numeros y un simbolo)",btnRegistrar);
         isPasswordEquals(txtPassConfirm);
-    }
+    }//fin de validateFields()
 
-
+    private void textboxEmpty(){
+        if (txtApellidos.getText().length()==0 || txtNombre.getText().length()==0 || txtEmail.getText().length()==0 || txtUsuario.getText().length()==0 ||
+        txtPassUsuario.getText().length()==0 || txtPassConfirm.getText().length()==0){
+            messages.messageToast(getContext(),"Debes llenar todos los campos correctamente");
+            validate.isInvalid=true;
+        }
+        else{
+            if (spnSeleccion=="Seleccione un Rol de Usuario:"){
+                messages.messageToast(getContext(),"Debes seleccionar un rol de usuario");
+                btnRegistrar.setEnabled(false);
+                btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                validate.isInvalid=true;
+            }else{
+                validate.isInvalid=false;
+            }
+        }
+    }//fin textboxEmpty()
 
 }

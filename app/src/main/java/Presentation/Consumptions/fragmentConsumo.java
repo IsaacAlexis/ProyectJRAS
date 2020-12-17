@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +79,7 @@ public class fragmentConsumo extends Fragment {
 
                 }else {
                     registrar(true);
-                    if(!(new GenaratorPDF().createPDFexample(getContext(),bill))){
+                    if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
                         new BusinessConsumption().BridgeConsumptionReading(cm);
                     }
                 }

@@ -30,7 +30,7 @@ import static androidx.navigation.Navigation.findNavController;
 
 public class HomeFragment extends Fragment {
 
-    private Button btnAbrirConsumo;
+    private FloatingActionButton btnAbrirConsumo;
     public FloatingActionButton fabConsumo;
     //Variables del Scanner
     private static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
@@ -48,7 +48,8 @@ public class HomeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         fabConsumo=view.findViewById(R.id.fabConsumo);
-        btnAbrirConsumo = view.findViewById(R.id.btnAbrirConsumo);
+        btnAbrirConsumo=view.findViewById(R.id.abrirConsumo);
+
         verificaryPedirPermisosDeCamara();
 
 
@@ -93,10 +94,7 @@ public class HomeFragment extends Fragment {
                 if (data != null){
                     String codigo = data.getStringExtra("codigo");
                     new WaterBillsModel().setBarCode(codigo);
-
                     new BusinessConsumption().BridgeHouseScanner(billsModel);
-
-
                     if (!billsModel.isCorrectHouse()){
                         Toast.makeText(getContext(), billsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
                     }

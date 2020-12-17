@@ -171,20 +171,6 @@ public class fragmentConsumo extends Fragment {
         return view;
     }
 
-//    private void manualText(){
-//        waterBillsModel.setBarCode(tvBarCode.getText().toString());
-//        new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
-//
-//        if (!home.isExistHouse()){
-//            Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
-//            tvHouseNum.setText("");
-//            tvOwner.setText("");
-//        }
-//        else{
-//            mostrarInfoViv();
-//        }
-//    }
-
     private void mostrarInfoViv(View view){
         new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
 
@@ -259,28 +245,10 @@ con normalidad*/
                     if (!waterBillsModel.isCorrectHouse()){
                         Toast.makeText(getContext(), waterBillsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-
-                    //*****************************Mio
-//                    codigo = data.getStringExtra("codigo");
-//                    waterBillsModel.setBarCode(codigo);
-//
-//                    new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
-//
-//
-//                    if (!home.isExistHouse()){
-//                        Toast.makeText(getContext(), "El código no existe, escanee un código diferente", Toast.LENGTH_SHORT).show();
-//                        clearFields();
-//                    }
-//                    else{
-//                        mostrarInfoViv();
-//                        btnEscanear.setVisibility(View.VISIBLE);
-//                        btnBuscar.setVisibility(View.INVISIBLE);
-//                    }
                 }
             }
         }
-    }
+    }//fin de onActivityResult
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){

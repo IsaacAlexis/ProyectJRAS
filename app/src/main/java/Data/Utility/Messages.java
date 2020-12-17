@@ -14,6 +14,9 @@ public class Messages {
     public void messageToast(Context context,String message){
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
     }
+    public void messageToastShort(Context context,String message){
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+    }
     public  void messageAlert(Context context, String messageDescription, String messageTitle, View view,final int fregment){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(messageDescription)

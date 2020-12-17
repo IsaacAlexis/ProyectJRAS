@@ -42,21 +42,6 @@ public class Validations {
     }
 
     public void IsValidTextboxOnClick(EditText field, TextInputLayout til, String parameterstovalidate, String errorMessage, Button btn){
-//        field.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(!field.getText().toString().matches(parameterstovalidate)){
-//                    til.setError(errorMessage);
-//                    btn.setEnabled(false);
-//                    return true;
-//                }
-//                else{
-//                    til.setErrorEnabled(false);
-//                    btn.setEnabled(true);
-//                    return false;
-//                }
-//            }
-//        });
         field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -11,8 +11,7 @@ import com.example.jras.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Validations {
-   public boolean isInvalid;
-   public boolean finalValidation = false;
+   public boolean isInvalid = false;
     public boolean IsTextboxEmpty(EditText field, String errorMessage){
         if(field.getText().toString().trim().equals("")){
             field.setError(errorMessage);
@@ -43,33 +42,6 @@ public class Validations {
     }
 
     public void IsValidTextboxOnClick(EditText field, TextInputLayout til, String parameterstovalidate, String errorMessage, Button btn){
-//        field.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(!field.getText().toString().matches(parameterstovalidate)){
-//                    til.setError(errorMessage);
-//                    btn.setEnabled(false);
-//                    return true;
-//                }
-//                else{
-//                    til.setErrorEnabled(false);
-//                    btn.setEnabled(true);
-//                    return false;
-//                }
-//            }
-//        });
-
-        if (finalValidation){
-            if(!field.getText().toString().matches(parameterstovalidate) || field.getText().length()==0){
-                til.setError(errorMessage);
-                isInvalid = true;
-            }
-            else{
-                til.setErrorEnabled(false);
-                isInvalid = false;
-            }
-        }
-
         field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,13 +54,11 @@ public class Validations {
                     til.setError(errorMessage);
                     btn.setEnabled(false);
                     btn.setBackgroundResource(R.drawable.boton_desabilitado);
-                    isInvalid = true;
                 }
                 else{
                     til.setErrorEnabled(false);
                     btn.setEnabled(true);
                     btn.setBackgroundResource(R.drawable.bordes_redondos_azul);
-                    isInvalid=false;
                 }
             }
             @Override

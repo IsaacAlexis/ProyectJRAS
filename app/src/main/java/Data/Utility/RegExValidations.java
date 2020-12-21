@@ -8,7 +8,7 @@ public class RegExValidations {
     public String validNameLstName = "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,25})?$";
     public String validUser = "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$";
     public String validPassword = "^(?=.*\\d)(?=.*[\\u0021-\\u002b\\u003c-\\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$";
-
+    public String validStreet = "^[a-zA-ZÁÉÍÓÚñáéíóúÑ.0-9]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ0-9]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?$";
 
     public String ValidNumbers(int maxNum,int minNum){
         String validNumbers = "^\\d{"+minNum+","+maxNum+"}$";

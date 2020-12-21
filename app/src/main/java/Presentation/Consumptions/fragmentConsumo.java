@@ -1,10 +1,20 @@
 package Presentation.Consumptions;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +32,7 @@ import java.util.List;
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
+import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
 import Data.Utility.GenaratorPDF;
@@ -31,20 +42,30 @@ import static androidx.navigation.Navigation.findNavController;
 
 public class fragmentConsumo extends Fragment {
 
-    private TextView tvBarCode;
+    private EditText tvBarCode;
     private TextView tvOwner;
     private TextView tvHouseNum;
     private EditText etConsumption;
+    private TextView tvFechaConsumo;
+    private Button btnEscanear;
+    public Button btnBuscar;
     private EditText etLastConsumption;
     private EditText etLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    private String codigo;
+
+    public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
+    public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
+
 
     WaterBillsModel waterBillsModel = new WaterBillsModel();
     ConsumptionsModel cm = new ConsumptionsModel();
     UsersModel user = new UsersModel();
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
+    Messages messages = new Messages();
+
 
 
     public fragmentConsumo() {
@@ -61,12 +82,63 @@ public class fragmentConsumo extends Fragment {
         tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
+        tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
         etLastConsumption=view.findViewById(R.id.txtConsumoAnterior);
         etLastRate=view.findViewById(R.id.txtPagoAnterior);
         btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
+        btnEscanear = view.findViewById(R.id.btnEscanearConsumo);
+        btnBuscar = view.findViewById(R.id.btnBuscarConsumo);
 
-        mostrarInfoViv(view);
+        tvFechaConsumo.setText(currentDate);
+        verificaryPedirPermisosDeCamara();
+
+
+
+        btnEscanear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //abrir el escaner
+                if (!permisoCamaraConcedido){
+                    Toast.makeText(getContext(), "Por favor permite que la aplicacion acceda a la camara", Toast.LENGTH_SHORT).show();
+                    permisoSolicitadoDesdeBoton = true;
+                    verificaryPedirPermisosDeCamara();
+                    return;
+                }
+                escanear();
+            }
+        });
+
+        tvBarCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (tvBarCode.getText().length()!=0){
+                    btnEscanear.setVisibility(View.INVISIBLE);
+                    btnBuscar.setVisibility(View.VISIBLE);
+                    waterBillsModel.setBarCode(tvBarCode.getText().toString());
+                }else{
+                    btnEscanear.setVisibility(View.VISIBLE);
+                    btnBuscar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarInfoViv(view);
+            }
+        });
 
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +151,7 @@ public class fragmentConsumo extends Fragment {
 
                 }else {
                     registrar(true);
-                    if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
+                    if(!(new GenaratorPDF().createPDFexample(getContext(),bill))){
                         new BusinessConsumption().BridgeConsumptionReading(cm);
                     }
                 }
@@ -94,23 +166,27 @@ public class fragmentConsumo extends Fragment {
         return view;
     }
 
-
     private void mostrarInfoViv(View view){
-        if(!waterBillsModel.isExistFirstRegister()){
-            new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
-            tvBarCode.setText(waterBillsModel.getBarCode());
-            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
-            tvOwner.setText(waterBillsModel.getOwner());
-            etLastConsumption.setVisibility(View.VISIBLE);
-            etLastRate.setVisibility(View.VISIBLE);
+        new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
 
-
+        if (!waterBillsModel.isCorrectHouse()){
+            new Messages().messageToast(getContext(),waterBillsModel.getValidationMessage());
         }else{
-            tvBarCode.setText(waterBillsModel.getBarCode());
-            tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
-            tvOwner.setText(waterBillsModel.getOwner());
-        }
+            if(!waterBillsModel.isExistFirstRegister()){
+                new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
+                tvBarCode.setText(waterBillsModel.getBarCode());
+                tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+                tvOwner.setText(waterBillsModel.getOwner());
+                etLastConsumption.setVisibility(View.VISIBLE);
+                etLastRate.setVisibility(View.VISIBLE);
 
+
+            }else{
+                tvBarCode.setText(waterBillsModel.getBarCode());
+                tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
+                tvOwner.setText(waterBillsModel.getOwner());
+            }
+        }
     }
 /*activity-> se refiere al camino que va tomar si seria el primer registro o realizar el registro con
 con normalidad*/
@@ -137,4 +213,51 @@ con normalidad*/
     }
 
 
+    //************************************************Metodos para el scaner*******************************************************************
+    public void escanear(){
+        Intent i = new Intent(getContext(), activityScanner.class);
+        startActivityForResult(i,CODIGO_INTENT);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == CODIGO_PERMISOS_CAMARA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (permisoSolicitadoDesdeBoton) {
+                    escanear();
+                }
+                permisoCamaraConcedido = true;
+            } else {
+                messages.messageToastShort(getContext(), "No puedes escanear si no das el permiso");
+            }
+        }
+    }
+
+    public void verificaryPedirPermisosDeCamara(){
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
+            permisoCamaraConcedido = true;
+        }
+        else{
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == CODIGO_INTENT){
+            if (resultCode == Activity.RESULT_OK){
+                if (data != null){
+                    codigo = data.getStringExtra("codigo");
+                    waterBillsModel.setBarCode(codigo);
+
+                    btnBuscar.callOnClick();
+                    btnBuscar.setVisibility(View.INVISIBLE);
+
+
+                    if (!waterBillsModel.isCorrectHouse()){
+                        Toast.makeText(getContext(), waterBillsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }//fin de onActivityResult
 }

@@ -59,22 +59,23 @@
         android:layout_marginStart="82dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="82dp"
+        app:endIconMode="password_toggle"
+        app:endIconTintMode="multiply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-        app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleDrawable="@drawable/ic_baseline_remove_red_eye_24">
 
         <EditText
             android:id="@+id/txtPassLogin"
             android:layout_width="241dp"
             android:layout_height="65dp"
             android:layout_marginTop="8dp"
-            android:maxLength="20"
-            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
             android:hint="Contraseña"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
+            android:maxLength="20"
             android:text="Alexis88$" />
 
     </com.google.android.material.textfield.TextInputLayout>

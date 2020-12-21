@@ -36,7 +36,6 @@
                 android:id="@+id/txtPassUsuario"
                 android:layout_width="311dp"
                 android:layout_height="47dp"
-                android:layout_marginTop="236dp"
 
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:hint="Contraseña"
@@ -71,21 +70,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-
-            android:id="@+id/btnregistrarUsuario"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bordes_redondos_azul"
-            android:text="Registrar"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spnRolUser" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout7"
@@ -153,10 +137,26 @@
                 android:hint="Nombre de Usuario" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+
+            android:id="@+id/btnregistrarUsuario"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bordes_redondos_azul"
+            android:text="Registrar"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnRolUser" />
+
         <Spinner
             android:id="@+id/spnRolUser"
             android:layout_width="311dp"
             android:layout_height="47dp"
+            android:backgroundTintMode="src_in"
             android:dropDownWidth="47dp"
             android:spinnerMode="dialog"
             app:layout_constraintEnd_toEndOf="parent"

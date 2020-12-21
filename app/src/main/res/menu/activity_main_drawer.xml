@@ -27,7 +27,7 @@
         android:title="Usuarios" />
 
         <item
-            android:id="@+id/fragmentPagos"
+            android:id="@+id/info_Pagos"
             android:icon="@drawable/ic_baseline_attach_money_24"
             android:title="Pagos" />
 

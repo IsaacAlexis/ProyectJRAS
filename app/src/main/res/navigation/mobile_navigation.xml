@@ -17,17 +17,11 @@
             android:id="@+id/action_nav_home_to_fragmentUsuarios"
             app:destination="@id/fragmentUsuarios" />
         <action
-            android:id="@+id/action_nav_home_to_fragmentPagos"
-            app:destination="@id/fragmentPagos" />
-        <action
             android:id="@+id/action_nav_home_to_fragmentReportes"
             app:destination="@id/fragmentReportes" />
         <action
             android:id="@+id/action_nav_home_to_fragmentUsuarios2"
             app:destination="@id/fragmentUsuarios" />
-        <action
-            android:id="@+id/action_nav_home_to_fragmentPagos2"
-            app:destination="@id/fragmentPagos" />
         <action
             android:id="@+id/action_nav_home_to_fragmentReportes2"
             app:destination="@id/fragmentReportes" />
@@ -40,6 +34,9 @@
         <action
             android:id="@+id/action_nav_home_to_recibosFragment"
             app:destination="@id/recibosFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_info_Pagos"
+            app:destination="@id/info_Pagos" />
     </fragment>
     <fragment
         android:id="@+id/fragmentViviendas"
@@ -68,7 +65,7 @@
     <fragment
         android:id="@+id/fragmentPagos"
         android:name="Presentation.Payments.fragmentPagos"
-        android:label="Pagos"
+        android:label="Registrar Pago"
         tools:layout="@layout/fragment_pagos" />
     <fragment
         android:id="@+id/fragmentReportes"
@@ -137,5 +134,14 @@
         android:name="Presentation.WaterBills.FragmentInfoRecibo"
         android:label="Informacion del Consumo"
         tools:layout="@layout/fragment_info_recibo" />
+    <fragment
+        android:id="@+id/info_Pagos"
+        android:name="Presentation.Payments.Info_Pagos"
+        android:label="Pagos"
+        tools:layout="@layout/fragment_info_pagos" >
+        <action
+            android:id="@+id/action_info_Pagos_to_fragmentPagos"
+            app:destination="@id/fragmentPagos" />
+    </fragment>
 
 </navigation>

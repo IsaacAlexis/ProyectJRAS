@@ -91,19 +91,6 @@ public class fragementModificarUsuarios extends Fragment {
                             }
                         }
                     }
-//                    if (validations.IsValidTextbox(lastname, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$",
-//                            "Debes ingresar un apellido") |
-//                            validations.IsValidTextbox(firstname, "^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,12}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,13})?$",
-//                                    "Debes ingresar un nombre") |
-//                            validations.IsValidTextbox(email, "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$",
-//                                    "Debes ingresar un correo electronico") |
-//                            validations.IsValidTextbox(username, "^(?=.*[0-9])[0-9a-zA-Z]{8,15}$",
-//                                    "Debes ingresar un usuario que contengan letras y numeros(entre 8 y 16 caracteres ")){
-//                        messages.messageToast(getContext(),"Debes llenar todo los campos correctamente");
-//
-//                    }else{
-//
-//                    }
                 }
             }
         });
@@ -243,22 +230,6 @@ public class fragementModificarUsuarios extends Fragment {
             validations.isInvalid=true;
         }
         else{
-//            if (spnSeleccionRole=="Seleccione un Rol de Usuario:"){
-//                messages.messageToast(getContext(),"Debes seleccionar un rol de usuario");
-//                save.setEnabled(false);
-//                save.setBackgroundResource(R.drawable.boton_desabilitado);
-//                validations.isInvalid=true;
-//            }else{
-//                if (spnSelectionStatus=="Seleccione un estatus para el usuario:"){
-//                    messages.messageToast(getContext(),"Debes seleccionar un estatus de usuario");
-//                    save.setEnabled(false);
-//                    save.setBackgroundResource(R.drawable.boton_desabilitado);
-//                    validations.isInvalid=true;
-//                }else{
-//                    validations.isInvalid=false;
-//                }
-//
-//            }
             validations.isInvalid=false;
         }
     }//fin de textboxEmpty()

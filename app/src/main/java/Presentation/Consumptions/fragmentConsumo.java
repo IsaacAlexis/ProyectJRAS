@@ -15,12 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,9 +31,7 @@ import java.util.List;
 
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
-import Data.Models.HousesModel;
 import Data.Models.UsersModel;
-import Presentation.Home.HomeFragment;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -53,23 +48,23 @@ public class fragmentConsumo extends Fragment {
     private EditText etConsumption;
     private TextView tvFechaConsumo;
     private Button btnEscanear;
-    private Button btnBuscar;
+    public Button btnBuscar;
     private EditText etLastConsumption;
     private EditText etLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
 
+    public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
+    public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
-    //Variables del Scanner
-    private static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
-    private boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
     WaterBillsModel waterBillsModel = new WaterBillsModel();
     ConsumptionsModel cm = new ConsumptionsModel();
     UsersModel user = new UsersModel();
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
+    Messages messages = new Messages();
 
 
 
@@ -95,9 +90,9 @@ public class fragmentConsumo extends Fragment {
         btnEscanear = view.findViewById(R.id.btnEscanearConsumo);
         btnBuscar = view.findViewById(R.id.btnBuscarConsumo);
 
-
         tvFechaConsumo.setText(currentDate);
         verificaryPedirPermisosDeCamara();
+
 
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
@@ -217,18 +212,34 @@ con normalidad*/
 
     }
 
-    public void clearFields(){
-        tvBarCode.setText("");
-        tvHouseNum.setText("");
-        tvOwner.setText("");
+
+    //************************************************Metodos para el scaner*******************************************************************
+    public void escanear(){
+        Intent i = new Intent(getContext(), activityScanner.class);
+        startActivityForResult(i,CODIGO_INTENT);
     }
 
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == CODIGO_PERMISOS_CAMARA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (permisoSolicitadoDesdeBoton) {
+                    escanear();
+                }
+                permisoCamaraConcedido = true;
+            } else {
+                messages.messageToastShort(getContext(), "No puedes escanear si no das el permiso");
+            }
+        }
+    }
 
-    //*************************************************Metodos para el scaner******************************************************************************
-    private void escanear(){
-        Intent i = new Intent(fragmentConsumo.this.getContext(), activityScanner.class);
-        startActivityForResult(i,CODIGO_INTENT);
-
+    public void verificaryPedirPermisosDeCamara(){
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
+            permisoCamaraConcedido = true;
+        }
+        else{
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -249,36 +260,4 @@ con normalidad*/
             }
         }
     }//fin de onActivityResult
-
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case CODIGO_PERMISOS_CAMARA:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    if (permisoSolicitadoDesdeBoton){
-                        escanear();
-                    }
-                    permisoCamaraConcedido = true;
-                }
-                else{
-                    permisoDeCamaraDenegado();
-                }
-                break;
-        }
-    }
-
-    private void verificaryPedirPermisosDeCamara(){
-        int estadoDePermiso = ContextCompat.checkSelfPermission(fragmentConsumo.this.getContext(), Manifest.permission.CAMERA);
-        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
-            permisoCamaraConcedido = true;
-        }
-        else{
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
-        }
-    }
-
-    private void permisoDeCamaraDenegado(){
-        Toast.makeText(getContext(), "No puedes escanear si no das el permiso", Toast.LENGTH_SHORT).show();
-    }
-
-
 }

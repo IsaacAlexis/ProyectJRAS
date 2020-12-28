@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        android:background="@drawable/encabezado_formularios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+
+        android:id="@+id/btnConfirmarUsuario"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bordes_redondos_azul"
+        android:text="Editar"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRolEditUser" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtApellidosM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_face_24"
+            android:hint="Apellidos" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout11">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNombreM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_face_24"
+            android:hint="Nombre(s)" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmailM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtUsuarioM"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:hint="Nombre de Usuario" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinnerStatusEditUser"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15"
+
+    />
+
+    <Spinner
+        android:id="@+id/spinnerRolEditUser"
+        android:layout_width="311dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="81dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnConfirmarUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerStatusEditUser" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

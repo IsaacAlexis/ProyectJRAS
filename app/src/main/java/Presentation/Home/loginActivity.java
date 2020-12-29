@@ -46,12 +46,13 @@ public class loginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         getCommonValues();
+
 
         btnUserLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadingDialog.startLoadingDialogActivity();
                 Handler handler = new Handler();
 

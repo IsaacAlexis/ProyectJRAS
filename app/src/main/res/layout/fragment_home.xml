@@ -16,6 +16,16 @@
         android:onClick="onClickRegistrarUsuario"
         android:src="@drawable/ic_baseline_qr_code_24"
         app:backgroundTint="@color/colorRojo" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/abrirConsumo"
+        android:layout_width="78dp"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        android:onClick="onClickRegistrarUsuario"
+        android:src="@drawable/ic_baseline_qr_code_24"
+        app:backgroundTint="@color/colorRojo" />
 
 <androidx.constraintlayout.widget.ConstraintLayout
 

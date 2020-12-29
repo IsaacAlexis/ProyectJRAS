@@ -138,10 +138,14 @@
         android:id="@+id/info_Pagos"
         android:name="Presentation.Payments.Info_Pagos"
         android:label="Pagos"
-        tools:layout="@layout/fragment_info_pagos" >
-        <action
-            android:id="@+id/action_info_Pagos_to_fragmentPagos"
-            app:destination="@id/fragmentPagos" />
-    </fragment>
+        tools:layout="@layout/fragment_info_pagos" />
+    <action
+        android:id="@+id/action_info_Pagos_to_fragmentPagos"
+        app:destination="@id/fragmentPrePago" />
+    <fragment
+        android:id="@+id/fragmentPrePago"
+        android:name="Presentation.Payments.FragmentPrePago"
+        android:label="Pagos"
+        tools:layout="@layout/fragment_pre_pago" />
 
 </navigation>

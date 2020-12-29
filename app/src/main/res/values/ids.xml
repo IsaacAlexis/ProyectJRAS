@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="TotalPagos" type="id"></item>
+    <item name="PropietarioPagos" type="id" />
+    <item name="PeriodosPagos" type="id" />
+    <item name="StatusPagos" type="id" />
+    <item name="SubtituloPagos" type="id" />
+    <item name="RecycleViewAdeudoPagos" type="id" />
+    <item name="TipoPago" type="id" />
+    <item name="NombreTipoPago" type="id" />
+    <item name="txtAbonoPagos" type="id" />
+    <item name="btnPagar" type="id" />
+    <item name="etiquetaTotal" type="id" />
+    <item name="ImagenPagos" type="id" />
+    <item name="Adeudos" type="id" />
+</resources>

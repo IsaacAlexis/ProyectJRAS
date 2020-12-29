@@ -1,136 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+    <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
+
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:saveEnabled="false"
-        tools:context=".Usuarios_Activity">
+        android:layout_height="195dp"
+        android:background="@drawable/encabezado_formularios"></ImageView>
 
-        <TextView
+    <ImageView
+        android:id="@+id/ImagenPagos"
+        android:layout_width="100dp"
+        android:layout_height="92dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="38dp"
+        android:background="@drawable/icon_pagos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"></ImageView>
 
-            android:id="@+id/txtPropietarioCasa"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="148dp"
-            android:text="Propietario"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/txtPago"
-            app:layout_constraintStart_toStartOf="@id/txtPago"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    <TextView
+        android:id="@+id/etiquetaTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ImagenPagos"
+        android:text="Total a pagar:"
+        android:textColor="@color/colorVerde"
+        android:textSize="20dp"
+        android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/txtNumeroCasaPago"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="84dp"
-            android:text="No de Casa"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/txtPago"
-            app:layout_constraintStart_toStartOf="@id/txtPago"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    <TextView
+        android:id="@+id/TotalPagos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etiquetaTotal"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@+id/ImagenPagos"
+        android:text="$0.00"
+        android:textSize="50dp"></TextView>
 
-        <TextView
-            android:id="@+id/txtBarCodePagos"
-            android:layout_width="281dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="20dp"
-            android:text="Codigo de barras"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/txtPago"
-            app:layout_constraintStart_toStartOf="@id/txtPago"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    <TextView
+        android:id="@+id/PropietarioPagos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ImagenPagos"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="21dp"
+        android:text="Propietario"
+        android:textSize="15dp"></TextView>
+
+    <TextView
+        android:id="@+id/PeriodosPagos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/PropietarioPagos"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="17dp"
+        android:text="Periodos de adeudo:"
+        android:textSize="15dp"></TextView>
+
+    <TextView
+        android:id="@+id/StatusPagos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/PeriodosPagos"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="17dp"
+        android:text="Estado de la vivienda:"
+        android:textSize="15dp"></TextView>
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="215dp"
-            android:background="@drawable/encabezado_formularios"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecycleViewAdeudoPagos"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/TipoPago"
+        android:layout_below="@+id/StatusPagos"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="vertical">
 
-        <TextView
-            android:id="@+id/txtFechaPago"
-            android:layout_width="200dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="50dp"
-            android:drawableLeft="@drawable/ic_baseline_date_range_24"
-            android:gravity="center_vertical"
-            android:hint="Fecha del Pago"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:textAlignment="gravity"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/txtFolioPago"
-            android:layout_width="200dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="50dp"
-            android:drawableLeft="@drawable/ic_baseline_report_24"
-            android:gravity="center_vertical"
-            android:hint="Folio"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:textAlignment="gravity"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <Switch
+        android:id="@+id/TipoPago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tilAbonoPagos"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="41dp"
+        android:layout_marginBottom="21dp"
+        android:text="Tipo de pago" />
 
-        <Button
+    <TextView
+        android:id="@+id/NombreTipoPago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tilAbonoPagos"
+        android:layout_marginStart="33dp"
+        android:layout_marginBottom="21dp"
+        android:layout_toEndOf="@+id/TipoPago"
+        android:text="PAGO TOTAL"
+        android:textSize="20dp"
+        android:textStyle="bold"></TextView>
 
-            android:id="@+id/btnRegistrarPago"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
-            android:background="@drawable/bordes_redondos_rojo"
-            android:text="Registrar"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPago" />
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAbonoPagos"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/btnPagar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="49dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="32dp">
         <EditText
-            android:id="@+id/txtPago"
-            android:layout_width="171dp"
-            android:layout_height="63dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="96dp"
-            android:layout_marginEnd="120dp"
-            android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-            android:hint="Total"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPropietarioCasa" />
+            android:id="@+id/txtAbonoPagos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="CANTIDAD A ABONAR"
+            android:inputType="numberDecimal"
+            android:visibility="invisible" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnPagar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bordes_redondos_rojo"
+        android:text="Realizar Pago" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
 
-</ScrollView>
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+

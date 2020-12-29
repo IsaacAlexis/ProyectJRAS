@@ -376,32 +376,44 @@ public class GenaratorPDF {
             mypaint.setTextSize(9.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Folio de Pago:",50,170,mypaint);
-            mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("12345",(myPageInfo.getPageWidth()-150),170,mypaint);
-
-            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("ID de Usuario:",50,185,mypaint);
-            mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("54321",(myPageInfo.getPageWidth()-150),185,mypaint);
-
-            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("ID de Consumo:",50,200,mypaint);
-            mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("6789",(myPageInfo.getPageWidth()-150),200,mypaint);
-
-            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Propietario de la vivienda:",50,220,mypaint);
+            canvas.drawText("Calle: ",50,170,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("Brayan Espinoza",(myPageInfo.getPageWidth()-20),220,mypaint);
+            canvas.drawText("calle quinta",(myPageInfo.getPageWidth()-20),170,mypaint);
+
+            mypaint.setTextAlign(Paint.Align.LEFT);
+
+
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("No de Vivienda:",50,185,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("254",(myPageInfo.getPageWidth()-20),185,mypaint);
+
+            mypaint.setTextAlign(Paint.Align.LEFT);
+
+
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("Nombre del Propietario:",50,200,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("Brayan Espinoza",(myPageInfo.getPageWidth()-20),200,mypaint);
+
+            mypaint.setTextAlign(Paint.Align.LEFT);
+
+
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("Operacion Realizada por:",50,220,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("Ebber Dominguez",(myPageInfo.getPageWidth()-20),220,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Fecha: ",180,235,mypaint);
+            canvas.drawText("Fecha: ",180,240,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("09/12/2020",(myPageInfo.getPageWidth()-20),235,mypaint);
-            canvas.drawText("07:11:00 p.m",(myPageInfo.getPageWidth()-20),245,mypaint);
+            canvas.drawText("09/12/2020",(myPageInfo.getPageWidth()-20),240,mypaint);
+            canvas.drawText("07:11:00 p.m",(myPageInfo.getPageWidth()-20),250,mypaint);
 
             mypaint.setStyle(Paint.Style.FILL);
             mypaint.setColor(Color.BLACK);
@@ -439,6 +451,13 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.RIGHT);
             canvas.drawText("50.00",(myPageInfo.getPageWidth()-20),365,mypaint);
 
+            mypaint.setTextSize(12.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("SALDO RESTANTE:",50,380,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("00.00",(myPageInfo.getPageWidth()-20),380,mypaint);
+
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(11.0f);
             canvas.drawText("Pago en Efectivo",(myPageInfo.getPageWidth()/2),410,mypaint);
@@ -448,6 +467,7 @@ public class GenaratorPDF {
 
             mypaint.setTextAlign(Paint.Align.CENTER);
             canvas.drawBitmap(GenerateCodeBar(context,"6789"),50,myPageInfo.getPageHeight()-70,mypaint);
+
 
 
             mypdfDocument.finishPage(mypage1);

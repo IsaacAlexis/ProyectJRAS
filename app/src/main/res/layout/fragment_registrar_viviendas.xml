@@ -52,6 +52,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_face_24"
             android:hint="Nombre del Propietario"
+            android:inputType="textCapSentences|textAutoComplete"
+            android:imeOptions="actionDone"
             android:maxLength="80" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,6 +72,7 @@
             android:drawableStart="@drawable/ic_baseline_local_phone_24"
             android:hint="Telefono"
             android:inputType="number"
+            android:imeOptions="actionDone"
             android:maxLength="10" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,6 +90,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_email_24"
             android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"
             android:maxLength="50" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,6 +110,7 @@
             android:drawableStart="@drawable/ic_baseline_my_location_24"
             android:hint="Número de la Vivienda"
             android:inputType="number"
+            android:imeOptions="actionDone"
             android:maxLength="6" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,6 +128,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_person_pin_circle_24"
             android:hint="Calle de la Vivienda"
+            android:inputType="textCapSentences|textAutoComplete"
+            android:imeOptions="actionDone"
             android:maxLength="40" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,6 +148,7 @@
             android:drawableStart="@drawable/ic_baseline_markunread_mailbox_24"
             android:hint="Código Postal"
             android:inputType="number"
+            android:imeOptions="actionDone"
             android:maxLength="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,6 +183,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_commute_24"
             android:hint="Ciudad"
+            android:inputType="textCapSentences|textAutoComplete"
+            android:imeOptions="actionDone"
             android:maxLength="40" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -191,6 +202,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_location_city_24"
             android:hint="Estado"
+            android:inputType="textCapSentences|textAutoComplete"
+            android:imeOptions="actionDone"
             android:maxLength="40" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -215,7 +228,9 @@
                 android:layout_height="47dp"
                 android:drawableStart="@drawable/ic_baseline_addchart_24"
                 android:hint="No. Medidor"
-                android:maxLength="9" />
+                android:maxLength="9"
+                android:inputType="number"
+                android:imeOptions="actionDone"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

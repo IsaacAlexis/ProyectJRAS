@@ -19,9 +19,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.jras.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 import Data.Models.HousesModel;
 import Data.Utility.Messages;
+import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessHouse;
 
@@ -37,65 +39,15 @@ public class fragmentModificarViviendas extends Fragment {
     private EditText colony;
     private EditText city;
     private EditText state;
-    private TextView statusHouse;
+    private EditText statusHouse;
     private Button savechanges;
+    private TextInputLayout tilOwner,tilPhoneNum,tilEmail;
 
     HousesModel house=new HousesModel();
     Validations validations=new Validations();
     Messages messages=new Messages();
-    public void assignValues(){
-        owner.setText(house.getModifyowner());
-        phoneNumber.setText(house.getModifyphoneNumber().toString());
-        email.setText(house.getModifyemail());
-        street.setText(house.getModifystreet());
-        street.setEnabled(false);
-        houseNumber.setText(house.getModifyhouseNumber().toString());
-        houseNumber.setEnabled(false);
-        zipCode.setText(house.getModifyzipCode().toString());
-        colony.setText(house.getModifycolony());
-        colony.setEnabled(false);
-        city.setText(house.getModifycity());
-        state.setText(house.getModifystate());
-        statusHouse.setText(house.getModifystatusHouse());
-    }
+    RegExValidations regEx = new RegExValidations();
 
-    public void getvalues(View view){
-        owner= view.findViewById(R.id.txtPropietario);
-        phoneNumber=view.findViewById(R.id.txtTelefonoViv);
-        email=view.findViewById(R.id.txtEmail);
-        street=view.findViewById(R.id.txtCalleViv);
-        houseNumber= view.findViewById(R.id.txtNumViv);
-        zipCode= view.findViewById(R.id.txtCPViv);
-        colony= view.findViewById(R.id.txtColViv);
-        city= view.findViewById(R.id.txtCiudadViv);
-        state= view.findViewById(R.id.txtEstadoViv);
-        statusHouse= view.findViewById(R.id.lbRolm);
-        savechanges=view.findViewById(R.id.btnregistrarViviendaM);
-        assignValues();
-    }
-    public void assignValuesModificate(){
-        house.setBarCode(house.getModifybarCode());
-        house.setOwner(owner.getText().toString());
-        house.setPhoneNumber(Long.parseLong(phoneNumber.getText().toString()));
-        house.setEmail(email.getText().toString());
-        house.setStreet(street.getText().toString());
-        house.setHouseNumber(Integer.parseInt(houseNumber.getText().toString()));
-        house.setZipCode(Integer.parseInt(zipCode.getText().toString()));
-        house.setColony(colony.getText().toString());
-        house.setCity(city.getText().toString());
-        house.setState(state.getText().toString());
-        house.setStatusHouse(statusHouse.getText().toString());
-    }
-    public void fieldsEnable(){
-        owner.setEnabled(true);
-        phoneNumber.setEnabled(true);
-        email.setEnabled(true);
-        zipCode.setEnabled(true);
-        city.setEnabled(true);
-        state.setEnabled(true);
-        statusHouse.setEnabled(true);
-        savechanges.setText("Guardar");
-    }
     public static fragmentModificarViviendas newInstance() {
         return new fragmentModificarViviendas();
     }
@@ -109,15 +61,9 @@ public class fragmentModificarViviendas extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!savechanges.getText().toString().equals("Editar")){
-                    if(validations.IsValidTextbox(owner,"^[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20}(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})?(\\s[A-Za-zÁÉÍÓÚñáéíóúÑ]{1,20})?$","Debes ingresar un Nombre del propietario completo correctamente")|
-                            validations.IsValidTextbox(phoneNumber,"^\\d{10,15}$","Debes ingresar un numero de telefono correctamente")|
-                            validations.IsValidTextbox(email,"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$","Debes ingresar un correo electronico correctamente")|
-                            validations.IsValidTextbox(street,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.0-9]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ0-9]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar una calle de la vivienda correctamente")|
-                            validations.IsValidTextbox(houseNumber,"^\\d{1,8}$","Debes ingresar el numero de la vivienda correctamente")|
-                            validations.IsValidTextbox(zipCode,"^\\d{5}$","Debes ingresar un codigo postal correctamente")|
-                            validations.IsValidTextbox(colony,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,15})?$","Debes ingresar la colonia de la vivienda correctamente")|
-                            validations.IsValidTextbox(city,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el municipio donde se ubica la vivienda correctamente")|
-                            validations.IsValidTextbox(state,"^[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10}(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?(\\s[a-zA-ZÁÉÍÓÚñáéíóúÑ.]{1,10})?$","Debes ingresar el Estado donde se ubica la vivienda correctamente ")){
+                    textboxEmpty();
+
+                    if(!validations.isInvalid){
                         messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
                     }else{
                         assignValuesModificate();
@@ -141,6 +87,85 @@ public class fragmentModificarViviendas extends Fragment {
         return view;
     }
 
+    private void textboxEmpty() {
+        if (owner.getText().length()==0 || phoneNumber.getText().length()==0 || email.getText().length()==0){
+            messages.messageToast(getContext(),"Debes llenar todos los campos correctamente");
+            validations.isInvalid=true;
+        }
+        else{
+            validations.isInvalid=false;
+        }
+    }
+
+
+    public void assignValues(){
+        owner.setText(house.getModifyowner());
+        phoneNumber.setText(house.getModifyphoneNumber().toString());
+        email.setText(house.getModifyemail());
+        street.setText(house.getModifystreet());
+        street.setEnabled(false);
+        houseNumber.setText(house.getModifyhouseNumber().toString());
+        houseNumber.setEnabled(false);
+        zipCode.setText(house.getModifyzipCode().toString());
+        colony.setText(house.getModifycolony());
+        colony.setEnabled(false);
+        city.setText(house.getModifycity());
+        state.setText(house.getModifystate());
+        statusHouse.setText(house.getModifystatusHouse());
+    }
+
+    public void getvalues(View view){
+        //**********Edit Text's**********
+        owner= view.findViewById(R.id.txtPropietario);
+        phoneNumber=view.findViewById(R.id.txtTelefonoViv);
+        email=view.findViewById(R.id.txtEmail);
+        street=view.findViewById(R.id.txtCalleViv);
+        houseNumber= view.findViewById(R.id.txtNumViv);
+        zipCode= view.findViewById(R.id.txtCPViv);
+        colony= view.findViewById(R.id.txtColViv);
+        city= view.findViewById(R.id.txtCiudadViv);
+        state= view.findViewById(R.id.txtEstadoViv);
+        statusHouse= view.findViewById(R.id.lbRolm);
+        savechanges=view.findViewById(R.id.btnregistrarViviendaM);
+
+        //**********TextInputLayout's**********
+        tilOwner=view.findViewById(R.id.textInputLayout13);
+        tilPhoneNum=view.findViewById(R.id.textInputLayout17);
+        tilEmail=view.findViewById(R.id.textInputLayout22);
+
+        //**********Validations**********
+        validations.IsValidTextboxOnClick(owner,tilOwner,regEx.validNamesComplete,"Ingresa el nombre completo del propietario correctamente",savechanges);
+        validations.IsValidTextboxOnClick(phoneNumber,tilPhoneNum,"^\\d{10}$","Ingresa un número de telefono valido",savechanges);
+        validations.IsValidTextboxOnClick(email,tilEmail,regEx.validEmail,"Ingresar un correo electronico valido",savechanges);
+
+        assignValues();
+    }
+    public void assignValuesModificate(){
+        house.setBarCode(house.getModifybarCode());
+        house.setOwner(owner.getText().toString());
+        house.setPhoneNumber(Long.parseLong(phoneNumber.getText().toString()));
+        house.setEmail(email.getText().toString());
+        house.setStreet(street.getText().toString());
+        house.setHouseNumber(Integer.parseInt(houseNumber.getText().toString()));
+        house.setZipCode(Integer.parseInt(zipCode.getText().toString()));
+        house.setColony(colony.getText().toString());
+        house.setCity(city.getText().toString());
+        house.setState(state.getText().toString());
+        house.setStatusHouse(statusHouse.getText().toString());
+    }
+    public void fieldsEnable(){
+        owner.setEnabled(true);
+        phoneNumber.setEnabled(true);
+        email.setEnabled(true);
+        street.setEnabled(true);
+        houseNumber.setEnabled(true);
+        zipCode.setEnabled(true);
+        colony.setEnabled(true);
+        city.setEnabled(true);
+        state.setEnabled(true);
+        statusHouse.setEnabled(true);
+        savechanges.setText("Guardar");
+    }
 
 
 }

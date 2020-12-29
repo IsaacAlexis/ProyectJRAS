@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
@@ -21,17 +20,14 @@ import com.google.zxing.oned.Code128Writer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
 import Data.Models.ConsumptionsModel;
-import Data.Models.HousesModel;
 import Data.Models.WaterBillsModel;
 
 public class GenaratorPDF {
@@ -341,7 +337,7 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
-            String test=""+new WaterBillsModel().getOwner().toString().toUpperCase()+" PERIODO "+ NameNumber(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
+            String test=""+new WaterBillsModel().getOwner().toString().toUpperCase()+" PERIODO "+ NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
             new ConsumptionsModel().setPdf(test);
             File file=new File(context.getExternalFilesDir("/"),"/"+test);
             mypdfDocument.writeTo(new  FileOutputStream(file));
@@ -466,7 +462,7 @@ public class GenaratorPDF {
         }
     }
 
-     public String NameNumber(int number){
+     public String NameMonth(int number){
         number-=1;
         if(number==0){
             number=12;

@@ -45,5 +45,53 @@ public class Dates {
 
         }
     }
+    public String NameMonth(int number){
+        number-=1;
+        if(number==0){
+            number=12;
+        }
+        String Name="";
+        switch(number){
+            case 1:
+                Name="ENERO";
+                break;
+            case 2:
+                Name="FEBRERO";
+                break;
+            case 3:
+                Name="MARZO";
+                break;
+            case 4:
+                Name="ABRIL";
+                break;
+            case 5:
+                Name="MAYO";
+                break;
+            case 6:
+                Name="JUNIO";
+                break;
+            case 7:
+                Name="JULIO";
+                break;
+            case 8:
+                Name="AGOSTO";
+                break;
+            case 9:
+                Name="SEPTIEMBRE";
+                break;
+            case 10:
+                Name="OCTUBRE";
+                break;
+            case 11:
+                Name="NOVIEMBRE";
+                break;
+            case 12:
+                Name="DICIEMBRE";
+                break;
+            default:
+
+        }
+        return  Name;
+    }
 
 }

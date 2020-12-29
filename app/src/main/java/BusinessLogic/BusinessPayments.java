@@ -20,6 +20,10 @@ public class BusinessPayments {
                 new DAPayments().PostRegisterPayment(AmountPay,action);
                 break;
             case 2:
+              if(AmountPay==new PaymentsModel().getTotal()){
+                  RegisterPayment(AmountPay,1);
+                  return;
+              }
                 if(new PaymentsModel().getTotal()<AmountPay){
                     new PaymentsModel().setValidationMessage("No se puede ingresar una cantidad mayor al total");
                     return;

@@ -22,8 +22,8 @@ public class scPayments {
             callableStatement.setString(1, new UsersModel().getCurrentColony());
             ResultSet resultSet=callableStatement.executeQuery();
             while (resultSet.next()){
-                paymentsModels.add(new PaymentsModel(resultSet.getLong("FolioPay"),
-                        resultSet.getString("Owner"),resultSet.getDate("PayDate"),resultSet.getFloat("Total")));
+                paymentsModels.add(new PaymentsModel(
+                        resultSet.getString(1),resultSet.getDate(2),resultSet.getFloat(3)));
             }
 
 

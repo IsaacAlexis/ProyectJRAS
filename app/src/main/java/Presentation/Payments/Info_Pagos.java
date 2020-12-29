@@ -50,7 +50,7 @@ public class Info_Pagos extends Fragment {
         fabPago=view.findViewById(R.id.fabRegistrarPago);
         paymentsAdapter=new PaymentsAdapter(payments, getContext(), new PaymentsAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(Long Folio, String Owner, Date PayDate, float Total) {
+            public void OnItemClick( String Owner, Date PayDate, float Total) {
 
             }
         });

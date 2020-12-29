@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Data.Models.ConsumptionsModel;
-import Data.Models.HousesModel;
 import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -50,7 +49,7 @@ public class BusinessConsumption {
                     waterBillsModel.getReadLast()));
             List<WaterBillsModel> bill=new ArrayList<>();
             bill=new BusinessConsumption().BridgeWaterBills(cm);
-            if(!new GenaratorPDF().createPDFexample(context,bill)){
+            if(!new GenaratorPDF().createPDFWaterBills(context,bill)){
                 BridgeConsumptionReading(cm);
 
             }

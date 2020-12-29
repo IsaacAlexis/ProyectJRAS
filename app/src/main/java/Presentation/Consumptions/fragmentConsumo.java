@@ -151,7 +151,7 @@ public class fragmentConsumo extends Fragment {
 
                 }else {
                     registrar(true);
-                    if(!(new GenaratorPDF().createPDFexample(getContext(),bill))){
+                    if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
                         new BusinessConsumption().BridgeConsumptionReading(cm);
                     }
                 }

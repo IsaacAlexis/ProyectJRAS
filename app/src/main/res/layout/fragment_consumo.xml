@@ -7,8 +7,8 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -21,6 +21,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/txtConsumoAnterior"
             android:layout_width="171dp"
@@ -84,33 +85,13 @@
             app:layout_constraintTop_toBottomOf="@+id/txtConsumo" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <EditText
-                android:id="@+id/txtBarCodeConsumo"
-                android:layout_width="match_parent"
-                android:layout_height="63dp"
-                android:clickable="false"
-                android:drawableLeft="@drawable/ic_baseline_addchart_24"
-                android:hint="No. Medidor"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
             android:layout_width="284dp"
             android:layout_height="83dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtNumeroCasaConsumo"
@@ -118,8 +99,8 @@
                 android:layout_height="63dp"
                 android:clickable="false"
                 android:drawableLeft="@drawable/ic_baseline_location_on_24"
-                android:hint="No. Casa"
-                android:editable="false"/>
+                android:editable="false"
+                android:hint="No. Casa" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -136,60 +117,71 @@
                 android:layout_height="63dp"
                 android:clickable="false"
                 android:drawableLeft="@drawable/ic_baseline_face_24"
-                android:hint="Propietario"
-                android:editable="false"/>
+                android:editable="false"
+                android:hint="Propietario" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="104dp"
-            android:text="Fecha:"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.148"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/txFechaConsumo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:layout_marginTop="144dp"
+            android:drawableStart="@drawable/ic_baseline_date_range_24"
+            android:text="Fecha:"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.156"
+            app:layout_constraintHorizontal_bias="0.086"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnEscanearConsumo"
+        <RelativeLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/bordes_redondos_rojo"
-            android:text="Escanear"
+            android:layout_marginTop="28dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <Button
-            android:id="@+id/btnBuscarConsumo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/bordes_redondos_rojo"
-            android:text="Buscar"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtBarCodeConsumo"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/ic_baseline_addchart_24"
+                    android:hint="No. Medidor"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnBuscarConsumo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/textInputLayout2"
+                android:background="@drawable/bordes_redondos_rojo"
+                android:text="Buscar"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEscanearConsumo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/textInputLayout2"
+                android:background="@drawable/bordes_redondos_rojo"
+                android:text="Escanear" />
+
+        </RelativeLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

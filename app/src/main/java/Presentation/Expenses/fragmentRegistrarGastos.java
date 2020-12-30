@@ -2,6 +2,7 @@ package Presentation.Expenses;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.EventLogTags;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import Data.Models.ExpensesModel;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessExpense;
@@ -43,11 +45,15 @@ public class fragmentRegistrarGastos extends Fragment {
 
 
 
-    //instancia
+    //instancias
     ExpensesModel expens = new ExpensesModel();
     UsersModel data = new UsersModel();
     Validations validate = new Validations();
     Messages messages = new Messages();
+
+    //Clase de pantalla de carga
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentRegistrarGastos.this);
+    Handler handler = new Handler();
 
     public fragmentRegistrarGastos() {
         // Required empty public constructor
@@ -63,27 +69,34 @@ public class fragmentRegistrarGastos extends Fragment {
         registerexp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textboxEmpty();
+                loadingDialog.startLoadingDialogFragment(getContext());
 
-                if(!validate.isInvalid){
-                    new Messages().messageToast(getContext(),"Debes llenar todo los campos correctamente");
-                }
-                else {
-                    setvalues();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textboxEmpty();
 
-                    new BusinessExpense().BridgeExpenRegister(expens);
+                        if(!validate.isInvalid){
+                            new Messages().messageToast(getContext(),"Debes llenar todo los campos correctamente");
+                        }
+                        else {
+                            setvalues();
 
-                    if(!expens.isRegisterExpens()) {
-                        new Messages().messageAlert(getContext(),expens.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentGastos2);
-                    }
-                    else {
-                        new Messages().messageAlert(getContext(),expens.getValidationMessage(),"Eror al registrar",view,R.id.fragmentGastos2);
+                            new BusinessExpense().BridgeExpenRegister(expens);
 
-                    }
-                }
+                            if(!expens.isRegisterExpens()) {
+                                new Messages().messageAlert(getContext(),expens.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentGastos2);
+                            }
+                            else {
+                                new Messages().messageAlert(getContext(),expens.getValidationMessage(),"Eror al registrar",view,R.id.fragmentGastos2);
 
-            }
-        });
+                            }
+                        }
+                        loadingDialog.dismissDialog();
+                    }//fin de run()
+                },50);//fin de postDelayed
+            }//fin de onClick registerexp
+        });//fin de registerexp.setOnClickListener
         return view;
     }
 

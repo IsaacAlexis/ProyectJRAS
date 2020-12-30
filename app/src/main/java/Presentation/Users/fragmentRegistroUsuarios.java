@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -51,6 +52,10 @@ public class fragmentRegistroUsuarios extends Fragment {
     RegExValidations regEx = new RegExValidations();
     String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
+    //Clase de la pantalla de carga
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentRegistroUsuarios.this);
+    Handler handler = new Handler();
+
     public fragmentRegistroUsuarios() {
         // Required empty public constructor
     }
@@ -71,23 +76,32 @@ public class fragmentRegistroUsuarios extends Fragment {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textboxEmpty();
+                loadingDialog.startLoadingDialogFragment(getContext());
 
-                if (!validate.isInvalid){
-                    setvalues();
-                    new BusinessUser().BridgeUserRegister(data);
-                    if(!data.isRegisterUser()){
-                        messages.messageAlert(getContext(),data.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentUsuarios);
-                    }else{
-                        if(data.getUserExist()){
-                            messages.messageToast(getContext(),data.getValidationMessage());
-                        }else{
-                            messages.messageToast(getContext(),data.getValidationMessage());
-                            findNavController(view).navigate(R.id.fragmentUsuarios);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textboxEmpty();
+
+                        if (!validate.isInvalid){
+                            setvalues();
+                            new BusinessUser().BridgeUserRegister(data);
+                            if(!data.isRegisterUser()){
+                                messages.messageAlert(getContext(),data.getValidationMessage(),"Se completo con exito el registro",view,R.id.fragmentUsuarios);
+                            }else{
+                                if(data.getUserExist()){
+                                    messages.messageToast(getContext(),data.getValidationMessage());
+                                }else{
+                                    messages.messageToast(getContext(),data.getValidationMessage());
+                                    findNavController(view).navigate(R.id.fragmentUsuarios);
+                                }
+                            }
                         }
-                    }
-                }//fin de if(!validate.isInvalid)
-            }
+
+                        loadingDialog.dismissDialog();
+                    }//fin de run()
+                },50);// fin de postDelayed
+            }//fin de onClick btnRegistrar
         });//fin de OnClick btnRegistrar
         return view;
     }//fin onCreateView

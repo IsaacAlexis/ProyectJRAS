@@ -52,8 +52,8 @@
             android:layout_height="47dp"
             android:drawableStart="@drawable/ic_baseline_face_24"
             android:hint="Nombre del Propietario"
-            android:inputType="textCapSentences|textAutoComplete"
             android:imeOptions="actionDone"
+            android:inputType="textCapSentences|textAutoComplete"
             android:maxLength="80" />
     </com.google.android.material.textfield.TextInputLayout>
 

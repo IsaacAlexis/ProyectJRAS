@@ -1,12 +1,13 @@
 package DataAccess;
 
-import android.widget.Switch;
+import android.content.Context;
 
-import androidx.core.app.ActivityCompat;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import Data.Models.PaymentsModel;
+import Data.Utility.GenaratorPDF;
+import Data.Utility.Messages;
 import Security.scPayments;
 
 public class DAPayments {
@@ -25,104 +26,79 @@ public class DAPayments {
         return false;
     }
 
-    public void PostRegisterPayment(float amountPay,int action) {
-        switch(action){
+    public void PostRegisterPayment(float amountPay, int action, Context context) {
+        List<PaymentsModel> pays=new ArrayList<>();
+        switch(action) {
             case 1:
 
-                for (PaymentsModel debit:new PaymentsModel().getaDebits()){
-                    PaymentsModel paymentsModel=new PaymentsModel();
-                    paymentsModel.setPayTotal(debit.getRate());
+                for (int i = (new PaymentsModel().getDebits().size() - 1); i >= 0; i--) {
+                    PaymentsModel paymentsModel = new PaymentsModel();
+                    paymentsModel.setPayTotal(new PaymentsModel().getDebits().get(i).getRate());
                     paymentsModel.setRate(Float.parseFloat("0"));
-                    paymentsModel.setIdConsumption(debit.getIdConsumption());
-                    new scPayments().RegisterPayment(paymentsModel,action);
+                    paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
+                    new scPayments().RegisterPayment(paymentsModel, action);
                 }
                 break;
 
             case 2:
-                float total=amountPay;
-                //-------Pruebas de mejora en el algoritmo------
-//                for(int  i=(new PaymentsModel().getaDebits().size()-1);i>=0;i--){
-//                    if(total<0){
-//                        total+=new PaymentsModel().getaDebits().get(i).getRate();
-//                        if(total<=0){
-//                            PaymentsModel paymentsModel=new PaymentsModel();
-//                            paymentsModel.setPayTotal(new PaymentsModel().getaDebits().get(i).getRate());
-//                            paymentsModel.setRate(Float.parseFloat("0"));
-//                            paymentsModel.setIdConsumption(new PaymentsModel().getaDebits().get(i).getIdConsumption());
-//                            new scPayments().RegisterPayment(paymentsModel,action);
-//
-//                        }else {
-//                            PaymentsModel paymentsModel=new PaymentsModel();
-//                            paymentsModel.setPayTotal((new PaymentsModel().getaDebits().get(i).getRate()-total));
-//                            paymentsModel.setRate(total);
-//                            paymentsModel.setIdConsumption(new PaymentsModel().getaDebits().get(i).getIdConsumption());
-//                            new scPayments().RegisterPayment(paymentsModel,action);
-//                            total=0;
-//
-//                        }
-//                    }else if(total>0){
-//                        total=new PaymentsModel().getaDebits().get(i).getRate()-amountPay;
-//                        if(total<=0){
-//                            PaymentsModel paymentsModel=new PaymentsModel();
-//                            paymentsModel.setPayTotal(new PaymentsModel().getaDebits().get(i).getRate());
-//                            paymentsModel.setRate(Float.parseFloat("0"));
-//                            paymentsModel.setIdConsumption(new PaymentsModel().getaDebits().get(i).getIdConsumption());
-//                            new scPayments().RegisterPayment(paymentsModel,action);
-//
-//                        }else {
-//                            PaymentsModel paymentsModel=new PaymentsModel();
-//                            paymentsModel.setPayTotal(amountPay);
-//                            paymentsModel.setRate(total);
-//                            paymentsModel.setIdConsumption(new PaymentsModel().getaDebits().get(i).getIdConsumption());
-//                            new scPayments().RegisterPayment(paymentsModel,action);
-//                            total=0;
-//
-//                        }
-//                    }else if(total==0){return;}
-//}
-                for (PaymentsModel debit: new PaymentsModel().getaDebits()) {
-                    if(total<0){
-                        total+=debit.getRate();
-                        if(total<=0){
-                            PaymentsModel paymentsModel=new PaymentsModel();
-                            paymentsModel.setPayTotal(debit.getRate());
-                            paymentsModel.setRate(Float.parseFloat("0"));
-                            paymentsModel.setIdConsumption(debit.getIdConsumption());
-                            new scPayments().RegisterPayment(paymentsModel,action);
+                float total = amountPay;
+                new PaymentsModel().setDebitTotal(amountPay);
+                new PaymentsModel().setTotal(new PaymentsModel().getTotal()-amountPay);
 
-                        }else {
-                            PaymentsModel paymentsModel=new PaymentsModel();
-                            paymentsModel.setPayTotal((debit.getRate()-total));
+               for (int i = (new PaymentsModel().getDebits().size() - 1); i >= 0; i--) {
+                    if (total < 0) {
+                        total += new PaymentsModel().getDebits().get(i).getRate();
+                        if (total <= 0) {
+                            PaymentsModel paymentsModel = new PaymentsModel();
+                            paymentsModel.setPayTotal(new PaymentsModel().getDebits().get(i).getRate());
+                            paymentsModel.setRate(Float.parseFloat("0"));
+                            paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
+                            new scPayments().RegisterPayment(paymentsModel, action);
+                            pays.add(new PaymentsModel(new PaymentsModel().getDebits().get(i).getReadDate(),
+                                    new PaymentsModel().getDebits().get(i).getRate(),"PAGO TOTAL"));
+
+                        } else {
+                            PaymentsModel paymentsModel = new PaymentsModel();
+                            paymentsModel.setPayTotal((new PaymentsModel().getDebits().get(i).getRate() - total));
                             paymentsModel.setRate(total);
-                            paymentsModel.setIdConsumption(debit.getIdConsumption());
-                            new scPayments().RegisterPayment(paymentsModel,action);
-                            total=0;
+                            paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
+                            new scPayments().RegisterPayment(paymentsModel, action);
+                            pays.add(new PaymentsModel(new PaymentsModel().getDebits().get(i).getReadDate(),
+                                    new PaymentsModel().getDebits().get(i).getRate() - total,"ABONO"));
+                            total = 0;
 
                         }
-                    }else if(total>0){
-                        total=debit.getRate()-amountPay;
-                        if(total<=0){
-                            PaymentsModel paymentsModel=new PaymentsModel();
-                            paymentsModel.setPayTotal(debit.getRate());
+                    } else if (total > 0) {
+                        total = new PaymentsModel().getDebits().get(i).getRate() - amountPay;
+                        if (total <= 0) {
+                            PaymentsModel paymentsModel = new PaymentsModel();
+                            paymentsModel.setPayTotal(new PaymentsModel().getDebits().get(i).getRate());
                             paymentsModel.setRate(Float.parseFloat("0"));
-                            paymentsModel.setIdConsumption(debit.getIdConsumption());
-                            new scPayments().RegisterPayment(paymentsModel,action);
+                            paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
+                            new scPayments().RegisterPayment(paymentsModel, action);
+                            pays.add(new PaymentsModel(new PaymentsModel().getDebits().get(i).getReadDate(),
+                                    new PaymentsModel().getDebits().get(i).getRate(),"PAGO TOTAL"));
 
-                        }else {
-                            PaymentsModel paymentsModel=new PaymentsModel();
+                        } else {
+                            PaymentsModel paymentsModel = new PaymentsModel();
                             paymentsModel.setPayTotal(amountPay);
                             paymentsModel.setRate(total);
-                            paymentsModel.setIdConsumption(debit.getIdConsumption());
-                            new scPayments().RegisterPayment(paymentsModel,action);
-                            total=0;
+                            paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
+                            new scPayments().RegisterPayment(paymentsModel, action);
+                            pays.add(new PaymentsModel(new PaymentsModel().getDebits().get(i).getReadDate(),
+                                    new PaymentsModel().getDebits().get(i).getRate() - total,"ABONO"));
+                            total = 0;
 
                         }
-                    }else if(total==0){return;}
-
-
+                    } else if (total == 0) {
+                        new GenaratorPDF().createTicketPDF(context,pays);
+                        return;
+                    }
                 }
-                break;
+
+               break;
             default:
+                break;
 
         }
 

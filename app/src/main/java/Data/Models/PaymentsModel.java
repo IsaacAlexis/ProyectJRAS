@@ -12,15 +12,19 @@ public class PaymentsModel {
     private static String Owner;
     private static String Barcode;
     private static Float Total;
+    private static Float DebitTotal;
     private static Integer DebitPeriod;
     private static String Status;
+    private static String Street;
+    private static Integer HouseNumber;
     //Informacion de adeudos
-    private static List<PaymentsModel> dDebits;//Ordenados de manera descendente
-    private static List<PaymentsModel> aDebits;//Ordenados de manera Ascendente
+    private static List<PaymentsModel> Debits;//Ordenados de manera descendente
     private Date ReadDate;
     private Float Rate;
+    private String Description;
     private Float payTotal;
     private Long IdConsumption;
+
 
 
 
@@ -42,23 +46,26 @@ public class PaymentsModel {
         Rtotal = rtotal;
     }
 //Constructor de la vista de pagos
-    public PaymentsModel(String owner, String barcode, Float total, Integer debitPeriod, String status) {
+    public PaymentsModel(String owner, String barcode, Float total, Integer debitPeriod, String status,String street,Integer houseNumber) {
         Owner = owner;
         Barcode = barcode;
         Total = total;
         DebitPeriod = debitPeriod;
         Status = status;
+        Street=street;
+        HouseNumber=houseNumber;
     }
 //Constructor para los adeudos descente
-    public PaymentsModel(Date readDate, Float rate) {
+    public PaymentsModel(Date readDate, Float rate,Long idConsumption) {
         ReadDate = readDate;
         Rate = rate;
-    }
-//Constructor para los adeudos ascendente
-
-    public PaymentsModel(Float rate, Long idConsumption) {
-        Rate = rate;
         IdConsumption = idConsumption;
+    }
+
+    public PaymentsModel(Date readDate, Float rate, String description) {
+        ReadDate = readDate;
+        Rate = rate;
+        Description = description;
     }
 
     public long getRfolio() {
@@ -158,20 +165,12 @@ public class PaymentsModel {
         Rate = rate;
     }
 
-    public static List<PaymentsModel> getdDebits() {
-        return dDebits;
+    public static List<PaymentsModel> getDebits() {
+        return Debits;
     }
 
-    public static void setdDebits(List<PaymentsModel> dDebits) {
-        PaymentsModel.dDebits = dDebits;
-    }
-
-    public static List<PaymentsModel> getaDebits() {
-        return aDebits;
-    }
-
-    public static void setaDebits(List<PaymentsModel> aDebits) {
-        PaymentsModel.aDebits = aDebits;
+    public static void setDebits(List<PaymentsModel> debits) {
+        PaymentsModel.Debits = debits;
     }
 
     public Long getIdConsumption() {
@@ -188,5 +187,37 @@ public class PaymentsModel {
 
     public void setPayTotal(Float payTotal) {
         this.payTotal = payTotal;
+    }
+
+    public static String getStreet() {
+        return Street;
+    }
+
+    public static void setStreet(String street) {
+        Street = street;
+    }
+
+    public static Integer getHouseNumber() {
+        return HouseNumber;
+    }
+
+    public static void setHouseNumber(Integer houseNumber) {
+        HouseNumber = houseNumber;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public static Float getDebitTotal() {
+        return DebitTotal;
+    }
+
+    public static void setDebitTotal(Float debitTotal) {
+        DebitTotal = debitTotal;
     }
 }

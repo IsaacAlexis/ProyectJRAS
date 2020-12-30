@@ -54,9 +54,9 @@ public class AdapterHouses extends RecyclerView.Adapter<AdapterHouses.ViewHolder
             owner.setText(house.getOwner());
             address.setText(house.getStreet()+" #"+house.getHouseNumber());
             status.setText(house.getStatusHouse());
-            if(status.getText().toString().toUpperCase().equals("ADEUDO PARCIAL")){
+            if(status.getText().toString().toUpperCase().equals("ADEUDO")){
                 status.setTextColor(Color.rgb(255,90,11));
-            }else if (status.getText().toString().toUpperCase().equals("ADEUDO TOTAL")){
+            }else if (status.getText().toString().toUpperCase().equals("SIN SERVICIO")){
                 status.setTextColor(Color.rgb(255,0,0));
             }
             itemView.setOnClickListener(new View.OnClickListener() {

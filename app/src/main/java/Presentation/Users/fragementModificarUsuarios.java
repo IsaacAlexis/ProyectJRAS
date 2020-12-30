@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import java.util.Date;
 
 import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
@@ -54,6 +56,10 @@ public class fragementModificarUsuarios extends Fragment {
     Messages  messages=new Messages();
     RegExValidations regEx = new RegExValidations();
 
+    //Clase dela pantalla de carga
+    LoadingDialog loadingDialog = new LoadingDialog(fragementModificarUsuarios.this);
+    Handler handler = new Handler();
+
 
     public fragementModificarUsuarios() {
         // Required empty public constructor
@@ -70,30 +76,38 @@ public class fragementModificarUsuarios extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!edit){
-                    fieldsavailability(false);
-                    save.setText("Guardar");
-                    edit=true;
-                }else{
-                    textboxEmpty();
+                loadingDialog.startLoadingDialogFragment(getContext());
 
-                    if (!validations.isInvalid){
-                        setValues();
-                        new BusinessUser().BridgeUserUpdate(users);
-                        if(!users.isRegisterUser()){
-                            messages.messageAlert(getContext(),users.getValidationMessage(),"Los cambios se realizarion exito",view,R.id.fragmentUsuarios);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!edit){
+                            fieldsavailability(false);
+                            save.setText("Guardar");
+                            edit=true;
                         }else{
-                            if(users.getUserExist()){
-                                messages.messageToast(getContext(),users.getValidationMessage());
-                            }else{
-                                messages.messageToast(getContext(),users.getValidationMessage());
-                                findNavController(view).navigate(R.id.fragmentUsuarios);
+                            textboxEmpty();
+
+                            if (!validations.isInvalid){
+                                setValues();
+                                new BusinessUser().BridgeUserUpdate(users);
+                                if(!users.isRegisterUser()){
+                                    messages.messageAlert(getContext(),users.getValidationMessage(),"Los cambios se realizarion exito",view,R.id.fragmentUsuarios);
+                                }else{
+                                    if(users.getUserExist()){
+                                        messages.messageToast(getContext(),users.getValidationMessage());
+                                    }else{
+                                        messages.messageToast(getContext(),users.getValidationMessage());
+                                        findNavController(view).navigate(R.id.fragmentUsuarios);
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            }
-        });
+                        loadingDialog.dismissDialog();
+                    }//fin de run()
+                },50);//fin de postDelayed
+            }//fin de onClick
+        });//fin de save.setOnClickListener
         return view;
     }
 

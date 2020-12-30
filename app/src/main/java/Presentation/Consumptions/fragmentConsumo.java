@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import java.util.List;
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -42,6 +44,7 @@ import static androidx.navigation.Navigation.findNavController;
 
 public class fragmentConsumo extends Fragment {
 
+    //Comunes
     private EditText tvBarCode;
     private TextView tvOwner;
     private TextView tvHouseNum;
@@ -55,10 +58,11 @@ public class fragmentConsumo extends Fragment {
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
 
+    //Variables para el escaner
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
-
+    //Instancias de otras clases
     WaterBillsModel waterBillsModel = new WaterBillsModel();
     ConsumptionsModel cm = new ConsumptionsModel();
     UsersModel user = new UsersModel();
@@ -66,34 +70,20 @@ public class fragmentConsumo extends Fragment {
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
     Messages messages = new Messages();
 
+    //Clase de pantalla de carga
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentConsumo.this);
+    Handler handler = new Handler();
 
 
     public fragmentConsumo() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
-
-        tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
-        tvOwner = view.findViewById(R.id.txtPropietarioC);
-        tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
-        tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
-        etConsumption = view.findViewById(R.id.txtConsumo);
-        etLastConsumption=view.findViewById(R.id.txtConsumoAnterior);
-        etLastRate=view.findViewById(R.id.txtPagoAnterior);
-        btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
-        btnEscanear = view.findViewById(R.id.btnEscanearConsumo);
-        btnBuscar = view.findViewById(R.id.btnBuscarConsumo);
-
-        tvFechaConsumo.setText(currentDate);
-        verificaryPedirPermisosDeCamara();
-
-
+        getValues(view);
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +96,8 @@ public class fragmentConsumo extends Fragment {
                     return;
                 }
                 escanear();
-            }
-        });
+            }//fin de onClick
+        });//fin btnEscanear.setOnClickListener()
 
         tvBarCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -131,40 +121,73 @@ public class fragmentConsumo extends Fragment {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });//fin de tvBarCode.addTextChangedListener
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrarInfoViv(view);
-            }
-        });
+                loadingDialog.startLoadingDialogFragment(getContext());
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mostrarInfoViv(view);
+                        loadingDialog.dismissDialog();
+                    }
+                },50);
+            }//fin de onClick btnBuscar
+        });//fin de btnBuscar.setOnClickListener
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!waterBillsModel.isExistFirstRegister()){
-                    registrar(false);
-                    new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList);
+                loadingDialog.startLoadingDialogFragment(getContext());
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!waterBillsModel.isExistFirstRegister()){
+                            registrar(false);
+                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList);
 
 
-                }else {
-                    registrar(true);
-                    if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
-                        new BusinessConsumption().BridgeConsumptionReading(cm);
-                    }
-                }
+                        }else {
+                            registrar(true);
+                            if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
+                                new BusinessConsumption().BridgeConsumptionReading(cm);
+                            }
+                        }
 
+                        Toast.makeText(getContext(), cm.getValidationMessage(), Toast.LENGTH_SHORT).show();
+                        findNavController(view).navigate(R.id.nav_home);
 
-                Toast.makeText(getContext(), cm.getValidationMessage(), Toast.LENGTH_SHORT).show();
-                findNavController(view).navigate(R.id.nav_home);
-            }
-        });
+                        loadingDialog.dismissDialog();
+
+                    }//fin de run()
+                },50);//fin de postDelayed
+            }//fin de onClick btnRegistrar
+        });//fin de btnRegistrar.setOnClickListener
 
 
         return view;
-    }
+    }//fin de onCreateView
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Metodos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
+    public void getValues(View view){
+        tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
+        tvOwner = view.findViewById(R.id.txtPropietarioC);
+        tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
+        tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
+        etConsumption = view.findViewById(R.id.txtConsumo);
+        etLastConsumption=view.findViewById(R.id.txtConsumoAnterior);
+        etLastRate=view.findViewById(R.id.txtPagoAnterior);
+        btnRegistrar = view.findViewById(R.id.btnRegistrarConsumo);
+        btnEscanear = view.findViewById(R.id.btnEscanearConsumo);
+        btnBuscar = view.findViewById(R.id.btnBuscarConsumo);
+
+        tvFechaConsumo.setText("Fecha:  " + new java.text.SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        verificaryPedirPermisosDeCamara();
+    }//fin de getValues(View view)
 
     private void mostrarInfoViv(View view){
         new BusinessConsumption().BridgeHouseScanner(waterBillsModel);
@@ -187,9 +210,10 @@ public class fragmentConsumo extends Fragment {
                 tvOwner.setText(waterBillsModel.getOwner());
             }
         }
-    }
-/*activity-> se refiere al camino que va tomar si seria el primer registro o realizar el registro con
-con normalidad*/
+    }//fin de mostrarInfoViv(View view)
+
+    /*activity-> se refiere al camino que va tomar si seria el primer registro o realizar el registro con
+    con normalidad*/
     private void registrar(Boolean activity){
         if(!activity){
             cm.setIDUser(user.getCurrentIdUser());
@@ -210,7 +234,7 @@ con normalidad*/
             bill=new BusinessConsumption().BridgeWaterBills(cm);
         }
 
-    }
+    }//fin de registrar(Boolean activity)
 
 
     //************************************************Metodos para el scaner*******************************************************************
@@ -260,4 +284,4 @@ con normalidad*/
             }
         }
     }//fin de onActivityResult
-}
+}//fin de fragmentConsumo

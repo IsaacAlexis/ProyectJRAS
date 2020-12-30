@@ -129,10 +129,9 @@ public class loginActivity extends AppCompatActivity {
                         }
                         loadingDialog.dismissDialog();
                     }
-                },500);
-         }
+                },500);//fin de handler
+            }//fin de onClick
         });//fin de btnUserLogin onClickListener
-
     }//fin de onCreate
 
     // ******************************Metodos******************************

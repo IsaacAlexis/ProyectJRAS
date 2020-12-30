@@ -23,187 +23,213 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <EditText
-        android:id="@+id/txtPropietario"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:maxLength="80"
-        android:enabled="false"
-        android:drawableLeft="@drawable/ic_baseline_face_24"
-        android:hint="Nombre de Propieartio"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/txtTelefonoViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:enabled="false"
-        android:maxLength="10"
-        android:drawableLeft="@drawable/ic_baseline_local_phone_24"
-        android:hint="Telefono"
-        android:imeOptions="actionNext"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPropietario" />
-
-    <EditText
-        android:id="@+id/txtEmail"
-        android:layout_width="320dp"
-        android:enabled="false"
-        android:layout_height="46dp"
-        android:maxLength="50"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefonoViv" />
-    <EditText
-        android:id="@+id/txtCalleViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:enabled="false"
-        android:maxLength="40"
-        android:drawableLeft="@drawable/ic_baseline_location_on_24"
-        android:hint="Calle de la Vivienda"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="286dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"/>
-    <EditText
-        android:id="@+id/txtNumViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:enabled="false"
-        android:maxLength="4"
-        android:drawableLeft="@drawable/ic_baseline_location_on_24"
-        android:hint="Numero de vivienda"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="286dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCalleViv"/>
-    <EditText
-        android:id="@+id/txtCPViv"
-        android:layout_width="311dp"
-        android:enabled="false"
-        android:layout_height="47dp"
-        android:maxLength="5"
-        android:drawableLeft="@drawable/ic_baseline_pin_drop_24"
-        android:hint="C.P."
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="229dp"
-        tools:layout_editor_absoluteY="346dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNumViv"/>
-    <EditText
-        android:id="@+id/txtColViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:enabled="false"
-        android:maxLength="40"
-        android:drawableLeft="@drawable/ic_baseline_location_on_24"
-        android:hint="Colonia de vivienda"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="286dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCPViv"/>
-    <EditText
-        android:id="@+id/txtCiudadViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:enabled="false"
-        android:maxLength="40"
-        android:drawableLeft="@drawable/ic_baseline_location_city_24"
-        android:hint="Ciudad"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="338dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtColViv"/>
-    <EditText
-        android:id="@+id/txtEstadoViv"
-        android:layout_width="311dp"
-        android:layout_height="47dp"
-        android:maxLength="40"
-        android:enabled="false"
-        android:drawableLeft="@drawable/ic_baseline_apartment_24"
-        android:hint="Estado"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="422dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCiudadViv"/>
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="311dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="2dp"
-        android:stretchColumns="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEstadoViv">
-
-        <TableRow
-            android:layout_width="173dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/lbRolm"
-                android:layout_width="286dp"
-                android:layout_height="match_parent"
-                android:layout_column="0"
-                android:enabled="false"
-                android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
-                android:text=" Estado de la vivienda     "
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <RadioGroup
-                android:id="@+id/rolUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_span="2"
-                android:checkedButton="@+id/rbRol"
-                android:orientation="horizontal"/>
-        </TableRow>
-    </TableLayout>
-
     <Button
         android:id="@+id/btnregistrarViviendaM"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bordes_redondos_azul"
         android:text="Editar"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout35" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPropietario"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:enabled="false"
+            android:hint="Nombre del Propietario"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences|textAutoComplete"
+            android:maxLength="80" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtTelefonoViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_local_phone_24"
+            android:enabled="false"
+            android:hint="Teléfono"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:maxLength="10" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout17">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmail"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:enabled="false"
+            android:hint="Email"
+            android:maxLength="50" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout22">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCalleViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_person_pin_circle_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Calle de la Vivienda"
+            android:maxLength="40" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout25">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNumViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_my_location_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Número de la Vivienda"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:maxLength="6" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout29">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCPViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_markunread_mailbox_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Código Postal"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLines="5" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout30">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtColViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_pin_drop_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Colonia de la Vivienda"
+            android:maxLength="40" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout32">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCiudadViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_commute_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Ciudad"
+            android:maxLength="40" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout33">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEstadoViv"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:drawableStart="@drawable/ic_baseline_location_city_24"
+            android:editable="false"
+            android:enabled="false"
+            android:hint="Estado"
+            android:maxLength="40" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout34">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lbRolm"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:enabled="false"
+            android:editable="false"
+            android:drawableStart="@drawable/ic_baseline_status_on_24"
+            android:hint="Estado de la Vivienda" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

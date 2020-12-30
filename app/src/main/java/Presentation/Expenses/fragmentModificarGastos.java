@@ -90,9 +90,9 @@ public class fragmentModificarGastos extends Fragment {
     }
 
     public void getValues(View view) {
-        NameExp = view.findViewById(R.id.txtNombreGasto);
-        Descript = view.findViewById(R.id.txtDescripcion);
-        total = view.findViewById(R.id.txtTotal);
+        NameExp = view.findViewById(R.id.TxtNombreG);
+        Descript = view.findViewById(R.id.TxtDescripcionG);
+        total = view.findViewById(R.id.TxtTotalG);
         Folio = view.findViewById(R.id.txtFolio);
         Fecha = view.findViewById(R.id.txtFechaGasto);
         save = view.findViewById(R.id.btnConfirmarGasto);
@@ -110,7 +110,7 @@ public class fragmentModificarGastos extends Fragment {
 
     public void PastValues() {
         Folio.setText("Folio: " + String.valueOf(expen.getModifyFolioExp()));
-        Fecha.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        Fecha.setText("Fecha:  " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         NameExp.setText(expen.getModifyNameExp());
         Descript.setText(expen.getModifyDescript());
         total.setText(String.valueOf(expen.getModifyTotal()));

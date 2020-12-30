@@ -47,6 +47,7 @@ public class fragmentRegistrarGastos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_registrar_gastos, container, false);
+
         //Ejecucion del metodo para relacionar las variables con el componente
         getvalues(view);
         registerexp.setOnClickListener(new View.OnClickListener() {

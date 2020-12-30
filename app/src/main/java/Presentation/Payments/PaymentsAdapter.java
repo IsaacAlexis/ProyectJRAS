@@ -37,7 +37,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
         gOriginal.addAll(items);
     }
     public  interface OnItemClickListener{
-        void OnItemClick(Long Folio, String Owner, Date PayDate, float Total);
+        void OnItemClick( String Owner, Date PayDate, float Total);
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconView;
@@ -60,7 +60,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(payment.getRfolio(), payment.getRowner(), payment.getRpayDate(), payment.getRtotal());
+                    listener.OnItemClick(payment.getRowner(), payment.getRpayDate(), payment.getRtotal());
                 }
             });
         }
@@ -73,12 +73,11 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
             gData.clear();
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
                 List<PaymentsModel> collect = gOriginal.stream()
-                        .filter(i -> String.valueOf(i.getRfolio()).equals(svSearch)||
-                                (i.getRowner().toLowerCase().contains(svSearch.toLowerCase())||
+                        .filter(i -> i.getRowner().toLowerCase().contains(svSearch.toLowerCase())||
                                         new SimpleDateFormat("dd-MM-yyyy").format(i.getRpayDate()).equals(svSearch.toLowerCase())||
                                         new SimpleDateFormat("dd").format(i.getRpayDate()).equals(svSearch.toLowerCase())||
                                         new SimpleDateFormat("MM").format(i.getRpayDate()).equals(svSearch.toLowerCase())||
-                                        new SimpleDateFormat("yyyy").format(i.getRpayDate()).equals(svSearch.toLowerCase()))).
+                                        new SimpleDateFormat("yyyy").format(i.getRpayDate()).equals(svSearch.toLowerCase())).
                                 collect(Collectors.toList());
 
                 gData.addAll(collect);

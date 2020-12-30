@@ -2,6 +2,7 @@ package Presentation.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,9 +17,11 @@ import com.example.jras.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.SQLException;
+import java.util.zip.Inflater;
 
 import BusinessLogic.BusinessUser;
 import Data.Models.UsersModel;
+import Data.Utility.GenaratorPDF;
 import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
@@ -52,6 +55,7 @@ public class loginActivity extends AppCompatActivity {
         btnUserLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 loadingDialog.startLoadingDialogActivity();
                 Handler handler = new Handler();
@@ -128,7 +132,6 @@ public class loginActivity extends AppCompatActivity {
                 },500);//fin de handler
             }//fin de onClick
         });//fin de btnUserLogin onClickListener
-
     }//fin de onCreate
 
     // ******************************Metodos******************************

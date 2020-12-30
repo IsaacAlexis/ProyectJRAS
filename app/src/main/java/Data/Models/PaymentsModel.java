@@ -35,8 +35,8 @@ public class PaymentsModel {
     public PaymentsModel() {
     }
 //    Se agregan los valores para el arreglo del RecyclerView
-    public PaymentsModel(long rfolio, String rowner, Date rpayDate, Float rtotal) {
-        Rfolio = rfolio;
+    public PaymentsModel( String rowner, Date rpayDate, Float rtotal) {
+//        Rfolio = rfolio;
         Rowner = rowner;
         RpayDate = rpayDate;
         Rtotal = rtotal;

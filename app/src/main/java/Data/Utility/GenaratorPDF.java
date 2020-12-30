@@ -28,6 +28,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 import Data.Models.ConsumptionsModel;
+import Data.Models.PaymentsModel;
+import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
 
 public class GenaratorPDF {
@@ -348,7 +350,7 @@ public class GenaratorPDF {
             return true;
         }
     }
-    public boolean createTicketPDF(Context context){
+    public boolean createTicketPDF(Context context, List<PaymentsModel> pays){
         try {
             PdfDocument mypdfDocument=new PdfDocument();
             Paint mypaint=new Paint();
@@ -367,7 +369,7 @@ public class GenaratorPDF {
             canvas.drawText("JUNTA RURAL DE AGUA Y SANEAMIENTO ",(myPageInfo.getPageWidth()/2),95,mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(9.0f);
-            canvas.drawText("COL. BELLAVISTA",(myPageInfo.getPageWidth()/2),110,mypaint);
+            canvas.drawText(new UsersModel().getCurrentColony(),(myPageInfo.getPageWidth()/2),110,mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(9.0f);
             canvas.drawText("CALLE QUINTA #254",(myPageInfo.getPageWidth()/2),125,mypaint);
@@ -379,7 +381,7 @@ public class GenaratorPDF {
             canvas.drawText("Calle: ",50,170,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("calle quinta",(myPageInfo.getPageWidth()-20),170,mypaint);
+            canvas.drawText(new PaymentsModel().getStreet(),(myPageInfo.getPageWidth()-20),170,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
@@ -388,7 +390,7 @@ public class GenaratorPDF {
             canvas.drawText("No de Vivienda:",50,185,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("254",(myPageInfo.getPageWidth()-20),185,mypaint);
+            canvas.drawText("#"+new PaymentsModel().getHouseNumber(),(myPageInfo.getPageWidth()-20),185,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
@@ -397,23 +399,23 @@ public class GenaratorPDF {
             canvas.drawText("Nombre del Propietario:",50,200,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("Brayan Espinoza",(myPageInfo.getPageWidth()-20),200,mypaint);
+            canvas.drawText(new PaymentsModel().getOwner(),(myPageInfo.getPageWidth()-20),200,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
 
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Operacion Realizada por:",50,220,mypaint);
+            canvas.drawText("OPERACION REALIZADA POR:",50,220,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("Ebber Dominguez",(myPageInfo.getPageWidth()-20),220,mypaint);
+            canvas.drawText(new UsersModel().getCurrentFirstName()+" "+new UsersModel().getCurrentLastName(),(myPageInfo.getPageWidth()-20),220,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Fecha: ",180,240,mypaint);
+            canvas.drawText("FECHA: ",180,240,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("09/12/2020",(myPageInfo.getPageWidth()-20),240,mypaint);
-            canvas.drawText("07:11:00 p.m",(myPageInfo.getPageWidth()-20),250,mypaint);
+            canvas.drawText(new SimpleDateFormat("dd-MM-YYYY").format(new Date()),(myPageInfo.getPageWidth()-20),240,mypaint);
+            canvas.drawText(new SimpleDateFormat("hh:mm a").format(new Date()),(myPageInfo.getPageWidth()-20),250,mypaint);
 
             mypaint.setStyle(Paint.Style.FILL);
             mypaint.setColor(Color.BLACK);
@@ -425,59 +427,73 @@ public class GenaratorPDF {
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("Concepto",50,280,mypaint);
+            canvas.drawText("CONCEPTO",50,280,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("Importe",(myPageInfo.getPageWidth()-20),280,mypaint);
+            canvas.drawText("IMPORTE",(myPageInfo.getPageWidth()-20),280,mypaint);
+            int yfirst=300;
+            int ysecond=310;
 
-            mypaint.setTextAlign(Paint.Align.LEFT);
-            mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("Pago "+"Parcial o Total ",50,300,mypaint);
-            canvas.drawText("del Periodo "+"20/12/2020 ",50,310,mypaint);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("50.00",(myPageInfo.getPageWidth()-20),310,mypaint);
+
+            for(PaymentsModel pay :pays){
+                mypaint.setTextAlign(Paint.Align.LEFT);
+                mypaint.setTypeface(Typeface.DEFAULT);
+                canvas.drawText(pay.getDescription()+" DEL",50,yfirst,mypaint);
+                canvas.drawText("PERIODO: "+new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(pay.getReadDate())))+
+                        "["+new Dates().getLastBill(pay.getReadDate())+"]",50,ysecond,mypaint);
+                mypaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText("$"+pay.getRate()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+                yfirst+=20;
+                ysecond+=20;
+            }
+            ysecond+=20;
+
 
             mypaint.setStyle(Paint.Style.FILL);
             mypaint.setColor(Color.BLACK);
             mypaint.setStyle(Paint.Style.STROKE);
             mypaint.setStrokeWidth(2);
-            canvas.drawLine(20,330,myPageInfo.getPageWidth()-20,330,mypaint);
+            canvas.drawLine(20,ysecond,myPageInfo.getPageWidth()-20,ysecond,mypaint);
             mypaint.setStrokeWidth(0);
             mypaint.setStyle(Paint.Style.FILL);
+            ysecond+=30;
 
             mypaint.setTextSize(12.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("TOTAL:",50,365,mypaint);
+            canvas.drawText("TOTAL:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("50.00",(myPageInfo.getPageWidth()-20),365,mypaint);
+            canvas.drawText("$"+new PaymentsModel().getDebitTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            ysecond+=15;
 
             mypaint.setTextSize(12.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("SALDO RESTANTE:",50,380,mypaint);
+            canvas.drawText("SALDO RESTANTE:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("00.00",(myPageInfo.getPageWidth()-20),380,mypaint);
+            canvas.drawText("$"+new PaymentsModel().getTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            ysecond+=30;
 
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(11.0f);
-            canvas.drawText("Pago en Efectivo",(myPageInfo.getPageWidth()/2),410,mypaint);
+            canvas.drawText("PAGO EN EFECTIVO",(myPageInfo.getPageWidth()/2),ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
 
             //Codigo de barras
 
-            mypaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawBitmap(GenerateCodeBar(context,"6789"),50,myPageInfo.getPageHeight()-70,mypaint);
+//            mypaint.setTextAlign(Paint.Align.CENTER);
+//            canvas.drawBitmap(GenerateCodeBar(context,"6789"),50,myPageInfo.getPageHeight()-70,mypaint);
 
 
 
             mypdfDocument.finishPage(mypage1);
 
-            File file=new File(context.getExternalFilesDir("/"),"/Ticket de pago.pdf");
+            File file=new File(context.getExternalFilesDir("/"),"/PAGO "+
+                    new PaymentsModel().getOwner()+new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf");
             mypdfDocument.writeTo(new FileOutputStream(file));
             mypdfDocument.close();
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            new PaymentsModel().setValidationMessage("No se pudo generar el recibo");
             return true;
         }
     }

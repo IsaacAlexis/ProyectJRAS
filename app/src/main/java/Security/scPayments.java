@@ -51,7 +51,8 @@ public class scPayments {
 
             while (resultSet.next()){
 
-               new PaymentsModel(resultSet.getString(1),resultSet.getString(2),resultSet.getFloat(3),resultSet.getInt(4),resultSet.getString(5));
+               new PaymentsModel(resultSet.getString(1),resultSet.getString(2),resultSet.getFloat(3),
+                       resultSet.getInt(4),resultSet.getString(5),resultSet.getString(6),resultSet.getInt(7));
                action=true;
             }
             if(!action){
@@ -112,12 +113,12 @@ public class scPayments {
             callableStatement.setString(1, barcode);
             ResultSet resultSet=callableStatement.executeQuery();
             while (resultSet.next()){
-                debits.add(new PaymentsModel(resultSet.getDate("ReadDate"),resultSet.getFloat("Rate")));
+                debits.add(new PaymentsModel(resultSet.getDate("ReadDate"),resultSet.getFloat("Rate")
+                ,resultSet.getLong("IDConsu")));
                 action=true;
             }
             if(action){
-                new PaymentsModel().setdDebits(debits);
-                getDebitsASC(barcode);
+                new PaymentsModel().setDebits(debits);
             }
 
             callableStatement.close();
@@ -134,36 +135,7 @@ public class scPayments {
         }
         return action;
     }
-    public boolean getDebitsASC(String barcode) {
-        boolean action=false;
-        List<PaymentsModel> debits=new ArrayList<>();
-        try{
-            bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            CallableStatement callableStatement=bd.connection.prepareCall("{call getDebitsAsc(?)}");
-            callableStatement.setString(1, barcode);
-            ResultSet resultSet=callableStatement.executeQuery();
-            while (resultSet.next()){
-                debits.add(new PaymentsModel(resultSet.getFloat("Rate"),resultSet.getLong("IDConsu")));
-                action=true;
-            }
-            if(action){
-                new PaymentsModel().setaDebits(debits);
-            }
 
-            callableStatement.close();
-            bd.CloseConnection();
-
-        }catch(SQLException e){
-            try {
-                if(!bd.connection.isClosed()){
-                    bd.CloseConnection();
-                }
-            } catch (SQLException e2) { }
-            action=false;
-            new PaymentsModel().setValidationMessage("Error al buscar los adeudos");
-        }
-        return action;
-    }
 
     public void RegisterPayment(PaymentsModel paymentsModel,int action) {
         try{

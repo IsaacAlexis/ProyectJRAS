@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import BusinessLogic.BusinessPayments;
 import Data.Models.PaymentsModel;
 import Data.Models.PaysModel;
 import Data.Utility.Messages;
+import Data.Utility.RegExValidations;
+import Data.Utility.Validations;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -59,7 +63,10 @@ public class fragmentPagos extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_pagos, container, false);
        getValues(view);
-       debitsAdapter=new DebitsAdapter(new PaymentsModel().getdDebits(), getContext());
+        new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
+                validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
+
+       debitsAdapter=new DebitsAdapter(new PaymentsModel().getDebits(), getContext());
         mRecycleView.setHasFixedSize(true);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setLayoutManager(mLayoutManger);
@@ -82,10 +89,10 @@ public class fragmentPagos extends Fragment {
             @Override
             public void onClick(View v) {
                 if(TypePayment.isChecked()){
-                    new BusinessPayments().RegisterPayment(Float.parseFloat(AmountPay.getText().toString()),2);
+                    new BusinessPayments().RegisterPayment(Float.parseFloat(AmountPay.getText().toString()),2,fragmentPagos.this.getContext());
 
                 }else{
-                    new BusinessPayments().RegisterPayment(Float.parseFloat("0"),1);
+                    new BusinessPayments().RegisterPayment(Float.parseFloat("0"),1,fragmentPagos.this.getContext());
 
                 }
                 new Messages().messageToast(getContext(),new PaymentsModel().getValidationMessage());

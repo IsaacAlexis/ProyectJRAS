@@ -53,6 +53,13 @@ public class FragmentPrePago extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
                 if(Barcode.length()==8){
                     if(!new BusinessPayments().AccessToRegisterPayment(Barcode.getText().toString())){
                         new Messages().messageToastShort(getContext(),new PaymentsModel().getValidationMessage());
@@ -64,11 +71,6 @@ public class FragmentPrePago extends Fragment {
 
 
                 }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
 
             }
         });

@@ -63,8 +63,8 @@ public class fragmentPagos extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_pagos, container, false);
        getValues(view);
-//        new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
-//                validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
+        new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
+                validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
 
        debitsAdapter=new DebitsAdapter(new PaymentsModel().getDebits(), getContext());
         mRecycleView.setHasFixedSize(true);

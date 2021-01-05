@@ -23,26 +23,65 @@
         android:saveEnabled="false"
         tools:context=".Usuarios_Activity">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="344dp"
-            android:text="en mantenimiento..."
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/encabezado_mostrar"
+            android:layout_height="216dp"
+            android:background="@drawable/encabezado_formularios"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/txtFecha"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:text="Ingrese su primera fecha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <EditText
+            android:id="@+id/txtFecha2"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:text="Ingrese su segunda fecha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCapturaFecha" />
+
+        <TextView
+            android:id="@+id/txtCapturaFecha"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:hint="Presione 2 veces para abrir calendario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtFecha" />
+
+        <TextView
+            android:id="@+id/txtCapturaFecha2"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:hint="Presione 2 veces para abrir calendario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtFecha2" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="252dp"
+            android:background="@drawable/bordes_redondos_azul"
+            android:text="Consultar"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCapturaFecha" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

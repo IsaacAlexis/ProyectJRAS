@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import BusinessLogic.BusinessPayments;
 import Data.Models.PaymentsModel;
-import Data.Models.PaysModel;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
@@ -48,8 +45,8 @@ public class fragmentPagos extends Fragment {
     private RecyclerView.LayoutManager mLayoutManger;
     private DebitsAdapter debitsAdapter;
 
-    //instancias a otras clases
-    PaysModel pays = new PaysModel();
+
+
 
 
 
@@ -62,13 +59,12 @@ public class fragmentPagos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_pagos, container, false);
-       getValues(view);
-        btnPay.setEnabled(false);
-        btnPay.setBackgroundResource(R.drawable.boton_desabilitado);
+        getValues(view);
+
         new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
                 validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
 
-       debitsAdapter=new DebitsAdapter(new PaymentsModel().getDebits(), getContext());
+        debitsAdapter=new DebitsAdapter(new PaymentsModel().getDebits(), getContext());
         mRecycleView.setHasFixedSize(true);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setLayoutManager(mLayoutManger);
@@ -80,10 +76,14 @@ public class fragmentPagos extends Fragment {
                     NamePayment.setText("ABONO");
                     AmountPay.setVisibility(View.VISIBLE);
                     tilAmountPay.setVisibility(View.VISIBLE);
+                    btnPay.setEnabled(false);
+                    btnPay.setBackgroundResource(R.drawable.boton_desabilitado);
                 }else{
                     NamePayment.setText("PAGO TOTAL");
                     AmountPay.setVisibility(View.INVISIBLE);
                     tilAmountPay.setVisibility(View.INVISIBLE);
+                    btnPay.setEnabled(true);
+                    btnPay.setBackgroundResource(R.drawable.bordes_redondos_azul);
                 }
             }
         });
@@ -127,9 +127,7 @@ public class fragmentPagos extends Fragment {
 
     }
 
-    public void setValues() {
 
-    }
 
 
 

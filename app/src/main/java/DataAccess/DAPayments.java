@@ -30,6 +30,8 @@ public class DAPayments {
         List<PaymentsModel> pays=new ArrayList<>();
         switch(action) {
             case 1:
+                new PaymentsModel().setDebitTotal(new PaymentsModel().getTotal());
+                new PaymentsModel().setTotal(new PaymentsModel().getTotal()-new PaymentsModel().getTotal());
 
                 for (int i = (new PaymentsModel().getDebits().size() - 1); i >= 0; i--) {
                     PaymentsModel paymentsModel = new PaymentsModel();
@@ -37,7 +39,10 @@ public class DAPayments {
                     paymentsModel.setRate(Float.parseFloat("0"));
                     paymentsModel.setIdConsumption(new PaymentsModel().getDebits().get(i).getIdConsumption());
                     new scPayments().RegisterPayment(paymentsModel, action);
+                    pays.add(new PaymentsModel(new PaymentsModel().getDebits().get(i).getReadDate(),
+                            new PaymentsModel().getDebits().get(i).getRate(),"PAGO TOTAL"));
                 }
+                new GenaratorPDF().createTicketPDF(context,pays);
                 break;
 
             case 2:

@@ -1,5 +1,8 @@
 package Presentation.Reports;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +10,82 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.example.jras.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragmentReportes#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Calendar;
+
+
 public class fragmentReportes extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //Variables
+    private EditText Fecha;
+    private EditText SegundaFecha;
+    private String date1;
+    private String date2;
+    private FloatingActionButton fabFecha;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+    DatePickerDialog.OnDateSetListener setListener;
+
 
     public fragmentReportes() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragmentReportes.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragmentReportes newInstance(String param1, String param2) {
-        fragmentReportes fragment = new fragmentReportes();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void getValues(View view) {
+        //Relacionar variables con los componentes
+        Fecha = view.findViewById(R.id.txtFecha1);
+        SegundaFecha = view.findViewById(R.id.txtFecha2);
+        fabFecha = view.findViewById(R.id.fabFechaReportes);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reportes, container, false);
+        final View view = inflater.inflate(R.layout.fragment_reportes, container, false);
+        getValues(view);
+        //crear instancia del calendario
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        fabFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                        ,setListener,year,month,day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month+1;
+                date1 = dayOfMonth+"/"+month+"/"+year;
+                if (month==12){
+                    month=1;
+                    year=year+1;
+                    date2 = dayOfMonth+"/"+month+"/"+year;
+                }else{
+                    date2 = dayOfMonth+"/"+(month+1)+"/"+year;
+                }
+                Fecha.setText(date1);
+                SegundaFecha.setText(date2);
+            }
+        };
+
+
+        return view;
     }
+
+
 }

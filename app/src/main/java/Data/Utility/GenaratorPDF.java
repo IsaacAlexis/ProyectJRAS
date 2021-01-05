@@ -9,9 +9,18 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 
+import android.net.Uri;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.jras.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
@@ -27,6 +36,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
+import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.PaymentsModel;
 import Data.Models.UsersModel;
@@ -36,7 +46,7 @@ public class GenaratorPDF {
 
 
     float total=0;
-    public boolean createPDFWaterBills(Context context, List<WaterBillsModel> debits){
+    public boolean createPDFWaterBills(Context context, List<WaterBillsModel> debits, StorageReference storageReference){
         try {
             PdfDocument mypdfDocument=new PdfDocument();
             Paint mypaint=new Paint();
@@ -340,10 +350,26 @@ public class GenaratorPDF {
             mypdfDocument.finishPage(mypage1);
 
             String test=""+new WaterBillsModel().getOwner().toString().toUpperCase()+" PERIODO "+ NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
-            new ConsumptionsModel().setPdf(test);
             File file=new File(context.getExternalFilesDir("/"),"/"+test);
             mypdfDocument.writeTo(new  FileOutputStream(file));
             mypdfDocument.close();
+            Uri files=Uri.fromFile(file);
+            String namepdf=System.currentTimeMillis()+".pdf";
+            new ConsumptionsModel().setPdf(namepdf);
+            StorageReference reference=storageReference.child("RECIBOS DE AGUA/"+namepdf);
+            reference.putFile(files).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isComplete()){
+                        String URL=reference.getDownloadUrl().toString();
+                        file.delete();
+
+                    }else{
+                        Toast.makeText(context,"No se pudo completar la operacion",Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
             return false;
         } catch (IOException e) {
             new ConsumptionsModel().setValidationMessage("Ocurrio un error al generar Recibo de agua");

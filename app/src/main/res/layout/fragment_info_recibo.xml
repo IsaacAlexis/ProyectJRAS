@@ -3,10 +3,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.github.barteksc.pdfviewer.PDFView
         android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnDescargar"
+        android:layout_marginBottom="10dp" />
+    <Button
+        android:id="@+id/btnDescargar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bordes_redondos_rojo"
+        android:text="Descargar"
+        android:textSize="20dp"/>
 </RelativeLayout>
 
 

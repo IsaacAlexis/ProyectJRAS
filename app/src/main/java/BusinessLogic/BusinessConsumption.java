@@ -2,6 +2,8 @@ package BusinessLogic;
 
 import android.content.Context;
 
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,12 @@ public class BusinessConsumption {
         DAC.HouseScan(billsModel);
     }
 
-    public void BridgeConsumptionReading(ConsumptionsModel cm){
-        DAC.ConsumptionReading(cm);
+    public void BridgeConsumptionReading(Context context, ConsumptionsModel cm, StorageReference storageReference){
+        List<WaterBillsModel> bill=new ArrayList<>();
+        bill=new BusinessConsumption().BridgeWaterBills(cm);
+        if(!new GenaratorPDF().createPDFWaterBills(context,bill,storageReference)) {
+            DAC.ConsumptionReading(cm);
+        }
     }
 
 
@@ -37,7 +43,8 @@ public class BusinessConsumption {
     }
 
 
-    public void BridgeConsumptionFirstReading(Context context, ConsumptionsModel cm, List<ConsumptionsModel> consumptionsModelList) {
+    public void BridgeConsumptionFirstReading(Context context, ConsumptionsModel cm,
+                                              List<ConsumptionsModel> consumptionsModelList,StorageReference storageReference) {
         if(DAC.FirstConsumptionReading(cm,consumptionsModelList)){
             WaterBillsModel waterBillsModel=new WaterBillsModel();
             BridgeHouseScanner(waterBillsModel);
@@ -49,9 +56,8 @@ public class BusinessConsumption {
                     waterBillsModel.getReadLast()));
             List<WaterBillsModel> bill=new ArrayList<>();
             bill=new BusinessConsumption().BridgeWaterBills(cm);
-            if(!new GenaratorPDF().createPDFWaterBills(context,bill)){
-                BridgeConsumptionReading(cm);
-
+            if(!new GenaratorPDF().createPDFWaterBills(context,bill,storageReference)){
+                DAC.ConsumptionReading(cm);
             }
 
         }

@@ -18,7 +18,6 @@ public class Dates {
     public String getDateBills(){
         Integer Month=Integer.parseInt(new SimpleDateFormat("MM").format(new Date()));
         String Year=new SimpleDateFormat("yyyy").format(new Date());
-        String Day=new SimpleDateFormat("dd").format(new Date());
         if((Month-1)==0){
             return (Integer.parseInt(Year)-1)+"/"+12;
         }else{

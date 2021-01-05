@@ -3,6 +3,7 @@ package Data.Models;
 import java.util.Date;
 
 public class WaterBillsModel {
+    private static String email;
     private static String BarCode;
     private static String Owner;
     private static String Street;
@@ -58,6 +59,14 @@ public class WaterBillsModel {
     public WaterBillsModel(Date bReadDate, Float bNowRate) {
         this.bReadDate = bReadDate;
         this.bNowRate = bNowRate;
+    }
+
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        WaterBillsModel.email = email;
     }
 
     public static String getBarCode() {

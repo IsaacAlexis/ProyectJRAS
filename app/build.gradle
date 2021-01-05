@@ -41,6 +41,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation files('libs\\activation.jar')
+    implementation files('libs\\mail.jar')
 
 
     testImplementation 'junit:junit:4.12'

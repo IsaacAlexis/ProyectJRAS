@@ -32,6 +32,7 @@ public class scConsumption {
                 billsModel.setHouseNumber(Result.getInt("HouseNum"));
                 billsModel.setZipCode(Result.getInt("ZipCode"));
                 billsModel.setStatus(Result.getString("StatusHouse"));
+                billsModel.setEmail(Result.getString("Email"));
                 billsModel.setCorrectHouse(true);
             }
 

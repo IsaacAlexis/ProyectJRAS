@@ -67,6 +67,10 @@ public class fragmentRegistrarGastos extends Fragment {
 
         //Ejecucion del metodo para relacionar las variables con el componente
         getvalues(view);
+
+        registerexp.setEnabled(false);
+        registerexp.setBackgroundResource(R.drawable.boton_desabilitado);
+
         registerexp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

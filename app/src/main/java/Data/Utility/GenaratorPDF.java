@@ -498,6 +498,96 @@ public class GenaratorPDF {
         }
     }
 
+    public boolean createReportPDF(Context context){
+        try {
+            PdfDocument mypdfDocument = new PdfDocument();
+            Paint mypaint = new Paint();
+            PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(612, 792, 1).create();
+            PdfDocument.Page mypage1 = mypdfDocument.startPage(myPageInfo);
+            Canvas canvas = mypage1.getCanvas();
+
+            //Agregamos la imagenes
+            mypaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawBitmap(converterBitmap(R.drawable.logo_jras1, context), 50, 15, mypaint);
+            canvas.drawBitmap(converterBitmapCuadro(R.drawable.logo_chih, context), myPageInfo.getPageWidth() - 120, 15, mypaint);
+            //canvas.drawBitmap(converterBitmap(R.drawable.logo_jras,context),myPageInfo.getPageWidth()-74,21,mypaint);
+            //Agregamos el titulo y los subtitulos
+            mypaint.setColor(Color.BLACK);
+            mypaint.setTextSize(12.0f);
+            mypaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("JUNTA RURAL DE AGUA Y SANEAMIENTO ", (myPageInfo.getPageWidth() / 2), 30, mypaint);
+            mypaint.setTextAlign(Paint.Align.CENTER);
+            mypaint.setTextSize(12.0f);
+            canvas.drawText("COL. BELLAVISTA", (myPageInfo.getPageWidth() / 2), 45, mypaint);
+            mypaint.setTextAlign(Paint.Align.CENTER);
+            mypaint.setTextSize(12.0f);
+            canvas.drawText("CALLE QUINTA #254", (myPageInfo.getPageWidth() / 2), 60, mypaint);
+            mypaint.setTextSize(12.0f);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("Reporte de Utilidad", (myPageInfo.getPageWidth() / 2), 90, mypaint);
+            canvas.drawText("PERIODO " + "DICIEMBRE " + "[2020-12]", (myPageInfo.getPageWidth() / 2), 105, mypaint);
+
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("INGRESOS ", 50, 140, mypaint);
+
+            mypaint.setTypeface(Typeface.DEFAULT);
+            mypaint.setTextSize(10.0f);
+            canvas.drawText("1.- " + " Brayan Espinoza Fernandez ", 50, 155, mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$50.00", (myPageInfo.getPageWidth() - 50), 155, mypaint);
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("TOTAL INGRESOS:   "+ " $50.00",(myPageInfo.getPageWidth()-50),180,mypaint);
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("EGRESOS ", 50, 210, mypaint);
+
+            mypaint.setTypeface(Typeface.DEFAULT);
+            mypaint.setTextSize(10.0f);
+            canvas.drawText("1.- " + " Gasto en Purificador ", 50, 225, mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$40.00", (myPageInfo.getPageWidth() - 50), 225, mypaint);
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("TOTAL EGRESOS:   "+ " $40.00",(myPageInfo.getPageWidth()-50),250,mypaint);
+
+            mypaint.setTextSize(12.0f);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("UTILIDAD NETA:   "+ " $10.00",(myPageInfo.getPageWidth()-50),300,mypaint);
+
+
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            mypaint.setTextSize(10.0f);
+            canvas.drawText("Todos los Derechos Reservados ", 50, myPageInfo.getPageHeight()-10, mypaint);
+
+
+
+
+
+
+            mypdfDocument.finishPage(mypage1);
+
+            File file=new File(context.getExternalFilesDir("/"),"/Reporte.pdf");
+            mypdfDocument.writeTo(new FileOutputStream(file));
+            mypdfDocument.close();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
      public String NameMonth(int number){
         number-=1;
         if(number==0){
@@ -551,6 +641,14 @@ public class GenaratorPDF {
         Bitmap bmp;
         bmp= BitmapFactory.decodeResource(context.getResources(),image);
         bmp=Bitmap.createScaledBitmap(bmp,50,70,false);
+        return bmp;
+    }
+    private Bitmap converterBitmapCuadro(int image,Context context){
+        Bitmap bmp;
+        bmp= BitmapFactory.decodeResource(context.getResources(),image);
+
+
+        bmp=Bitmap.createScaledBitmap(bmp,70,70,false);
         return bmp;
     }
 

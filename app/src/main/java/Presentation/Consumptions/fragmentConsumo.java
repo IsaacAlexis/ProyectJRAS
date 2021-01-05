@@ -139,6 +139,7 @@ public class fragmentConsumo extends Fragment {
                     @Override
                     public void run() {
                         mostrarInfoViv(view);
+
                         loadingDialog.dismissDialog();
                     }
                 },50);
@@ -180,7 +181,11 @@ public class fragmentConsumo extends Fragment {
         return view;
     }//fin de onCreateView
 
+
+
+
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Metodos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
+
     public void getValues(View view){
         tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
@@ -216,6 +221,7 @@ public class fragmentConsumo extends Fragment {
                 tvBarCode.setText(waterBillsModel.getBarCode());
                 tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
                 tvOwner.setText(waterBillsModel.getOwner());
+                //new Emails().createMailConsumptions(waterBillsModel.getEmail());
             }
         }
     }//fin de mostrarInfoViv(View view)

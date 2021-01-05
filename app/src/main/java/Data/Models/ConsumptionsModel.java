@@ -1,5 +1,7 @@
 package Data.Models;
 
+import java.util.Date;
+
 public class ConsumptionsModel {
 
     private long IDUser;
@@ -8,7 +10,7 @@ public class ConsumptionsModel {
     private String ReadDate;
     private float M3;
     private float Rate;
-    private static String pdf;
+    public static String pdf;
     private String validationMessage;
 
     public ConsumptionsModel(long IDUser, long IDCost, String barCode, String readDate, float m3, float rate, String validationMessage) {
@@ -23,6 +25,10 @@ public class ConsumptionsModel {
 
     public ConsumptionsModel() {
     }
+    public ConsumptionsModel(String Url) {
+        pdf=Url;
+    }
+
 
     public ConsumptionsModel(String readDate, float m3) {
         ReadDate = readDate;
@@ -92,4 +98,6 @@ public class ConsumptionsModel {
     public void setValidationMessage(String validationMessage) {
         this.validationMessage = validationMessage;
     }
+
+
 }

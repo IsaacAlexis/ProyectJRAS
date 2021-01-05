@@ -1,14 +1,19 @@
 package Presentation.WaterBills;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +21,11 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.jras.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,6 +37,7 @@ import BusinessLogic.BusinessHouse;
 import Data.Models.ConsumptionsModel;
 import Data.Models.HousesModel;
 import Data.Models.WaterBillsModel;
+import Data.Utility.Dates;
 import Data.Utility.Messages;
 import Presentation.Houses.AdapterHouses;
 
@@ -44,6 +54,10 @@ public class recibosFragment extends Fragment {
     private SearchView searchView;
     private WaterBillsAdapter waterBillsAdapter;
     private WaterBillsModel mBills =new WaterBillsModel() ;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    StorageReference reference;
+    DownloadManager downloadManager;
     public recibosFragment() {
         // Required empty public constructor
     }
@@ -63,8 +77,11 @@ public class recibosFragment extends Fragment {
             @Override
             public void OnItemClick(String barCode, String owner, String street, String colony, Integer houseNumber,
                                     Date readDate, Float readNow, Float nowRate, String nameFile) {
-                new ConsumptionsModel().setPdf(nameFile);
-                findNavController(view).navigate(R.id.fragmentInfoRecibo);
+
+                download("RECIBO DE AGUA PD: "+
+                        new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(readDate)))+
+                        "["+new Dates().getLastBill(readDate)+"]",nameFile);
+
             }
         });
 
@@ -87,5 +104,42 @@ public class recibosFragment extends Fragment {
 
 
         return view;
+    }
+    public void DownloadFile(Context context, String fileName, String fileExtension, String DestinationDirectory, String url) {
+
+
+        downloadManager = (DownloadManager) context.
+                getSystemService(context.DOWNLOAD_SERVICE);
+        Uri uris = Uri.parse(url);
+        DownloadManager.Request requests = new DownloadManager.Request(uris);
+        requests.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        requests.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName + fileExtension);
+        downloadManager.enqueue(requests);
+
+
+    }
+    private void download(String filename,String referenceId) {
+        //DataOriginal=new ConsumptionsModel().getPdf();
+        storageReference=firebaseStorage.getInstance().getReference();
+        reference=storageReference.child("RECIBOS DE AGUA/"+referenceId);
+        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+
+
+                DownloadFile(recibosFragment.this.getContext(),filename,".pdf","",uri.toString());
+
+                Toast.makeText(recibosFragment.this.getContext(),"Descargando recibo de agua.....",Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(recibosFragment.this.getContext(),"No se pudo descargar el archivo",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
     }
 }

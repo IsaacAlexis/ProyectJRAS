@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jras.R;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +62,8 @@ public class fragmentConsumo extends Fragment {
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
 
+    StorageReference storageReference;
+
     //Variables para el escaner
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
@@ -84,6 +90,7 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
+        storageReference= FirebaseStorage.getInstance().getReference();
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,14 +155,15 @@ public class fragmentConsumo extends Fragment {
                     public void run() {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
-                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList);
+                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList,storageReference);
 
 
                         }else {
                             registrar(true);
-                            if(!(new GenaratorPDF().createPDFWaterBills(getContext(),bill))){
-                                new BusinessConsumption().BridgeConsumptionReading(cm);
-                            }
+
+                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,storageReference);
+
+
                         }
 
                         Toast.makeText(getContext(), cm.getValidationMessage(), Toast.LENGTH_SHORT).show();

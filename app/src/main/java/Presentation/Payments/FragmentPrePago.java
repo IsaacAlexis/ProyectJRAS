@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +35,7 @@ import static androidx.navigation.Navigation.findNavController;
 public class FragmentPrePago extends Fragment {
     EditText Barcode;
     Button btnSearch;
+    FragmentManager fragmentManager;
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
@@ -45,35 +47,37 @@ public class FragmentPrePago extends Fragment {
         View view= inflater.inflate(R.layout.fragment_pre_pago, container, false);
         Barcode=view.findViewById(R.id.txtBarCodeRecibo);
 
-        Barcode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if(Barcode.length()==8){
-                    if(!new BusinessPayments().AccessToRegisterPayment(Barcode.getText().toString())){
-                        new Messages().messageToastShort(getContext(),new PaymentsModel().getValidationMessage());
-
-                    }else{
-                        Barcode.setText("");
-                        findNavController(getView()).navigate(R.id.fragmentPagos);
-                    }
-
-
-                }
-
-            }
-        });
+//        Barcode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                if(Barcode.length()==8){
+//                    if(!new BusinessPayments().AccessToRegisterPayment(Barcode.getText().toString())){
+//                        new Messages().messageToastShort(getContext(),new PaymentsModel().getValidationMessage());
+//
+//                    }else{
+//                        Barcode.setText("");
+//                        findNavController(getView()).navigate(R.id.fragmentPagos);
+//                    }
+//
+//
+//                }
+//
+//            }
+//        });
                 btnSearch = view.findViewById(R.id.btnBuscarRecibo);
         verificaryPedirPermisosDeCamara();
         btnSearch.setOnClickListener(new View.OnClickListener() {

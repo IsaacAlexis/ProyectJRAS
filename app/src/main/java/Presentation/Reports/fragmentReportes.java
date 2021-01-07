@@ -1,15 +1,19 @@
 package Presentation.Reports;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -18,18 +22,29 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 
+import BusinessLogic.BusinessReports;
+import Data.Models.ReportsModel;
+import Data.Utility.Messages;
+import Presentation.Payments.FragmentPrePago;
+
+import static androidx.navigation.Navigation.findNavController;
+
 
 public class fragmentReportes extends Fragment {
 
     //Variables
-    private EditText Fecha;
-    private EditText SegundaFecha;
-    private String date1;
-    private String date2;
+    private EditText firstDate;
+    private EditText secondDate;
+    private Button btngenerateReport;
+    private String datemin;
+    private String datemax;
+    FragmentManager fragmentManager;
+
     private FloatingActionButton fabFecha;
 
 
     DatePickerDialog.OnDateSetListener setListener;
+    ReportsModel reports=new ReportsModel();
 
 
     public fragmentReportes() {
@@ -38,9 +53,10 @@ public class fragmentReportes extends Fragment {
 
     public void getValues(View view) {
         //Relacionar variables con los componentes
-        Fecha = view.findViewById(R.id.txtFecha1);
-        SegundaFecha = view.findViewById(R.id.txtFecha2);
+        firstDate = view.findViewById(R.id.txtFecha1);
+        secondDate = view.findViewById(R.id.txtFecha2);
         fabFecha = view.findViewById(R.id.fabFechaReportes);
+        btngenerateReport=view.findViewById(R.id.btnConsultar);
     }
 
     @Override
@@ -65,21 +81,50 @@ public class fragmentReportes extends Fragment {
                 datePickerDialog.show();
             }
         });
+        btngenerateReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reports.setDateMin(datemin);
+                reports.setDateMax(datemax);
+                if(new BusinessReports().generateRepor(fragmentReportes.this.getContext(),reports)){
+                    new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                    Bundle bundle=new Bundle();
+                    bundle.putString("datemax",reports.getDateMax());
+                    FragmentPrePago fragment=new FragmentPrePago();
+                    fragment.setArguments(bundle);
+
+
+
+
+
+
+
+
+
+
+                }else{
+                    new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                }
+            }
+        });
 
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month+1;
-                date1 = dayOfMonth+"/"+month+"/"+year;
+                firstDate.setText(dayOfMonth+"/"+month+"/"+year);
+                datemin = year+"/"+month+"/"+dayOfMonth;
                 if (month==12){
                     month=1;
-                    year=year+1;
-                    date2 = dayOfMonth+"/"+month+"/"+year;
+                    year+=1;
+                    secondDate.setText(dayOfMonth+"/"+month+"/"+year);
+                    datemax = year+"/"+month+"/"+dayOfMonth;
                 }else{
-                    date2 = dayOfMonth+"/"+(month+1)+"/"+year;
+                    secondDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                    datemax = year+"/"+(month+1)+"/"+dayOfMonth;
                 }
-                Fecha.setText(date1);
-                SegundaFecha.setText(date2);
+
+
             }
         };
 

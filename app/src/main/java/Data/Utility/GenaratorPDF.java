@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 
 import android.net.Uri;
+import android.os.Environment;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import java.util.List;
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.PaymentsModel;
+import Data.Models.ReportsModel;
 import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
 
@@ -524,7 +526,9 @@ public class GenaratorPDF {
         }
     }
 
-    public boolean createReportPDF(Context context){
+    public boolean createReportPDF(Context context, ReportsModel reports){
+        int paystotal=0;
+        int expensestotal=0;
         try {
             PdfDocument mypdfDocument = new PdfDocument();
             Paint mypaint = new Paint();
@@ -544,58 +548,92 @@ public class GenaratorPDF {
             canvas.drawText("JUNTA RURAL DE AGUA Y SANEAMIENTO ", (myPageInfo.getPageWidth() / 2), 30, mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(12.0f);
-            canvas.drawText("COL. BELLAVISTA", (myPageInfo.getPageWidth() / 2), 45, mypaint);
+            canvas.drawText(new UsersModel().getCurrentColony(), (myPageInfo.getPageWidth() / 2), 45, mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(12.0f);
             canvas.drawText("CALLE QUINTA #254", (myPageInfo.getPageWidth() / 2), 60, mypaint);
             mypaint.setTextSize(12.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText("Reporte de Utilidad", (myPageInfo.getPageWidth() / 2), 90, mypaint);
-            canvas.drawText("PERIODO " + "DICIEMBRE " + "[2020-12]", (myPageInfo.getPageWidth() / 2), 105, mypaint);
+            canvas.drawText("DESDE:"+reports.getDateMin()+" HASTA:"+reports.getDateMax(), (myPageInfo.getPageWidth() / 2), 105, mypaint);
 
 
             mypaint.setTextSize(11.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText("INGRESOS ", 50, 140, mypaint);
+            int valuey=155;
+            int indicePays=1;
+            for(ReportsModel pays:reports.getPays()){
 
-            mypaint.setTypeface(Typeface.DEFAULT);
-            mypaint.setTextSize(10.0f);
-            canvas.drawText("1.- " + " Brayan Espinoza Fernandez ", 50, 155, mypaint);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$50.00", (myPageInfo.getPageWidth() - 50), 155, mypaint);
+                mypaint.setTypeface(Typeface.DEFAULT);
+                mypaint.setTextSize(10.0f);
+                mypaint.setTextAlign(Paint.Align.LEFT);
+                canvas.drawText(""+indicePays+".-"+"PAGO DEL PROPIETARIO:"+pays.getOwner()+"["+new SimpleDateFormat("dd-MM-yyyy").format(pays.getPayDate())+"]", 50, valuey, mypaint);
+                mypaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText("$"+pays.getPayTotal(), (myPageInfo.getPageWidth() - 50), valuey, mypaint);
+                valuey+=10;
+                indicePays+=1;
+                paystotal+=pays.getPayTotal();
+            }
 
-            mypaint.setTextSize(11.0f);
-            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("TOTAL INGRESOS:   "+ " $50.00",(myPageInfo.getPageWidth()-50),180,mypaint);
 
             mypaint.setTextSize(11.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("EGRESOS ", 50, 210, mypaint);
-
-            mypaint.setTypeface(Typeface.DEFAULT);
-            mypaint.setTextSize(10.0f);
-            canvas.drawText("1.- " + " Gasto en Purificador ", 50, 225, mypaint);
+            canvas.drawText("TOTAL INGRESOS",50,360,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$40.00", (myPageInfo.getPageWidth() - 50), 225, mypaint);
+            canvas.drawText("$"+paystotal, (myPageInfo.getPageWidth() - 50), 360, mypaint);
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("EGRESOS ", 50, 390, mypaint);
+
+
+            valuey=400;
+            int indiceExpenses=1;
+            for(ReportsModel expenses:reports.getExpenses()){
+                mypaint.setTypeface(Typeface.DEFAULT);
+                mypaint.setTextSize(10.0f);
+                mypaint.setTextAlign(Paint.Align.LEFT);
+                canvas.drawText(""+indiceExpenses+".-"+expenses.getTitle()+
+                        "("+expenses.getDescription()+"["+new SimpleDateFormat("dd-MM-yyyy").format(expenses.getEspenseDate())+"]"+")",
+                        50, valuey, mypaint);
+                mypaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText("$"+expenses.getExpenseTotal(), (myPageInfo.getPageWidth() - 50), valuey, mypaint);
+                valuey+=10;
+                indiceExpenses+=1;
+                expensestotal+=expenses.getExpenseTotal();
+            }
+
+
 
             mypaint.setTextSize(11.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText("TOTAL EGRESOS",50,605,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("TOTAL EGRESOS:   "+ " $40.00",(myPageInfo.getPageWidth()-50),250,mypaint);
+            canvas.drawText("$"+expensestotal, (myPageInfo.getPageWidth() - 50), 605, mypaint);
 
             mypaint.setTextSize(12.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("UTILIDAD NETA:   "+ " $10.00",(myPageInfo.getPageWidth()-50),300,mypaint);
-
-
             mypaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText("UTILIDAD NETA",50,660,mypaint);
+            if((paystotal-expensestotal)<0){
+                mypaint.setColor(Color.RED);
+            }else{
+                mypaint.setColor(Color.GREEN);
+            }
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$"+(paystotal-expensestotal), (myPageInfo.getPageWidth() - 50), 660, mypaint);
+
+
+            mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTypeface(Typeface.DEFAULT);
+            mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(10.0f);
-            canvas.drawText("Todos los Derechos Reservados ", 50, myPageInfo.getPageHeight()-10, mypaint);
+            canvas.drawText("Todos los Derechos Reservados ", (myPageInfo.getPageWidth()/2), myPageInfo.getPageHeight()-10, mypaint);
 
 
 
@@ -607,10 +645,10 @@ public class GenaratorPDF {
             File file=new File(context.getExternalFilesDir("/"),"/Reporte.pdf");
             mypdfDocument.writeTo(new FileOutputStream(file));
             mypdfDocument.close();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
             return true;
+        } catch (IOException e) {
+            reports.setValidationMessage("Ocurrio un error al generar el reporte");
+            return false;
         }
     }
 

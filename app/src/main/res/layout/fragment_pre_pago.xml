@@ -42,9 +42,9 @@
                 android:id="@+id/txtBarCodeRecibo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="N# DE CUENTA O MEDIDOR"
-                android:inputType="number"
-                ></EditText>
+                android:hint="N# DE CUENTA O MEDIDOR"></EditText>
+                <!--android:inputType="number"-->
+
 
         </com.google.android.material.textfield.TextInputLayout>
 

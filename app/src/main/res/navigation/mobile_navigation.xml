@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/fagmentConsumo">
 
     <fragment
         android:id="@+id/nav_home"
@@ -42,7 +42,7 @@
         android:id="@+id/fragmentViviendas"
         android:name="Presentation.Houses.fragmentViviendas"
         android:label="Viviendas"
-        tools:layout="@layout/fragment_viviendas" >
+        tools:layout="@layout/fragment_viviendas">
         <action
             android:id="@+id/action_fragmentViviendas_to_fragmentRegistrasViviendas"
             app:destination="@id/fragmentRegistrasViviendas" />
@@ -54,7 +54,7 @@
         android:id="@+id/fragmentUsuarios"
         android:name="Presentation.Users.fragmentUsuarios"
         android:label="Usuarios"
-        tools:layout="@layout/fragment_usuarios" >
+        tools:layout="@layout/fragment_usuarios">
         <action
             android:id="@+id/action_fragmentUsuarios_to_fragmentRegistroUsuarios"
             app:destination="@id/fragmentRegistroUsuarios" />
@@ -76,7 +76,7 @@
         android:id="@+id/fragmentGastos2"
         android:name="Presentation.Expenses.fragmentGastos"
         android:label="Gastos"
-        tools:layout="@layout/fragment_gastos" >
+        tools:layout="@layout/fragment_gastos">
         <action
             android:id="@+id/action_fragmentGastos2_to_fragmentModificarGastos"
             app:destination="@id/fragmentModificarGastos" />
@@ -124,7 +124,7 @@
         android:id="@+id/recibosFragment"
         android:name="Presentation.WaterBills.recibosFragment"
         android:label="Recibos de Consumo"
-        tools:layout="@layout/fragment_recibos" >
+        tools:layout="@layout/fragment_recibos">
         <action
             android:id="@+id/action_recibosFragment_to_fragmentInfoRecibo"
             app:destination="@id/fragmentInfoRecibo" />
@@ -138,14 +138,19 @@
         android:id="@+id/info_Pagos"
         android:name="Presentation.Payments.Info_Pagos"
         android:label="Pagos"
-        tools:layout="@layout/fragment_info_pagos" />
-    <action
-        android:id="@+id/action_info_Pagos_to_fragmentPagos"
-        app:destination="@id/fragmentPrePago" />
+        tools:layout="@layout/fragment_info_pagos">
+        <action
+            android:id="@+id/action_info_Pagos_to_fragmentPrePago"
+            app:destination="@id/fragmentPrePago" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentPrePago"
         android:name="Presentation.Payments.FragmentPrePago"
         android:label="Pagos"
-        tools:layout="@layout/fragment_pre_pago" />
+        tools:layout="@layout/fragment_pre_pago">
+        <action
+            android:id="@+id/action_fragmentPrePago_to_fragmentPagos"
+            app:destination="@id/fragmentPagos" />
+    </fragment>
 
 </navigation>

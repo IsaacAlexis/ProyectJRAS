@@ -20,8 +20,6 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="221dp"
-        android:layout_above="@+id/etiquetaTotal"
-        android:layout_marginBottom="-21dp"
         android:background="@drawable/encabezado_formularios"></ImageView>
 
     <ImageView
@@ -98,8 +96,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecycleViewAdeudoPagos"
-        android:layout_width="370dp"
-        android:layout_height="38dp"
+        android:layout_width="wrap_content"
+        android:layout_height="106dp"
         android:layout_above="@+id/TipoPago"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -132,6 +130,7 @@
         android:textSize="20dp"
         android:textStyle="bold"></TextView>
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAbonoPagos"
         android:layout_width="match_parent"
@@ -141,7 +140,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="49dp"
         android:layout_marginEnd="49dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="5dp"
         android:visibility="invisible">
 
         <EditText
@@ -155,7 +154,6 @@
             android:visibility="invisible" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <Button
         android:id="@+id/btnPagar"

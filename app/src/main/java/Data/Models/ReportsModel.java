@@ -1,10 +1,14 @@
 package Data.Models;
 
-import java.util.ArrayList;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 import java.util.List;
 
-public class ReportsModel {
+public class ReportsModel implements Parcelable {
     //Datos de los pagos
     private String owner;
     private Float payTotal;
@@ -37,6 +41,39 @@ public class ReportsModel {
         this.expenseTotal = expenseTotal;
         this.espenseDate = espenseDate;
     }
+
+    protected ReportsModel(Parcel in) {
+        owner = in.readString();
+        if (in.readByte() == 0) {
+            payTotal = null;
+        } else {
+            payTotal = in.readFloat();
+        }
+        title = in.readString();
+        description = in.readString();
+        if (in.readByte() == 0) {
+            expenseTotal = null;
+        } else {
+            expenseTotal = in.readFloat();
+        }
+        dateMin = in.readString();
+        dateMax = in.readString();
+        Pays = in.createTypedArrayList(ReportsModel.CREATOR);
+        Expenses = in.createTypedArrayList(ReportsModel.CREATOR);
+        validationMessage = in.readString();
+    }
+
+    public static final Creator<ReportsModel> CREATOR = new Creator<ReportsModel>() {
+        @Override
+        public ReportsModel createFromParcel(Parcel in) {
+            return new ReportsModel(in);
+        }
+
+        @Override
+        public ReportsModel[] newArray(int size) {
+            return new ReportsModel[size];
+        }
+    };
 
     public String getOwner() {
         return owner;
@@ -132,5 +169,52 @@ public class ReportsModel {
 
     public void setValidationMessage(String validationMessage) {
         this.validationMessage = validationMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "ReportsModel{" +
+                "owner='" + owner + '\'' +
+                ", payTotal=" + payTotal +
+                ", payDate=" + payDate +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", expenseTotal=" + expenseTotal +
+                ", espenseDate=" + espenseDate +
+                ", dateMin='" + dateMin + '\'' +
+                ", dateMax='" + dateMax + '\'' +
+                ", Pays=" + Pays +
+                ", Expenses=" + Expenses +
+                ", validationMessage='" + validationMessage + '\'' +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(owner);
+        if (payTotal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(payTotal);
+        }
+        dest.writeString(title);
+        dest.writeString(description);
+        if (expenseTotal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(expenseTotal);
+        }
+        dest.writeString(dateMin);
+        dest.writeString(dateMax);
+        dest.writeTypedList(Pays);
+        dest.writeTypedList(Expenses);
+        dest.writeString(validationMessage);
     }
 }

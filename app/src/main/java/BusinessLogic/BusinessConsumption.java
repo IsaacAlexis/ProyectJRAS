@@ -22,10 +22,11 @@ public class BusinessConsumption {
         DAC.HouseScan(billsModel);
     }
 
-    public void BridgeConsumptionReading(Context context, ConsumptionsModel cm, StorageReference storageReference){
+    public void BridgeConsumptionReading(Context context, ConsumptionsModel cm,WaterBillsModel waterBillsModel, StorageReference storageReference){
         List<WaterBillsModel> bill=new ArrayList<>();
         bill=new BusinessConsumption().BridgeWaterBills(cm);
-        if(!new GenaratorPDF().createPDFWaterBills(context,bill,storageReference)) {
+        waterBillsModel.setBills(bill);
+        if(!new GenaratorPDF().createPDFWaterBills(context,waterBillsModel,storageReference)) {
             DAC.ConsumptionReading(cm);
         }
     }
@@ -43,11 +44,11 @@ public class BusinessConsumption {
     }
 
 
-    public void BridgeConsumptionFirstReading(Context context, ConsumptionsModel cm,
+    public void BridgeConsumptionFirstReading(Context context, ConsumptionsModel cm,WaterBillsModel waterBillsModel,
                                               List<ConsumptionsModel> consumptionsModelList,StorageReference storageReference) {
         if(DAC.FirstConsumptionReading(cm,consumptionsModelList)){
-            WaterBillsModel waterBillsModel=new WaterBillsModel();
-            BridgeHouseScanner(waterBillsModel);
+            /*WaterBillsModel waterBillsModel=new WaterBillsModel();
+            BridgeHouseScanner(waterBillsModel);*/
             cm.setReadDate(consumptionsModelList.get(0).getReadDate());
             cm.setM3(consumptionsModelList.get(0).getM3());
             waterBillsModel.setReadNow(consumptionsModelList.get(0).getM3());
@@ -56,7 +57,8 @@ public class BusinessConsumption {
                     waterBillsModel.getReadLast()));
             List<WaterBillsModel> bill=new ArrayList<>();
             bill=new BusinessConsumption().BridgeWaterBills(cm);
-            if(!new GenaratorPDF().createPDFWaterBills(context,bill,storageReference)){
+            waterBillsModel.setBills(bill);
+            if(!new GenaratorPDF().createPDFWaterBills(context,waterBillsModel,storageReference)){
                 DAC.ConsumptionReading(cm);
             }
 

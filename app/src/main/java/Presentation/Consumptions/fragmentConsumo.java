@@ -90,7 +90,7 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
-        storageReference= FirebaseStorage.getInstance().getReference();
+
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,13 +156,13 @@ public class fragmentConsumo extends Fragment {
                     public void run() {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
-                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList,storageReference);
+                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
 
 
                         }else {
                             registrar(true);
 
-                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,storageReference);
+                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
 
 
                         }
@@ -187,6 +187,7 @@ public class fragmentConsumo extends Fragment {
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Metodos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
 
     public void getValues(View view){
+        storageReference= FirebaseStorage.getInstance().getReference();
         tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);

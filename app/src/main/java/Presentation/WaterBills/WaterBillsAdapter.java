@@ -49,14 +49,21 @@ public class WaterBillsAdapter  extends RecyclerView.Adapter<WaterBillsAdapter.V
             iconView=itemView.findViewById(R.id.iconimageG);
             nameOwner =itemView.findViewById(R.id.propietarioRecibo);
             ReadDate =itemView.findViewById(R.id.fecheRecibo);
-            Total=itemView.findViewById(R.id.consumoRecibo);
+            //Total=itemView.findViewById(R.id.consumoRecibo);
         }
         void bind(final WaterBillsModel bills, final WaterBillsAdapter.OnItemClickListener listener){
             String readDate = new SimpleDateFormat("yyyy-MM").format(bills.getbReadDate());
             iconView.setColorFilter(Color.parseColor("#6DC36D"));
             nameOwner.setText(bills.getbOwner());
             ReadDate.setText(readDate);
-            Total.setText("$"+ String.valueOf(bills.getbNowRate())+"0");
+//            if(bills.getNowRate()==0){
+//                Total.setTextColor(Color.GREEN);
+//                Total.setText("SALDADO");
+//            }else{
+//                Total.setTextColor(Color.RED);
+//                Total.setText("ADEUDO");
+//            }
+//            Total.setText("$"+ String.valueOf(bills.getbNowRate())+"0");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

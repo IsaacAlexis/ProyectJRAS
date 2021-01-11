@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,50 +37,46 @@ import static androidx.navigation.Navigation.findNavController;
 public class FragmentPrePago extends Fragment {
     EditText Barcode;
     Button btnSearch;
-    FragmentManager fragmentManager;
+
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
 
+    PaymentsModel pays=new PaymentsModel();
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_pre_pago, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final NavController navController=Navigation.findNavController(view);
         Barcode=view.findViewById(R.id.txtBarCodeRecibo);
 
+        Barcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(Barcode.length()==8){
+                    pays.setBarcode(Barcode.getText().toString());
+                    if(!new BusinessPayments().AccessToRegisterPayment(pays)){
+                        new Messages().messageToastShort(getContext(),pays.getValidationMessage());
+
+                    }else{
+                        Barcode.setText("");
+                        FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
+                        findNavController(getView()).navigate(action);
+                    }
 
 
-//        Barcode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if(Barcode.length()==8){
-//                    if(!new BusinessPayments().AccessToRegisterPayment(Barcode.getText().toString())){
-//                        new Messages().messageToastShort(getContext(),new PaymentsModel().getValidationMessage());
-//
-//                    }else{
-//                        Barcode.setText("");
-//                        findNavController(getView()).navigate(R.id.fragmentPagos);
-//                    }
-//
-//
-//                }
-//
-//            }
-//        });
-                btnSearch = view.findViewById(R.id.btnBuscarRecibo);
+                }
+
+            }
+        });
+        btnSearch = view.findViewById(R.id.btnBuscarRecibo);
         verificaryPedirPermisosDeCamara();
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +88,30 @@ public class FragmentPrePago extends Fragment {
                     return;
                 }
                 escanear();
-                //findNavController(view).navigate(R.id.fragmentPagos);
+
+
             }
         });
+
+
+//        btnSearch=view.findViewById(R.id.btnBuscarRecibo);
+//        btnSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//             FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action=FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(3);
+//             navController.navigate(action);
+//            }
+//        }
+//        );
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view= inflater.inflate(R.layout.fragment_pre_pago, container, false);
+
         return view;
     }
     public void escanear(){
@@ -127,11 +146,13 @@ public class FragmentPrePago extends Fragment {
         if (requestCode == CODIGO_INTENT){
             if (resultCode == Activity.RESULT_OK){
                 if (data != null){
-                    if(!new BusinessPayments().AccessToRegisterPayment(data.getStringExtra("codigo"))){
-                        new Messages().messageToastShort(getContext(),new PaymentsModel().getValidationMessage());
+                    pays.setBarcode(data.getStringExtra("codigo"));
+                    if(!new BusinessPayments().AccessToRegisterPayment(pays)){
+                        new Messages().messageToastShort(getContext(),pays.getValidationMessage());
                         return;
                     }
-                    findNavController(getView()).navigate(R.id.fragmentPagos);
+                    FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
+                    findNavController(getView()).navigate(action);
 
                 }
             }

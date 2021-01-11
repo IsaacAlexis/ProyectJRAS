@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -51,19 +53,19 @@ public class fragmentReportes extends Fragment {
         // Required empty public constructor
     }
 
-    public void getValues(View view) {
-        //Relacionar variables con los componentes
-        firstDate = view.findViewById(R.id.txtFecha1);
-        secondDate = view.findViewById(R.id.txtFecha2);
-        fabFecha = view.findViewById(R.id.fabFechaReportes);
-        btngenerateReport=view.findViewById(R.id.btnConsultar);
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_reportes, container, false);
+        return inflater.inflate(R.layout.fragment_reportes, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getValues(view);
         //crear instancia del calendario
         Calendar calendar = Calendar.getInstance();
@@ -77,6 +79,7 @@ public class fragmentReportes extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
                         ,setListener,year,month,day);
+
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
             }
@@ -88,19 +91,9 @@ public class fragmentReportes extends Fragment {
                 reports.setDateMax(datemax);
                 if(new BusinessReports().generateRepor(fragmentReportes.this.getContext(),reports)){
                     new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
-                    Bundle bundle=new Bundle();
-                    bundle.putString("datemax",reports.getDateMax());
-                    FragmentPrePago fragment=new FragmentPrePago();
-                    fragment.setArguments(bundle);
-
-
-
-
-
-
-
-
-
+                    fragmentReportesDirections.ActionFragmentReportesToFragmentViewReportes action=
+                            fragmentReportesDirections.actionFragmentReportesToFragmentViewReportes(reports);
+                    findNavController(view).navigate(action);
 
                 }else{
                     new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
@@ -128,9 +121,12 @@ public class fragmentReportes extends Fragment {
             }
         };
 
-
-        return view;
     }
-
-
+    public void getValues(View view) {
+        //Relacionar variables con los componentes
+        firstDate = view.findViewById(R.id.txtFecha1);
+        secondDate = view.findViewById(R.id.txtFecha2);
+        fabFecha = view.findViewById(R.id.fabFechaReportes);
+        btngenerateReport=view.findViewById(R.id.btnConsultar);
+    }
 }

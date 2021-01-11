@@ -40,23 +40,28 @@ public class scPayments {
         return paymentsModels;
     }
 
-    public boolean ExistConsumption(String barCode) {
+    public boolean ExistConsumption(PaymentsModel pays) {
         boolean action=false;
+
         try{
 
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call getDatasConsumption(?)}");
-            callableStatement.setString(1, barCode);
+            callableStatement.setString(1, pays.getBarcode());
             ResultSet resultSet=callableStatement.executeQuery();
 
             while (resultSet.next()){
-
-               new PaymentsModel(resultSet.getString(1),resultSet.getString(2),resultSet.getFloat(3),
-                       resultSet.getInt(4),resultSet.getString(5),resultSet.getString(6),resultSet.getInt(7));
-               action=true;
+                pays.setOwner(resultSet.getString(1));
+                pays.setBarcode(resultSet.getString(2));
+                pays.setTotal(resultSet.getFloat(3));
+                pays.setDebitPeriod(resultSet.getInt(4));
+                pays.setStatus(resultSet.getString(5));
+                pays.setStreet(resultSet.getString(6));
+                pays.setHouseNumber(resultSet.getInt(7));
+                action=true;
             }
             if(!action){
-                new PaymentsModel().setValidationMessage("Referencia sin adeudo");
+                pays.setValidationMessage("Referencia sin adeudo");
             }
 
 
@@ -68,17 +73,17 @@ public class scPayments {
                     bd.CloseConnection();
                 }
             } catch (SQLException e2) { }
-            new PaymentsModel().setValidationMessage("Error al obtener los datos de la vivienda");
+            pays.setValidationMessage("Error al obtener los datos de la vivienda");
         }
         return action;
     }
 
-    public boolean ExistHouse(String barCode) {
+    public boolean ExistHouse(PaymentsModel pay) {
         boolean action=false;
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call HomeExist(?,?,?,?)}");
-            callableStatement.setString(1, barCode);
+            callableStatement.setString(1, pay.getBarcode());
             callableStatement.setString(2, "");
             callableStatement.setString(3, "");
             callableStatement.setInt(4, 0);
@@ -99,18 +104,18 @@ public class scPayments {
                     bd.CloseConnection();
                 }
             } catch (SQLException e2) { }
-            new PaymentsModel().setValidationMessage("Error al buscar la vivienda");
+           pay.setValidationMessage("Error al buscar la vivienda");
         }
         return action;
     }
 
-    public boolean getDebits(String barcode) {
+    public boolean getDebits(PaymentsModel pays) {
         boolean action=false;
         List<PaymentsModel> debits=new ArrayList<>();
         try{
             bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             CallableStatement callableStatement=bd.connection.prepareCall("{call getDebits(?)}");
-            callableStatement.setString(1, barcode);
+            callableStatement.setString(1, pays.getBarcode());
             ResultSet resultSet=callableStatement.executeQuery();
             while (resultSet.next()){
                 debits.add(new PaymentsModel(resultSet.getDate("ReadDate"),resultSet.getFloat("Rate")
@@ -118,7 +123,7 @@ public class scPayments {
                 action=true;
             }
             if(action){
-                new PaymentsModel().setDebits(debits);
+                pays.setDebits(debits);
             }
 
             callableStatement.close();
@@ -131,7 +136,7 @@ public class scPayments {
                 }
             } catch (SQLException e2) { }
             action=false;
-            new PaymentsModel().setValidationMessage("Error al buscar los adeudos");
+            pays.setValidationMessage("Error al buscar los adeudos");
         }
         return action;
     }
@@ -169,7 +174,7 @@ public class scPayments {
                     bd.CloseConnection();
                 }
             } catch (SQLException e2) { }
-            new PaymentsModel().setValidationMessage("No se pudo realizar la operacion de pago");
+            paymentsModel.setValidationMessage("No se pudo realizar la operacion de pago");
         }
 
     }

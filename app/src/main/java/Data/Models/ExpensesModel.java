@@ -1,25 +1,21 @@
 package Data.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import net.sourceforge.jtds.jdbc.DateTime;
 
 import java.util.Date;
 
-public class ExpensesModel {
+public class ExpensesModel implements Parcelable {
     //Registro gastos
-    private  long FolioExp;
+    private long FolioExp;
     private long IDUser;
     private Date ExpDate;
     private String NameExp;
     private String Descript;
     private Float Total;
     private String DateModified;
-    //Modificaciones gastos
-    private static long modifyFolioExp;
-    private static long modifyIDUser;
-    private static Date modifyExpDate;
-    private static String modifyNameExp;
-    private static String modifyDescript;
-    private static float modifyTotal;
     // Bandera
     private boolean isRegisterExpens;
     //Mensajes
@@ -31,13 +27,19 @@ public class ExpensesModel {
 
     }
 
+    public ExpensesModel(long folioExp, String nameExp, String descript, Float total) {
+        this.FolioExp = folioExp;
+        this.NameExp = nameExp;
+        this.Descript = descript;
+        this.Total = total;
+    }
 
-    public ExpensesModel(long folioExp, String nameExp, String descript, Float total,Date Expdate) {
-        FolioExp = folioExp;
-        NameExp = nameExp;
-        Descript = descript;
-        Total = total;
-        ExpDate=Expdate;
+    public ExpensesModel(long folioExp, String nameExp, String descript, Float total, Date Expdate) {
+        this.FolioExp = folioExp;
+        this.NameExp = nameExp;
+        this.Descript = descript;
+        this.Total = total;
+        this.ExpDate=Expdate;
     }
 
     public ExpensesModel(long folioExp, long IDUser, Date expDate, String nameExp, String descript, float total, boolean isRegisterExpens) {
@@ -49,19 +51,40 @@ public class ExpensesModel {
         this.Total = total;
         this.isRegisterExpens = isRegisterExpens;
     }
-    public void assignValuesModify(Long folio,String title,String description, Float total){
-        setModifyFolioExp(folio);
-        setModifyNameExp(title);
-        setModifyDescript(description);
-        setModifyTotal(total);
+
+    protected ExpensesModel(Parcel in) {
+        FolioExp = in.readLong();
+        IDUser = in.readLong();
+        NameExp = in.readString();
+        Descript = in.readString();
+        if (in.readByte() == 0) {
+            Total = null;
+        } else {
+            Total = in.readFloat();
+        }
+        DateModified = in.readString();
+        isRegisterExpens = in.readByte() != 0;
+        validationMessage = in.readString();
     }
+
+    public static final Creator<ExpensesModel> CREATOR = new Creator<ExpensesModel>() {
+        @Override
+        public ExpensesModel createFromParcel(Parcel in) {
+            return new ExpensesModel(in);
+        }
+
+        @Override
+        public ExpensesModel[] newArray(int size) {
+            return new ExpensesModel[size];
+        }
+    };
+
+
     public String getValidationMessage() {
         return validationMessage;
     }
 
-    public void setValidationMessage(String validationMessage) {
-        this.validationMessage = validationMessage;
-    }
+    public void setValidationMessage(String validationMessage) {this.validationMessage = validationMessage;}
 
     public String getDateModified() {
         return DateModified;
@@ -69,54 +92,6 @@ public class ExpensesModel {
 
     public void setDateModified(String dateModified) {
         DateModified = dateModified;
-    }
-
-    public static long getModifyFolioExp() {
-        return modifyFolioExp;
-    }
-
-    public static void setModifyFolioExp(long modifyFolioExp) {
-        ExpensesModel.modifyFolioExp = modifyFolioExp;
-    }
-
-    public static long getModifyIDUser() {
-        return modifyIDUser;
-    }
-
-    public static void setModifyIDUser(long modifyIDUser) {
-        ExpensesModel.modifyIDUser = modifyIDUser;
-    }
-
-    public static Date getModifyExpDate() {
-        return modifyExpDate;
-    }
-
-    public static void setModifyExpDate(Date modifyExpDate) {
-        ExpensesModel.modifyExpDate = modifyExpDate;
-    }
-
-    public static String getModifyNameExp() {
-        return modifyNameExp;
-    }
-
-    public static void setModifyNameExp(String modifyNameExp) {
-        ExpensesModel.modifyNameExp = modifyNameExp;
-    }
-
-    public static String getModifyDescript() {
-        return modifyDescript;
-    }
-
-    public static void setModifyDescript(String modifyDescript) {
-        ExpensesModel.modifyDescript = modifyDescript;
-    }
-
-    public static float getModifyTotal() {
-        return modifyTotal;
-    }
-
-    public static void setModifyTotal(float modifyTotal) {
-        ExpensesModel.modifyTotal = modifyTotal;
     }
 
     public long getFolioExp() {
@@ -173,5 +148,27 @@ public class ExpensesModel {
 
     public void setRegisterExpens(boolean registerExpens) {
         isRegisterExpens = registerExpens;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(FolioExp);
+        dest.writeLong(IDUser);
+        dest.writeString(NameExp);
+        dest.writeString(Descript);
+        if (Total == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(Total);
+        }
+        dest.writeString(DateModified);
+        dest.writeByte((byte) (isRegisterExpens ? 1 : 0));
+        dest.writeString(validationMessage);
     }
 }

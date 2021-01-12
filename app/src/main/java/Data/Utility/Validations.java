@@ -58,7 +58,7 @@ public class Validations {
                 else{
                     til.setErrorEnabled(false);
                     btn.setEnabled(true);
-                    btn.setBackgroundResource(R.drawable.bordes_redondos_azul);
+                    btn.setBackgroundResource(R.drawable.bordes_redondos_rojo);
                 }
             }
             @Override

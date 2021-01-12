@@ -81,7 +81,7 @@ public class fragmentRegistrarViviendas extends Fragment {
             public void onClick(View v) {
                 textboxEmpty();
 
-                if(!validations.isInvalid){
+                if(validations.isInvalid){
                     messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
                 }else{
                     setValues();
@@ -160,7 +160,7 @@ public class fragmentRegistrarViviendas extends Fragment {
         tilState=view.findViewById(R.id.textInputLayout28);
 
         //**********Validations**********
-        validations.IsValidTextboxOnClick(measurer,tilMeasurer,regEx.ValidNumbers(1,8),"Ingresa un numero de medidor valido",btnRegistrar);
+
         validations.IsValidTextboxOnClick(owner,tilOwner,regEx.validNamesComplete,"Ingresa el nombre completo del propietario correctamente",btnRegistrar);
         validations.IsValidTextboxOnClick(phoneNumber,tilPhoneNum,"^\\d{10}$","Ingresa un número de telefono valido",btnRegistrar);
         validations.IsValidTextboxOnClick(email,tilEmail,regEx.validEmail,"Ingresar un correo electronico valido",btnRegistrar);

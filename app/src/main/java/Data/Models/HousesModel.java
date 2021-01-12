@@ -1,6 +1,9 @@
 package Data.Models;
 
-public class HousesModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class HousesModel implements Parcelable {
     public String barCode;
     public String owner;
     public Long phoneNumber;
@@ -16,18 +19,6 @@ public class HousesModel {
     public boolean statusActivity;
     public boolean existHouse;
     public String message;
-    //Modificar viviendas
-    public static String modifybarCode;
-    public static String modifyowner;
-    public static Long modifyphoneNumber;
-    public static String modifyemail;
-    public static String modifystreet;
-    public static Integer modifyhouseNumber;
-    public static Integer modifyzipCode;
-    public static String  modifycolony;
-    public static String modifycity;
-    public static String modifystate;
-    public static String modifystatusHouse;
 
     public HousesModel() {
     }
@@ -46,21 +37,48 @@ public class HousesModel {
         this.state = state;
         this.statusHouse = statusHouse;
     }
-    public void setValuesToModify(String barCode, String owner,
-                       Long phoneNumber, String email, String street, Integer houseNumber, Integer zipCode,
-                       String colony, String city, String state, String statusHouse) {
-        this.setModifybarCode(barCode);
-        this.setModifyowner(owner);
-        this.setModifyphoneNumber(phoneNumber);
-        this.setModifyemail(email);
-        this.setModifystreet(street);
-        this.setModifyhouseNumber(houseNumber);
-        this.setModifyzipCode(zipCode);
-        this.setModifycolony(colony);
-        this.setModifycity(city);
-        this.setModifystate(state);
-        this.setModifystatusHouse(statusHouse);
+
+
+    protected HousesModel(Parcel in) {
+        barCode = in.readString();
+        owner = in.readString();
+        if (in.readByte() == 0) {
+            phoneNumber = null;
+        } else {
+            phoneNumber = in.readLong();
+        }
+        email = in.readString();
+        street = in.readString();
+        if (in.readByte() == 0) {
+            houseNumber = null;
+        } else {
+            houseNumber = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            zipCode = null;
+        } else {
+            zipCode = in.readInt();
+        }
+        colony = in.readString();
+        city = in.readString();
+        state = in.readString();
+        statusHouse = in.readString();
+        statusActivity = in.readByte() != 0;
+        existHouse = in.readByte() != 0;
+        message = in.readString();
     }
+
+    public static final Creator<HousesModel> CREATOR = new Creator<HousesModel>() {
+        @Override
+        public HousesModel createFromParcel(Parcel in) {
+            return new HousesModel(in);
+        }
+
+        @Override
+        public HousesModel[] newArray(int size) {
+            return new HousesModel[size];
+        }
+    };
 
     public String getMessage() {
         return message;
@@ -174,91 +192,43 @@ public class HousesModel {
         this.existHouse = existHouse;
     }
 
-    public static String getModifybarCode() {
-        return modifybarCode;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public static void setModifybarCode(String modifybarCode) {
-        HousesModel.modifybarCode = modifybarCode;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(barCode);
+        dest.writeString(owner);
+        if (phoneNumber == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(phoneNumber);
+        }
+        dest.writeString(email);
+        dest.writeString(street);
+        if (houseNumber == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(houseNumber);
+        }
+        if (zipCode == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(zipCode);
+        }
+        dest.writeString(colony);
+        dest.writeString(city);
+        dest.writeString(state);
+        dest.writeString(statusHouse);
+        dest.writeByte((byte) (statusActivity ? 1 : 0));
+        dest.writeByte((byte) (existHouse ? 1 : 0));
+        dest.writeString(message);
     }
 
-    public static String getModifyowner() {
-        return modifyowner;
-    }
 
-    public static void setModifyowner(String modifyowner) {
-        HousesModel.modifyowner = modifyowner;
-    }
-
-    public static Long getModifyphoneNumber() {
-        return modifyphoneNumber;
-    }
-
-    public static void setModifyphoneNumber(Long modifyphoneNumber) {
-        HousesModel.modifyphoneNumber = modifyphoneNumber;
-    }
-
-    public static String getModifyemail() {
-        return modifyemail;
-    }
-
-    public static void setModifyemail(String modifyemail) {
-        HousesModel.modifyemail = modifyemail;
-    }
-
-    public static String getModifystreet() {
-        return modifystreet;
-    }
-
-    public static void setModifystreet(String modifystreet) {
-        HousesModel.modifystreet = modifystreet;
-    }
-
-    public static Integer getModifyhouseNumber() {
-        return modifyhouseNumber;
-    }
-
-    public static void setModifyhouseNumber(Integer modifyhouseNumber) {
-        HousesModel.modifyhouseNumber = modifyhouseNumber;
-    }
-
-    public static Integer getModifyzipCode() {
-        return modifyzipCode;
-    }
-
-    public static void setModifyzipCode(Integer modifyzipCode) {
-        HousesModel.modifyzipCode = modifyzipCode;
-    }
-
-    public static String getModifycolony() {
-        return modifycolony;
-    }
-
-    public static void setModifycolony(String modifycolony) {
-        HousesModel.modifycolony = modifycolony;
-    }
-
-    public static String getModifycity() {
-        return modifycity;
-    }
-
-    public static void setModifycity(String modifycity) {
-        HousesModel.modifycity = modifycity;
-    }
-
-    public static String getModifystate() {
-        return modifystate;
-    }
-
-    public static void setModifystate(String modifystate) {
-        HousesModel.modifystate = modifystate;
-    }
-
-    public static String getModifystatusHouse() {
-        return modifystatusHouse;
-    }
-
-    public static void setModifystatusHouse(String modifystatusHouse) {
-        HousesModel.modifystatusHouse = modifystatusHouse;
-    }
 }

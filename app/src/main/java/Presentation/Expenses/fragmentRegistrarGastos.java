@@ -81,7 +81,7 @@ public class fragmentRegistrarGastos extends Fragment {
                     public void run() {
                         textboxEmpty();
 
-                        if(!validate.isInvalid){
+                        if(validate.isInvalid){
                             new Messages().messageToast(getContext(),"Debes llenar todo los campos correctamente");
                         }
                         else {

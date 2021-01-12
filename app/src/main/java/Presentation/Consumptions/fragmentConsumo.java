@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jras.R;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -50,14 +51,20 @@ public class fragmentConsumo extends Fragment {
 
     //Comunes
     private EditText tvBarCode;
+
     private TextView tvOwner;
+    private TextInputLayout tilOwner;
     private TextView tvHouseNum;
+    private TextInputLayout tilHouseNumber;
     private EditText etConsumption;
+    private TextInputLayout tilConsumption;
     private TextView tvFechaConsumo;
     private Button btnEscanear;
     public Button btnBuscar;
     private EditText etLastConsumption;
+    private TextInputLayout tilLastConsumption;
     private EditText etLastRate;
+    private TextInputLayout tilLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
@@ -90,7 +97,14 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
-        storageReference= FirebaseStorage.getInstance().getReference();
+        if(waterBillsModel.isExistFirstRegister()){
+            avibleButton(etConsumption,btnRegistrar,2);
+        }else{
+            avibleButton(etConsumption,btnRegistrar,1);
+            avibleButton(etLastConsumption,btnRegistrar,1);
+            avibleButton(etLastRate,btnRegistrar,1);
+        }
+
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +152,31 @@ public class fragmentConsumo extends Fragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mostrarInfoViv(view);
+                        if(btnBuscar.getText().equals("CANCELAR")){
+                            btnBuscar.setText("BUSCAR");
+                            btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                            tilHouseNumber.setVisibility(View.INVISIBLE);
+                            tilOwner.setVisibility(View.INVISIBLE);
+                            tilLastConsumption.setVisibility(View.INVISIBLE);
+                            tilLastRate.setVisibility(View.INVISIBLE);
+                            tilConsumption.setVisibility(View.INVISIBLE);
+                            btnRegistrar.setVisibility(View.INVISIBLE);
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                            btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                            tvBarCode.setText("");
+                            tvBarCode.setEnabled(true);
+
+
+                        }else{
+                            mostrarInfoViv(view);
+                            if(waterBillsModel.isCorrectHouse()){
+                                btnBuscar.setText("CANCELAR");
+                                btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_azul);
+                            }
+
+                        }
+
 
                         loadingDialog.dismissDialog();
                     }
@@ -156,13 +194,13 @@ public class fragmentConsumo extends Fragment {
                     public void run() {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
-                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList,storageReference);
+                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
 
 
                         }else {
                             registrar(true);
 
-                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,storageReference);
+                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
 
 
                         }
@@ -187,8 +225,14 @@ public class fragmentConsumo extends Fragment {
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Metodos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
 
     public void getValues(View view){
+        storageReference= FirebaseStorage.getInstance().getReference();
         tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
+        tilOwner=view.findViewById(R.id.tilPropietario);
+        tilHouseNumber=view.findViewById(R.id.tilNumerocasa);
+        tilConsumption=view.findViewById(R.id.tilConsumo);
+        tilLastConsumption=view.findViewById(R.id.tilConsumoAnterior);
+        tilLastRate=view.findViewById(R.id.tilPagosAnterior);
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
         tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
@@ -210,17 +254,30 @@ public class fragmentConsumo extends Fragment {
         }else{
             if(!waterBillsModel.isExistFirstRegister()){
                 new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
+                tilHouseNumber.setVisibility(View.VISIBLE);
+                tilOwner.setVisibility(View.VISIBLE);
                 tvBarCode.setText(waterBillsModel.getBarCode());
+                tvBarCode.setEnabled(false);
                 tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
                 tvOwner.setText(waterBillsModel.getOwner());
-                etLastConsumption.setVisibility(View.VISIBLE);
-                etLastRate.setVisibility(View.VISIBLE);
+                tilLastConsumption.setVisibility(View.VISIBLE);
+                tilLastRate.setVisibility(View.VISIBLE);
+                tilConsumption.setVisibility(View.VISIBLE);
+                btnRegistrar.setVisibility(View.VISIBLE);
+                btnRegistrar.setEnabled(false);
+                btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
 
 
             }else{
+                tilHouseNumber.setVisibility(View.VISIBLE);
+                tilOwner.setVisibility(View.VISIBLE);
+                tilConsumption.setVisibility(View.VISIBLE);
                 tvBarCode.setText(waterBillsModel.getBarCode());
                 tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
                 tvOwner.setText(waterBillsModel.getOwner());
+                btnRegistrar.setVisibility(View.VISIBLE);
+                btnRegistrar.setEnabled(false);
+                btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
                 //new Emails().createMailConsumptions(waterBillsModel.getEmail());
             }
         }
@@ -289,13 +346,53 @@ public class fragmentConsumo extends Fragment {
 
                     btnBuscar.callOnClick();
                     btnBuscar.setVisibility(View.INVISIBLE);
-
-
-                    if (!waterBillsModel.isCorrectHouse()){
-                        Toast.makeText(getContext(), waterBillsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
         }
     }//fin de onActivityResult
+    public void avibleButton(EditText field, Button btn,int action){
+        field.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                switch (action){
+                    case 1:
+                        if(etLastConsumption.getText().length()!=0&&etConsumption.getText().length()!=0&&etLastRate.getText().length()!=0){
+                            if(Integer.parseInt(etLastConsumption.getText().toString())<=Integer.parseInt(etConsumption.getText().toString())){
+                                btnRegistrar.setEnabled(true);
+                                btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                                tilConsumption.setError("");
+                            }else{
+                                tilConsumption.setError("El consumo actual no debe ser menor al anterior");
+                            }
+
+                        }else{
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                        }
+                        break;
+                    case 2:
+                        if(etConsumption.getText().length()!=0){
+                            btnRegistrar.setEnabled(true);
+                            btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                        }else{
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
 }//fin de fragmentConsumo

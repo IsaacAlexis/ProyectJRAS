@@ -57,17 +57,17 @@
                     android:text="Propietario"
                     android:textSize="18sp" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/consumoRecibo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Consumo"
-                android:textSize="15sp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+<!--            <TextView-->
+<!--                android:id="@+id/consumoRecibo"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Consumo"-->
+<!--                android:textSize="15sp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginEnd="6dp"-->
+<!--                android:layout_marginRight="6dp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_alignParentEnd="true"/>-->
             <TextView
                 android:id="@+id/fecheRecibo"
                 android:layout_width="wrap_content"

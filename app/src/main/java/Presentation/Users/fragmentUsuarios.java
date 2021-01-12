@@ -2,6 +2,8 @@ package Presentation.Users;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,13 +42,9 @@ public class fragmentUsuarios extends Fragment  {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         //Mostrar usuarios
         users= BusinessUser.getallusers(mUsers);
         mRecycleView=(RecyclerView)view.findViewById(R.id.RecycleView);
@@ -56,11 +54,12 @@ public class fragmentUsuarios extends Fragment  {
             @Override
             public void OnItemClick(Long idUser, String firstName, String lastName, String role, String email, String username, String status, int position) {
                 setvalues(idUser,firstName,lastName,role,email,username,status);
-                findNavController(view).navigate(R.id.fragementModificarUsuarios);
+                fragmentUsuariosDirections.ActionFragmentUsuariosToFragementModificarUsuarios action=fragmentUsuariosDirections.actionFragmentUsuariosToFragementModificarUsuarios(mUsers);
+                findNavController(view).navigate(action);
             }
         });
 
-       searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -89,19 +88,28 @@ public class fragmentUsuarios extends Fragment  {
 
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.fragment_usuarios, container, false);
+
+
         return view;
 
 
     }
 
     private void setvalues(Long idUser, String firstName, String lastName, String role, String email, String username, String status) {
-        mUsers.setModifyIdUser(idUser);
-        mUsers.setModifyFirstName(firstName);
-        mUsers.setModifyLastName(lastName);
-        mUsers.setModifyRole(role);
-        mUsers.setModifyEmail(email);
-        mUsers.setModifyUsername(username);
-        mUsers.setModifyStatus(status);
+        mUsers.setIdUser(idUser);
+        mUsers.setFirstName(firstName);
+        mUsers.setLastName(lastName);
+        mUsers.setRole(role);
+        mUsers.setEmail(email);
+        mUsers.setUserName(username);
+        mUsers.setUserStatus(status);
     }
 
 

@@ -31,6 +31,7 @@ import static androidx.navigation.Navigation.findNavController;
 public class HomeFragment extends Fragment {
 
     public FloatingActionButton fabConsumo;
+    public boolean permisoCamaraConcedido = false;
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         fabConsumo=view.findViewById(R.id.fabConsumo);
+        permission();
 
 
         fabConsumo.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +55,17 @@ public class HomeFragment extends Fragment {
 
         return view;
     }//fin onCreateView
+
+    private void permission() {
+    }
+//    public void verificaryPedirPermisosDeCamara(){
+//        int estadoDePermiso = ContextCompat.checkSelfPermission(HomeFragment.this.getContext(), Manifest.permission.CAMERA);
+//        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
+//            permisoCamaraConcedido = true;
+//        }
+//        else{
+//            ActivityCompat.requestPermissions(HomeFragment.this.getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
+//        }
+//    }
 
 }//Fin HomeFragment

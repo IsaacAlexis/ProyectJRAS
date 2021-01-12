@@ -1,10 +1,13 @@
 package Data.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import net.sourceforge.jtds.jdbc.DateTime;
 
 import java.util.Date;
 
-public class UsersModel {
+public class UsersModel implements Parcelable {
     private long idUser;
     private String firstName;
     private String lastName;
@@ -31,19 +34,8 @@ public class UsersModel {
     private static String currentLastName;
     private static String currentColony;
     private static Date currentExpirationDate;
-    //Datos para la modifiacion de algun usuario
-    private static long modifyIdUser;
-    private static String modifyFirstName;
-    private static String modifyLastName;
-    private static String modifyEmail;
-    private static String modifyUsername;
-    private static String modifyRole;
-    private static String modifyPassword;
-    private static String modifyColony;
-    private static String modifyStatus;
-    private static Date modifyExpirationDate;
-    private static String modifyDateAdded;
-    private static String modifyDateModify;
+
+
 
     public UsersModel() {
     }
@@ -57,6 +49,40 @@ public class UsersModel {
         this.role=userRole;
         this.userStatus=userStatus;
     }
+
+    protected UsersModel(Parcel in) {
+        idUser = in.readLong();
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        userName = in.readString();
+        role = in.readString();
+        password = in.readString();
+        colony = in.readString();
+        userStatus = in.readString();
+        addedDate = in.readString();
+        modDate = in.readString();
+        isUserLoggedIn = in.readByte() != 0;
+        byte tmpFlagUser = in.readByte();
+        flagUser = tmpFlagUser == 0 ? null : tmpFlagUser == 1;
+        byte tmpUserExist = in.readByte();
+        UserExist = tmpUserExist == 0 ? null : tmpUserExist == 1;
+        validationMessage = in.readString();
+        isRegisterUser = in.readByte() != 0;
+    }
+
+    public static final Creator<UsersModel> CREATOR = new Creator<UsersModel>() {
+        @Override
+        public UsersModel createFromParcel(Parcel in) {
+            return new UsersModel(in);
+        }
+
+        @Override
+        public UsersModel[] newArray(int size) {
+            return new UsersModel[size];
+        }
+    };
+
     public boolean isRegisterUser() {
         return isRegisterUser;
     }
@@ -247,99 +273,29 @@ public class UsersModel {
         UsersModel.currentFirstName = currentFirstName;
     }
 
-    public static long getModifyIdUser() {
-        return modifyIdUser;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public static void setModifyIdUser(long modifyIdUser) {
-        UsersModel.modifyIdUser = modifyIdUser;
-    }
-
-    public static String getModifyFirstName() {
-        return modifyFirstName;
-    }
-
-    public static void setModifyFirstName(String modifyFirstName) {
-        UsersModel.modifyFirstName = modifyFirstName;
-    }
-
-    public static String getModifyLastName() {
-        return modifyLastName;
-    }
-
-    public static void setModifyLastName(String modifyLastName) {
-        UsersModel.modifyLastName = modifyLastName;
-    }
-
-    public static String getModifyEmail() {
-        return modifyEmail;
-    }
-
-    public static void setModifyEmail(String modifyEmail) {
-        UsersModel.modifyEmail = modifyEmail;
-    }
-
-    public static String getModifyUsername() {
-        return modifyUsername;
-    }
-
-    public static void setModifyUsername(String modifyUsername) {
-        UsersModel.modifyUsername = modifyUsername;
-    }
-
-    public static String getModifyRole() {
-        return modifyRole;
-    }
-
-    public static void setModifyRole(String modifyRole) {
-        UsersModel.modifyRole = modifyRole;
-    }
-
-    public static String getModifyPassword() {
-        return modifyPassword;
-    }
-
-    public static void setModifyPassword(String modifyPassword) {
-        UsersModel.modifyPassword = modifyPassword;
-    }
-
-    public static String getModifyColony() {
-        return modifyColony;
-    }
-
-    public static void setModifyColony(String modifyColony) {
-        UsersModel.modifyColony = modifyColony;
-    }
-
-    public static String getModifyStatus() {
-        return modifyStatus;
-    }
-
-    public static void setModifyStatus(String modifyStatus) {
-        UsersModel.modifyStatus = modifyStatus;
-    }
-
-    public static Date getModifyExpirationDate() {
-        return modifyExpirationDate;
-    }
-
-    public static void setModifyExpirationDate(Date modifyExpirationDate) {
-        UsersModel.modifyExpirationDate = modifyExpirationDate;
-    }
-
-    public static String getModifyDateAdded() {
-        return modifyDateAdded;
-    }
-
-    public static void setModifyDateAdded(String modifyDateAdded) {
-        UsersModel.modifyDateAdded = modifyDateAdded;
-    }
-
-    public static String getModifyDateModify() {
-        return modifyDateModify;
-    }
-
-    public static void setModifyDateModify(String modifyDateModify) {
-        UsersModel.modifyDateModify = modifyDateModify;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(idUser);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(email);
+        dest.writeString(userName);
+        dest.writeString(role);
+        dest.writeString(password);
+        dest.writeString(colony);
+        dest.writeString(userStatus);
+        dest.writeString(addedDate);
+        dest.writeString(modDate);
+        dest.writeByte((byte) (isUserLoggedIn ? 1 : 0));
+        dest.writeByte((byte) (flagUser == null ? 0 : flagUser ? 1 : 2));
+        dest.writeByte((byte) (UserExist == null ? 0 : UserExist ? 1 : 2));
+        dest.writeString(validationMessage);
+        dest.writeByte((byte) (isRegisterUser ? 1 : 0));
     }
 }

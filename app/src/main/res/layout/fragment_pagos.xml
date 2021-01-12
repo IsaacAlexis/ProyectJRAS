@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,17 +19,19 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="195dp"
+        android:layout_height="221dp"
         android:background="@drawable/encabezado_formularios"></ImageView>
 
     <ImageView
         android:id="@+id/ImagenPagos"
         android:layout_width="100dp"
         android:layout_height="92dp"
+        android:layout_above="@+id/PropietarioPagos"
         android:layout_below="@+id/imageView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_marginTop="38dp"
+        android:layout_marginBottom="21dp"
         android:background="@drawable/icon_pagos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"></ImageView>
@@ -33,9 +40,9 @@
         android:id="@+id/etiquetaTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="5dp"
+        android:layout_above="@+id/TotalPagos"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="7dp"
         android:layout_toEndOf="@+id/ImagenPagos"
         android:text="Total a pagar:"
         android:textColor="@color/colorVerde"
@@ -46,9 +53,9 @@
         android:id="@+id/TotalPagos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etiquetaTotal"
+        android:layout_above="@+id/PropietarioPagos"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="46dp"
         android:layout_toEndOf="@+id/ImagenPagos"
         android:text="$0.00"
         android:textSize="50dp"></TextView>
@@ -57,10 +64,10 @@
         android:id="@+id/PropietarioPagos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ImagenPagos"
+        android:layout_above="@+id/PeriodosPagos"
         android:layout_alignParentStart="true"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginBottom="18dp"
         android:text="Propietario"
         android:textSize="15dp"></TextView>
 
@@ -68,10 +75,10 @@
         android:id="@+id/PeriodosPagos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/PropietarioPagos"
+        android:layout_above="@+id/StatusPagos"
         android:layout_alignParentStart="true"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginBottom="17dp"
         android:text="Periodos de adeudo:"
         android:textSize="15dp"></TextView>
 
@@ -79,25 +86,23 @@
         android:id="@+id/StatusPagos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/PeriodosPagos"
+        android:layout_above="@+id/RecycleViewAdeudoPagos"
         android:layout_alignParentStart="true"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginBottom="9dp"
         android:text="Estado de la vivienda:"
         android:textSize="15dp"></TextView>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecycleViewAdeudoPagos"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="106dp"
         android:layout_above="@+id/TipoPago"
-        android:layout_below="@+id/StatusPagos"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginEnd="27dp"
         android:layout_marginBottom="20dp"
         android:scrollbars="vertical">
 
@@ -125,6 +130,7 @@
         android:textSize="20dp"
         android:textStyle="bold"></TextView>
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAbonoPagos"
         android:layout_width="match_parent"
@@ -134,7 +140,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="49dp"
         android:layout_marginEnd="49dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="5dp"
         android:visibility="invisible">
 
         <EditText
@@ -148,7 +154,6 @@
             android:visibility="invisible" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <Button
         android:id="@+id/btnPagar"
@@ -172,6 +177,6 @@
 
 
     </RelativeLayout>
-
+</ScrollView>
 
 

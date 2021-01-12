@@ -2,6 +2,8 @@ package Presentation.Houses;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,6 +51,13 @@ public class fragmentViviendas extends Fragment {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_viviendas, container, false);
 
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         house= BusinessHouse.getallHouses(mHouse);
         mRecycleView=view.findViewById(R.id.RecycleViewViviendas);
         mLayoutManger= new LinearLayoutManager(getContext());
@@ -57,8 +66,10 @@ public class fragmentViviendas extends Fragment {
             @Override
             public void OnItemClick(String barCode, String owner, Long phoneNumber, String email,
                                     String street, int houseNumber, int zipcode, String colony, String State, String city, String status) {
-               mHouse.setValuesToModify(barCode,owner,phoneNumber,email,street,houseNumber,zipcode,colony,city,State,status);
-                findNavController(view).navigate(R.id.fragmentModificarViviendas);
+                HousesModel houses=new HousesModel(barCode,owner,phoneNumber,email,street,houseNumber,zipcode,colony,city,State,status);
+                fragmentViviendasDirections.ActionFragmentViviendasToFragmentModificarViviendas action=
+                        fragmentViviendasDirections.actionFragmentViviendasToFragmentModificarViviendas(houses);
+                findNavController(view).navigate(action);
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -89,6 +100,6 @@ public class fragmentViviendas extends Fragment {
 
             }
         });
-        return view;
+
     }
 }

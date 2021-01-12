@@ -39,6 +39,7 @@ import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
 import Data.Utility.LoadingDialog;
+import Data.Utility.Notificaciones;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -82,6 +83,7 @@ public class fragmentConsumo extends Fragment {
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
     Messages messages = new Messages();
+    Notificaciones notify = new Notificaciones();
 
     //Clase de pantalla de carga
     LoadingDialog loadingDialog = new LoadingDialog(fragmentConsumo.this);
@@ -195,12 +197,15 @@ public class fragmentConsumo extends Fragment {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
                             new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
-
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
                         }else {
                             registrar(true);
 
                             new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
 
                         }
@@ -278,7 +283,7 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
-                //new Emails().createMailConsumptions(waterBillsModel.getEmail());
+
             }
         }
     }//fin de mostrarInfoViv(View view)
@@ -359,35 +364,24 @@ public class fragmentConsumo extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                switch (action){
-                    case 1:
-                        if(etLastConsumption.getText().length()!=0&&etConsumption.getText().length()!=0&&etLastRate.getText().length()!=0){
-                            if(Integer.parseInt(etLastConsumption.getText().toString())<=Integer.parseInt(etConsumption.getText().toString())){
-                                btnRegistrar.setEnabled(true);
-                                btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
-                                tilConsumption.setError("");
-                            }else{
-                                tilConsumption.setError("El consumo actual no debe ser menor al anterior");
-                            }
+                if(etLastConsumption.getText().length()!=0&&etConsumption.getText().length()!=0&&etLastRate.getText().length()!=0){
+                    if(Integer.parseInt(etLastConsumption.getText().toString())<=Integer.parseInt(etConsumption.getText().toString())){
+                        btnRegistrar.setEnabled(true);
+                        btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                        tilConsumption.setError("");
+                    }else{
+                        tilConsumption.setError("El consumo actual no debe ser menor al anterior");
+                    }
 
-                        }else{
-                            btnRegistrar.setEnabled(false);
-                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
-                        }
-                        break;
-                    case 2:
-                        if(etConsumption.getText().length()!=0){
-                            btnRegistrar.setEnabled(true);
-                            btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
-                        }else{
-                            btnRegistrar.setEnabled(false);
-                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
-                        }
-                        break;
-                    default:
-                        break;
+                }else{
+                    if(etConsumption.getText().length()!=1){
+                        btnRegistrar.setEnabled(true);
+                        btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                    }else{
+                        btnRegistrar.setEnabled(false);
+                        btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                    }
                 }
-
             }
             @Override
             public void afterTextChanged(Editable s) {

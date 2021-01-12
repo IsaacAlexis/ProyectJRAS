@@ -33,21 +33,7 @@ public class WaterBillsModel {
     private Float bNowRate;
     private String bNameFile;
 
-//    private static String email;
-//    private static String phone;
-//    private static String BarCode;
-//    private static String Owner;
-//    private static String Street;
-//    private static String Colony;
-//    private static String Status;
-//    private static Integer ZipCode;
-//    private static Integer HouseNumber;
-//    private static Float PreviousRate;
-//    private static Float ReadLast;
-//    private static boolean existFirstRegister;
-//    private static Float ReadNow;
-//    private static Float NowRate;
-//    private static String ReadDate;
+
 
 
 
@@ -198,91 +184,7 @@ public class WaterBillsModel {
     public void setReadDate(String readDate) {
         ReadDate = readDate;
     }
-//    public static String getPhone() {
-//        return phone;
-//    }
-//
-//    public static void setPhone(String phone) {
-//        WaterBillsModel.phone = phone;
-//    }
-//
-//    public static String getEmail() {
-//        return email;
-//    }
-//
-//    public static void setEmail(String email) {
-//        WaterBillsModel.email = email;
-//    }
-//
-//    public static String getBarCode() {
-//        return BarCode;
-//    }
-//
-//    public static void setBarCode(String barCode) {
-//        BarCode = barCode;
-//    }
-//
-//    public static String getOwner() {
-//        return Owner;
-//    }
-//
-//    public static void setOwner(String owner) {
-//        Owner = owner;
-//    }
-//
-//    public static String getStreet() {
-//        return Street;
-//    }
-//
-//    public static void setStreet(String street) {
-//        Street = street;
-//    }
-//
-//    public static String getColony() {return Colony;}
-//
-//    public static void setColony(String colony) {
-//        Colony = colony;
-//    }
-//
-//    public static String getStatus() {
-//        return Status;
-//    }
-//
-//    public static void setStatus(String status) {
-//        Status = status;
-//    }
-//
-//    public static Integer getZipCode() {
-//        return ZipCode;
-//    }
-//
-//    public static void setZipCode(Integer zipCode) {
-//        ZipCode = zipCode;
-//    }
-//
-//    public static Integer getHouseNumber() {
-//        return HouseNumber;
-//    }
-//
-//    public static void setHouseNumber(Integer houseNumber) {
-//        HouseNumber = houseNumber;
-//    }
-//
-//    public static Float getPreviousRate() {
-//        return PreviousRate;
-//    }
-//
-//    public static void setPreviousRate(Float previousRate) {
-//        PreviousRate = previousRate;
-//    }
-//
-//    public static Float getReadLast() {
-//        return ReadLast;
-//    }
-//
-//    public static void setReadLast(Float readLast) {
-//        ReadLast = readLast;
-//    }
+
 
     public String getValidationMessage() {
         return ValidationMessage;
@@ -300,37 +202,6 @@ public class WaterBillsModel {
         CorrectHouse = correctHouse;
     }
 
-//    public static boolean isExistFirstRegister() {
-//        return existFirstRegister;
-//    }
-//
-//    public static void setExistFirstRegister(boolean existFirstRegister) {
-//        WaterBillsModel.existFirstRegister = existFirstRegister;
-//    }
-//
-//    public static Float getReadNow() {
-//        return ReadNow;
-//    }
-//
-//    public static void setReadNow(Float readNow) {
-//        ReadNow = readNow;
-//    }
-//
-//    public static Float getNowRate() {
-//        return NowRate;
-//    }
-//
-//    public static void setNowRate(Float nowRate) {
-//        NowRate = nowRate;
-//    }
-//
-//    public static String getReadDate() {
-//        return ReadDate;
-//    }
-//
-//    public static void setReadDate(String readDate) {
-//        ReadDate = readDate;
-//    }
 
     public Date getbReadDate() {
         return bReadDate;

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +81,23 @@ public class fragmentPagos extends Fragment {
 
             new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
                     validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
+            AmountPay.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
 
             debitsAdapter=new DebitsAdapter(pays.getDebits(), getContext());
@@ -100,7 +119,7 @@ public class fragmentPagos extends Fragment {
                         AmountPay.setVisibility(View.INVISIBLE);
                         tilAmountPay.setVisibility(View.INVISIBLE);
                         btnPay.setEnabled(true);
-                        btnPay.setBackgroundResource(R.drawable.bordes_redondos_azul);
+                        btnPay.setBackgroundResource(R.drawable.bordes_redondos_rojo);
                     }
                 }
             });

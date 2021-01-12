@@ -32,15 +32,7 @@ public class PaymentsModel implements Parcelable {
     private String Description;
     private Float payTotal;
     private Long IdConsumption;
-    //   // ----Informacion de vista de Pagos-----
-//    private static String Owner;
-//    private static String Barcode;
-//    private static Float Total;
-//    private static Float DebitTotal;
-//    private static Integer DebitPeriod;
-//    private static String Status;
-//    private static String Street;
-//    private static Integer HouseNumber;
+
 
 
 
@@ -182,55 +174,7 @@ public class PaymentsModel implements Parcelable {
     public void setRtotal(Float rtotal) {
         Rtotal = rtotal;
     }
-    // ----Informacion de vista de Pagos-----
 
-//    public static String getOwner() {
-//        return Owner;
-//    }
-//
-//    public static void setOwner(String owner) {
-//        Owner = owner;
-//    }
-//
-//    public static String getBarcode() {
-//        return Barcode;
-//    }
-//
-//    public static void setBarcode(String barcode) {
-//        Barcode = barcode;
-//    }
-//
-//    public static Float getTotal() {
-//        return Total;
-//    }
-//
-//    public static void setTotal(Float total) {
-//        Total = total;
-//    }
-//
-//    public static Integer getDebitPeriod() {
-//        return DebitPeriod;
-//    }
-//
-//    public static void setDebitPeriod(Integer debitPeriod) {
-//        DebitPeriod = debitPeriod;
-//    }
-//
-//    public static String getStatus() {
-//        return Status;
-//    }
-//
-//    public static void setStatus(String status) {
-//        Status = status;
-//    }
-
-//    public static String getValidationMessage() {
-//        return ValidationMessage;
-//    }
-//
-//    public static void setValidationMessage(String validationMessage) {
-//        ValidationMessage = validationMessage;
-//    }
 
     public Date getReadDate() {
         return ReadDate;
@@ -272,21 +216,6 @@ public class PaymentsModel implements Parcelable {
         this.payTotal = payTotal;
     }
 
-//    public static String getStreet() {
-//        return Street;
-//    }
-//
-//    public static void setStreet(String street) {
-//        Street = street;
-//    }
-//
-//    public static Integer getHouseNumber() {
-//        return HouseNumber;
-//    }
-//
-//    public static void setHouseNumber(Integer houseNumber) {
-//        HouseNumber = houseNumber;
-//    }
 
     public String getDescription() {
         return Description;
@@ -295,14 +224,6 @@ public class PaymentsModel implements Parcelable {
     public void setDescription(String description) {
         Description = description;
     }
-//
-//    public static Float getDebitTotal() {
-//        return DebitTotal;
-//    }
-//
-//    public static void setDebitTotal(Float debitTotal) {
-//        DebitTotal = debitTotal;
-//    }
 
 
     public String getOwner() {

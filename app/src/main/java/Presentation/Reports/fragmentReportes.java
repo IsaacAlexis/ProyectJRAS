@@ -22,7 +22,10 @@ import android.widget.EditText;
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import BusinessLogic.BusinessReports;
 import Data.Models.ReportsModel;
@@ -43,6 +46,8 @@ public class fragmentReportes extends Fragment {
     FragmentManager fragmentManager;
 
     private FloatingActionButton fabFecha;
+    private FloatingActionButton fabFechafinal;
+    int action=0;
 
 
     DatePickerDialog.OnDateSetListener setListener;
@@ -79,6 +84,19 @@ public class fragmentReportes extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
                         ,setListener,year,month,day);
+                action=1;
+
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+        fabFechafinal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                        ,setListener,year,month,day);
+                action=2;
 
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -104,18 +122,36 @@ public class fragmentReportes extends Fragment {
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
-                firstDate.setText(dayOfMonth+"/"+month+"/"+year);
-                datemin = year+"/"+month+"/"+dayOfMonth;
-                if (month==12){
-                    month=1;
-                    year+=1;
-                    secondDate.setText(dayOfMonth+"/"+month+"/"+year);
-                    datemax = year+"/"+month+"/"+dayOfMonth;
-                }else{
-                    secondDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                    datemax = year+"/"+(month+1)+"/"+dayOfMonth;
+                switch (action){
+                    case 1:
+                            firstDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                            datemin = year+"/"+(month+1)+"/"+dayOfMonth;
+                            fabFechafinal.setVisibility(View.VISIBLE);
+
+
+                        break;
+                    case 2:
+                        try {
+                            Date datefirst=new SimpleDateFormat("dd/MM/yyyy").parse(firstDate.getText().toString());
+                            Date datelast=new SimpleDateFormat("dd/MM/yyyy").parse(""+dayOfMonth+"/"+(month+1)+"/"+year);
+                            if(datefirst.before(datelast)){
+
+                                secondDate.setText(""+dayOfMonth+"/"+(month+1)+"/"+year);
+                                datemax = year+"/"+(month+1)+"/"+dayOfMonth;
+                            }else{
+                                secondDate.setText("");
+                                new Messages().messageToast(getContext(),"Debes ingresar una fecha mayor a la anterior");
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        break;
+                    default:
+                        break;
                 }
+
 
 
             }
@@ -127,6 +163,7 @@ public class fragmentReportes extends Fragment {
         firstDate = view.findViewById(R.id.txtFecha1);
         secondDate = view.findViewById(R.id.txtFecha2);
         fabFecha = view.findViewById(R.id.fabFechaReportes);
+        fabFechafinal=view.findViewById(R.id.fabFechaReportesFinal);
         btngenerateReport=view.findViewById(R.id.btnConsultar);
     }
 }

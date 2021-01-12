@@ -27,7 +27,7 @@ public class BusinessPayments {
                   return;
               }
                 if(pays.getTotal()<pays.getAmountPay()){
-                    new PaymentsModel().setValidationMessage("No se puede ingresar una cantidad mayor al total");
+                    pays.setValidationMessage("No se puede ingresar una cantidad mayor al total");
                     return;
                 }
                 new DAPayments().PostRegisterPayment(pays,action,context);

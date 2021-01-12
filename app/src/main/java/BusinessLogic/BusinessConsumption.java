@@ -23,6 +23,7 @@ public class BusinessConsumption {
     }
 
     public void BridgeConsumptionReading(Context context, ConsumptionsModel cm,WaterBillsModel waterBillsModel, StorageReference storageReference){
+        BridgeHouseScanner(waterBillsModel);
         List<WaterBillsModel> bill=new ArrayList<>();
         bill=new BusinessConsumption().BridgeWaterBills(cm);
         waterBillsModel.setBills(bill);
@@ -47,8 +48,7 @@ public class BusinessConsumption {
     public void BridgeConsumptionFirstReading(Context context, ConsumptionsModel cm,WaterBillsModel waterBillsModel,
                                               List<ConsumptionsModel> consumptionsModelList,StorageReference storageReference) {
         if(DAC.FirstConsumptionReading(cm,consumptionsModelList)){
-            /*WaterBillsModel waterBillsModel=new WaterBillsModel();
-            BridgeHouseScanner(waterBillsModel);*/
+            BridgeHouseScanner(waterBillsModel);
             cm.setReadDate(consumptionsModelList.get(0).getReadDate());
             cm.setM3(consumptionsModelList.get(0).getM3());
             waterBillsModel.setReadNow(consumptionsModelList.get(0).getM3());

@@ -123,7 +123,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(waterBills.getStreet().toUpperCase()+" #"+new WaterBillsModel().getHouseNumber()+" CP:"+new WaterBillsModel().getZipCode(),30,185,mypaint);
+            canvas.drawText(waterBills.getStreet().toUpperCase()+" #"+waterBills.getHouseNumber()+" CP:"+waterBills.getZipCode(),30,185,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -262,7 +262,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(""+(waterBills.getReadNow()-new WaterBillsModel().getReadLast()),95,330,mypaint);
+            canvas.drawText(""+(waterBills.getReadNow()-waterBills.getReadLast()),95,330,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -283,21 +283,24 @@ public class GenaratorPDF {
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
             canvas.drawText("$"+waterBills.getNowRate()+"0",330,268,mypaint);
-            total+=new WaterBillsModel().getNowRate();
+            total+=waterBills.getNowRate();
             int valueY=283;
-            for(WaterBillsModel debit : waterBills.getBills()){
-                mypaint.setTextAlign(Paint.Align.LEFT);
-                mypaint.setColor(Color.BLACK);
-                mypaint.setTextSize(8.0f);
-                canvas.drawText("REZAGO AGUA ["+new Dates().getLastBill(debit.getbReadDate())+"]",220,valueY,mypaint);
+            if(waterBills.getBills().size()>0){
+                for(WaterBillsModel debit : waterBills.getBills()){
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.BLACK);
+                    mypaint.setTextSize(8.0f);
+                    canvas.drawText("REZAGO AGUA ["+new Dates().getLastBill(debit.getbReadDate())+"]",220,valueY,mypaint);
 
-                mypaint.setTextAlign(Paint.Align.LEFT);
-                mypaint.setColor(Color.BLACK);
-                mypaint.setTextSize(8.0f);
-                canvas.drawText("$"+debit.getbNowRate()+"0",330,valueY,mypaint);
-                total+=debit.getbNowRate();
-                valueY+=15;
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.BLACK);
+                    mypaint.setTextSize(8.0f);
+                    canvas.drawText("$"+debit.getbNowRate()+"0",330,valueY,mypaint);
+                    total+=debit.getbNowRate();
+                    valueY+=15;
+                }
             }
+
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -351,7 +354,8 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
-            String test=""+waterBills.getOwner().toString().toUpperCase()+" PERIODO "+ NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
+            String test=""+waterBills.getOwner().toString().toUpperCase()+" PERIODO "+
+                    NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
             File file=new File(context.getExternalFilesDir("/"),"/"+test);
             mypdfDocument.writeTo(new  FileOutputStream(file));
             mypdfDocument.close();

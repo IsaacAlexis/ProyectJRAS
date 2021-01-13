@@ -109,7 +109,7 @@ public class fragmentModificarGastos extends Fragment {
                             }else{
                                 fieldsEnable();
                             }
-                            loadingDialog.dismissDialog();
+
 
 
 

@@ -131,6 +131,7 @@ public class fragmentPagos extends Fragment {
                         pays.setAmountPay(Float.parseFloat(AmountPay.getText().toString()));
                         new BusinessPayments().RegisterPayment(pays,2,fragmentPagos.this.getContext());
 
+
                     }else{
                         pays.setAmountPay(Float.parseFloat("0"));
                         new BusinessPayments().RegisterPayment(pays,1,fragmentPagos.this.getContext());

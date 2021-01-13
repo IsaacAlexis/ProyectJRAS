@@ -74,6 +74,7 @@ public class fragmentConsumo extends Fragment {
     //Variables para el escaner
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
+    int action=0;
 
     //Instancias de otras clases
     WaterBillsModel waterBillsModel = new WaterBillsModel();
@@ -97,13 +98,7 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
-        if(waterBillsModel.isExistFirstRegister()){
-            avibleButton(etConsumption,btnRegistrar,2);
-        }else{
-            avibleButton(etConsumption,btnRegistrar,1);
-            avibleButton(etLastConsumption,btnRegistrar,1);
-            avibleButton(etLastRate,btnRegistrar,1);
-        }
+
 
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +166,13 @@ public class fragmentConsumo extends Fragment {
                         }else{
                             mostrarInfoViv(view);
                             if(waterBillsModel.isCorrectHouse()){
+                                if(waterBillsModel.isExistFirstRegister()){
+                                    avibleButton(etConsumption,btnRegistrar);
+                                }else{
+                                    avibleButton(etConsumption,btnRegistrar);
+                                    avibleButton(etLastConsumption,btnRegistrar);
+                                    avibleButton(etLastRate,btnRegistrar);
+                                }
                                 btnBuscar.setText("CANCELAR");
                                 btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_azul);
                             }
@@ -266,6 +268,7 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                action=1;
 
 
             }else{
@@ -278,6 +281,7 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                action=2;
                 //new Emails().createMailConsumptions(waterBillsModel.getEmail());
             }
         }
@@ -350,7 +354,7 @@ public class fragmentConsumo extends Fragment {
             }
         }
     }//fin de onActivityResult
-    public void avibleButton(EditText field, Button btn,int action){
+    public void avibleButton(EditText field, Button btn){
         field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

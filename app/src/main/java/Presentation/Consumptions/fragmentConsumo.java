@@ -39,6 +39,7 @@ import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
 import Data.Utility.LoadingDialog;
+import Data.Utility.Notificaciones;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -83,6 +84,7 @@ public class fragmentConsumo extends Fragment {
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
     Messages messages = new Messages();
+    Notificaciones notify = new Notificaciones();
 
     //Clase de pantalla de carga
     LoadingDialog loadingDialog = new LoadingDialog(fragmentConsumo.this);
@@ -197,12 +199,15 @@ public class fragmentConsumo extends Fragment {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
                             new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
-
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
                         }else {
                             registrar(true);
 
                             new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
 
                         }
@@ -281,8 +286,10 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+
                 action=2;
                 //new Emails().createMailConsumptions(waterBillsModel.getEmail());
+
             }
         }
     }//fin de mostrarInfoViv(View view)
@@ -391,7 +398,6 @@ public class fragmentConsumo extends Fragment {
                     default:
                         break;
                 }
-
             }
             @Override
             public void afterTextChanged(Editable s) {

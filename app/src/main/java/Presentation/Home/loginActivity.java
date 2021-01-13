@@ -8,6 +8,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -155,5 +157,6 @@ public class loginActivity extends AppCompatActivity {
         validations.IsValidTextboxOnClick(txtUser,tilUser,regEx.validUser,"Ingresa un usuario valido",btnUserLogIn);
         validations.IsValidTextboxOnClick(txtPass,tilPassword,regEx.validPassword,"Ingresa una contraseña valida",btnUserLogIn);
     }//fin de getCommonValues()
+
 
 }

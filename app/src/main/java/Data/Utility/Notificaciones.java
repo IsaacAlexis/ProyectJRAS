@@ -73,7 +73,47 @@ public class Notificaciones {
         }
     }
 
-    private void checkSMSStatePermission(Context context, Activity activity) {
+    public void createMailPay(String correoDestino){
+        getPeriodName();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host","smtp.googlemail.com");
+        properties.put("mail.smtp.socketFactory.port","465");
+        properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.auth","true");
+        properties.put("mail.smtp.port","465");
+
+        try {
+
+            session=Session.getDefaultInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(mail,password);
+                }
+            });
+
+            if (session!=null){
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(mail));
+                //Asunto del correo
+                message.setSubject("Recibo de pago");
+                //Correo de destino
+                message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(correoDestino));
+                //Texto del correo
+                message.setContent("Su recibo de pago del periodo "+periodo+" ya se encuentra disponible, consulte la " +
+                        "aplicacion de JRAS para verlo.","text/html;charset=utf-8");
+                Transport.send(message);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void checkSMSStatePermission(Context context, Activity activity,String Numero) {
+        getPeriodName();
         int permissionCheck = ContextCompat.checkSelfPermission(
                 context, Manifest.permission.SEND_SMS);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -81,7 +121,20 @@ public class Notificaciones {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 225);
         } else {
             Log.i("Mensaje", "Se tiene permiso para enviar SMS!");
-            enviaSMS("6391021228","Prueba de mensaje de texto",context);
+            enviaSMS(Numero,"Su recibo del periodo "+periodo+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
+        }
+    }
+
+    public void checkSMSStatePermissionPayments(Context context, Activity activity,String Numero) {
+        getPeriodName();
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                context, Manifest.permission.SEND_SMS);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Mensaje", "No se tiene permiso para enviar SMS.");
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 225);
+        } else {
+            Log.i("Mensaje", "Se tiene permiso para enviar SMS!");
+            enviaSMS(Numero,"Su recibo de pago del periodo "+periodo+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
         }
     }
 

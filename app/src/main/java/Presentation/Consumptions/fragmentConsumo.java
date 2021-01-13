@@ -39,6 +39,7 @@ import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
 import Data.Utility.LoadingDialog;
+import Data.Utility.Notificaciones;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -74,6 +75,7 @@ public class fragmentConsumo extends Fragment {
     //Variables para el escaner
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
+    int action=0;
 
     //Instancias de otras clases
     WaterBillsModel waterBillsModel = new WaterBillsModel();
@@ -82,6 +84,7 @@ public class fragmentConsumo extends Fragment {
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
     Messages messages = new Messages();
+    Notificaciones notify = new Notificaciones();
 
     //Clase de pantalla de carga
     LoadingDialog loadingDialog = new LoadingDialog(fragmentConsumo.this);
@@ -97,13 +100,7 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
-        if(waterBillsModel.isExistFirstRegister()){
-            avibleButton(etConsumption,btnRegistrar,2);
-        }else{
-            avibleButton(etConsumption,btnRegistrar,1);
-            avibleButton(etLastConsumption,btnRegistrar,1);
-            avibleButton(etLastRate,btnRegistrar,1);
-        }
+
 
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +168,13 @@ public class fragmentConsumo extends Fragment {
                         }else{
                             mostrarInfoViv(view);
                             if(waterBillsModel.isCorrectHouse()){
+                                if(waterBillsModel.isExistFirstRegister()){
+                                    avibleButton(etConsumption,btnRegistrar);
+                                }else{
+                                    avibleButton(etConsumption,btnRegistrar);
+                                    avibleButton(etLastConsumption,btnRegistrar);
+                                    avibleButton(etLastRate,btnRegistrar);
+                                }
                                 btnBuscar.setText("CANCELAR");
                                 btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_azul);
                             }
@@ -195,12 +199,15 @@ public class fragmentConsumo extends Fragment {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
                             new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
-
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
                         }else {
                             registrar(true);
 
                             new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
 
                         }
@@ -266,6 +273,7 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                action=1;
 
 
             }else{
@@ -278,7 +286,10 @@ public class fragmentConsumo extends Fragment {
                 btnRegistrar.setVisibility(View.VISIBLE);
                 btnRegistrar.setEnabled(false);
                 btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+
+                action=2;
                 //new Emails().createMailConsumptions(waterBillsModel.getEmail());
+
             }
         }
     }//fin de mostrarInfoViv(View view)
@@ -350,7 +361,7 @@ public class fragmentConsumo extends Fragment {
             }
         }
     }//fin de onActivityResult
-    public void avibleButton(EditText field, Button btn,int action){
+    public void avibleButton(EditText field, Button btn){
         field.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -387,7 +398,6 @@ public class fragmentConsumo extends Fragment {
                     default:
                         break;
                 }
-
             }
             @Override
             public void afterTextChanged(Editable s) {

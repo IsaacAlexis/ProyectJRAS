@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -29,7 +30,9 @@ import com.example.jras.R;
 
 import BusinessLogic.BusinessPayments;
 import Data.Models.PaymentsModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
+import Presentation.Expenses.fragmentRegistrarGastos;
 import Presentation.Houses.activityScanner;
 
 import static androidx.navigation.Navigation.findNavController;
@@ -40,6 +43,8 @@ public class FragmentPrePago extends Fragment {
 
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
+    LoadingDialog loadingDialog = new LoadingDialog(FragmentPrePago.this);
+    Handler handler = new Handler();
 
     PaymentsModel pays=new PaymentsModel();
 
@@ -61,15 +66,23 @@ public class FragmentPrePago extends Fragment {
             public void afterTextChanged(Editable s) {
 
                 if(Barcode.length()==8){
-                    pays.setBarcode(Barcode.getText().toString());
-                    if(!new BusinessPayments().AccessToRegisterPayment(pays)){
-                        new Messages().messageToastShort(getContext(),pays.getValidationMessage());
+                    loadingDialog.startLoadingDialogFragment(getContext(),"Buscando referencia...");
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pays.setBarcode(Barcode.getText().toString());
+                            if(!new BusinessPayments().AccessToRegisterPayment(pays)){
+                                new Messages().messageToastShort(getContext(),pays.getValidationMessage());
 
-                    }else{
-                        Barcode.setText("");
-                        FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
-                        findNavController(getView()).navigate(action);
-                    }
+                            }else{
+                                Barcode.setText("");
+                                FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
+                                findNavController(getView()).navigate(action);
+                            }
+                            loadingDialog.dismissDialog();
+                        }
+                    },50);
+
 
 
                 }
@@ -146,13 +159,21 @@ public class FragmentPrePago extends Fragment {
         if (requestCode == CODIGO_INTENT){
             if (resultCode == Activity.RESULT_OK){
                 if (data != null){
-                    pays.setBarcode(data.getStringExtra("codigo"));
-                    if(!new BusinessPayments().AccessToRegisterPayment(pays)){
-                        new Messages().messageToastShort(getContext(),pays.getValidationMessage());
-                        return;
-                    }
-                    FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
-                    findNavController(getView()).navigate(action);
+                    loadingDialog.startLoadingDialogFragment(FragmentPrePago.this.getContext(),"Buscando...");
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pays.setBarcode(data.getStringExtra("codigo"));
+                            if(!new BusinessPayments().AccessToRegisterPayment(pays)){
+                                new Messages().messageToastShort(getContext(),pays.getValidationMessage());
+                                return;
+                            }
+                            FragmentPrePagoDirections.ActionFragmentPrePagoToFragmentPagos action= FragmentPrePagoDirections.actionFragmentPrePagoToFragmentPagos(pays);
+                            findNavController(getView()).navigate(action);
+                            loadingDialog.dismissDialog();
+                        }
+                    },50);
+
 
                 }
             }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,10 @@ import java.util.Date;
 
 import BusinessLogic.BusinessReports;
 import Data.Models.ReportsModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Presentation.Payments.FragmentPrePago;
+import Presentation.Payments.fragmentPagos;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -52,6 +55,8 @@ public class fragmentReportes extends Fragment {
 
     DatePickerDialog.OnDateSetListener setListener;
     ReportsModel reports=new ReportsModel();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentReportes.this);
+    Handler handler = new Handler();
 
 
     public fragmentReportes() {
@@ -105,17 +110,27 @@ public class fragmentReportes extends Fragment {
         btngenerateReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reports.setDateMin(datemin);
-                reports.setDateMax(datemax);
-                if(new BusinessReports().generateRepor(fragmentReportes.this.getContext(),reports)){
-                    new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
-                    fragmentReportesDirections.ActionFragmentReportesToFragmentViewReportes action=
-                            fragmentReportesDirections.actionFragmentReportesToFragmentViewReportes(reports);
-                    findNavController(view).navigate(action);
+                loadingDialog.startLoadingDialogFragment(getContext(),"Generando reporte...");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        reports.setDateMin(datemin);
+                        reports.setDateMax(datemax);
+                        if(new BusinessReports().generateRepor(fragmentReportes.this.getContext(),reports)){
 
-                }else{
-                    new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
-                }
+                            new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                            fragmentReportesDirections.ActionFragmentReportesToFragmentViewReportes action=
+                                    fragmentReportesDirections.actionFragmentReportesToFragmentViewReportes(reports);
+
+                            findNavController(view).navigate(action);
+
+                        }else{
+                            new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                        }
+                        loadingDialog.dismissDialog();
+                    }
+                },50);
+
             }
         });
 

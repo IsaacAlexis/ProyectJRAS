@@ -144,7 +144,7 @@ public class fragmentConsumo extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+                loadingDialog.startLoadingDialogFragment(getContext(),"Buscando...");
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -191,7 +191,7 @@ public class fragmentConsumo extends Fragment {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+                loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
 
                 handler.postDelayed(new Runnable() {
                     @Override

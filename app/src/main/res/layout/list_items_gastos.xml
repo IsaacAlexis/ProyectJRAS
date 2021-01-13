@@ -42,15 +42,19 @@
                 android:layout_toRightOf="@+id/iconimageG">
                 <TextView
                     android:id="@+id/folioCV"
-                    android:layout_width="match_parent"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
+                    android:minLines="1"
+                    android:maxLines="3"
                     android:text="Folio"
                     android:textSize="23sp"
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/descriptionCV"
-                    android:layout_width="match_parent"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
+                    android:minLines="1"
+                    android:maxLines="4"
                     android:text="Descripcion"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"/>

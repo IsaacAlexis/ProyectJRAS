@@ -179,7 +179,7 @@
     <fragment
         android:id="@+id/fragmentViewReportes"
         android:name="Presentation.Reports.FragmentViewReportes"
-        android:label="fragment_view_reportes"
+        android:label="Informacion del reporte"
         tools:layout="@layout/fragment_view_reportes" >
         <argument
             android:name="reports"

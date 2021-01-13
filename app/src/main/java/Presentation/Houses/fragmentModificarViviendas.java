@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -22,10 +23,12 @@ import com.example.jras.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import Data.Models.HousesModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessHouse;
+import Presentation.Expenses.fragmentRegistrarGastos;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -47,6 +50,8 @@ public class fragmentModificarViviendas extends Fragment {
     Validations validations=new Validations();
     Messages messages=new Messages();
     RegExValidations regEx = new RegExValidations();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentModificarViviendas.this);
+    Handler handler = new Handler();
 
     public static fragmentModificarViviendas newInstance() {
         return new fragmentModificarViviendas();
@@ -68,20 +73,30 @@ public class fragmentModificarViviendas extends Fragment {
             savechanges.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if(!savechanges.getText().toString().equals("Editar")){
-                        textboxEmpty();
+                        loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                textboxEmpty();
 
-                        if(!validations.isInvalid){
-                            assignValuesModificate();
-                            new BusinessHouse().BridgeHouseUpdate(house);
-                            if(house.isStatusActivity()){
-                                messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
-                            }else{
-                                messages.messageToast(getContext(),house.getMessage());
-                                findNavController(view).navigate(R.id.fragmentViviendas);
+                                if(!validations.isInvalid){
+                                    assignValuesModificate();
+                                    new BusinessHouse().BridgeHouseUpdate(house);
+                                    if(house.isStatusActivity()){
+                                        messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
+                                    }else{
+                                        messages.messageToast(getContext(),house.getMessage());
+                                        findNavController(view).navigate(R.id.fragmentViviendas);
+                                    }
                             }
-
+                                loadingDialog.dismissDialog();
                         }
+
+
+
+                        },50);
                     }else{
                         fieldsEnable();
                     }

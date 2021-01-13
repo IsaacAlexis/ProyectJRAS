@@ -8,7 +8,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
+
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -55,6 +56,7 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getCommonValues();
+
 
 
         btnUserLogIn.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +141,9 @@ public class loginActivity extends AppCompatActivity {
         });//fin de btnUserLogin onClickListener
 
     }//fin de onCreate
+
+
+
 
     // ******************************Metodos******************************
 

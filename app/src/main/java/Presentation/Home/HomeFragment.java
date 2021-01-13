@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
 
 
     public FloatingActionButton fabConsumo;
+    public boolean permisoCamaraConcedido = false;
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
         permissions();
 
         fabConsumo=view.findViewById(R.id.fabConsumo);
+        permission();
 
 
         fabConsumo.setOnClickListener(new View.OnClickListener() {
@@ -160,5 +162,17 @@ public class HomeFragment extends Fragment {
             return true;
         }
     }
+
+    private void permission() {
+    }
+//    public void verificaryPedirPermisosDeCamara(){
+//        int estadoDePermiso = ContextCompat.checkSelfPermission(HomeFragment.this.getContext(), Manifest.permission.CAMERA);
+//        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
+//            permisoCamaraConcedido = true;
+//        }
+//        else{
+//            ActivityCompat.requestPermissions(HomeFragment.this.getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
+//        }
+//    }
 
 }//Fin HomeFragment

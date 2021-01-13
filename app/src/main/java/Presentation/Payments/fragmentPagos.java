@@ -25,7 +25,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import BusinessLogic.BusinessPayments;
 import Data.Models.PaymentsModel;
+import Data.Models.WaterBillsModel;
 import Data.Utility.Messages;
+import Data.Utility.Notificaciones;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
 
@@ -52,6 +54,8 @@ public class fragmentPagos extends Fragment {
 
 
     PaymentsModel pays=new PaymentsModel();
+//    Notificaciones notify = new Notificaciones();
+//    WaterBillsModel waterBillsModel = new WaterBillsModel();
 
 
 
@@ -130,10 +134,15 @@ public class fragmentPagos extends Fragment {
                     if(TypePayment.isChecked()){
                         pays.setAmountPay(Float.parseFloat(AmountPay.getText().toString()));
                         new BusinessPayments().RegisterPayment(pays,2,fragmentPagos.this.getContext());
+//                        notify.createMailPay(waterBillsModel.getEmail());
+//                        notify.checkSMSStatePermissionPayments(getContext(),getActivity(),waterBillsModel.getPhone());
+
 
                     }else{
                         pays.setAmountPay(Float.parseFloat("0"));
                         new BusinessPayments().RegisterPayment(pays,1,fragmentPagos.this.getContext());
+//                        notify.createMailPay(waterBillsModel.getEmail());
+//                        notify.checkSMSStatePermissionPayments(getContext(),getActivity(),waterBillsModel.getPhone());
 
                     }
                     new Messages().messageToast(getContext(),pays.getValidationMessage());

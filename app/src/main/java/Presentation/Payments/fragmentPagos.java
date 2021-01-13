@@ -1,15 +1,21 @@
 package Presentation.Payments;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -26,6 +32,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import BusinessLogic.BusinessPayments;
 import Data.Models.PaymentsModel;
 import Data.Models.WaterBillsModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.Notificaciones;
 import Data.Utility.RegExValidations;
@@ -33,6 +40,8 @@ import Data.Utility.Validations;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class fragmentPagos extends Fragment {
 
@@ -56,6 +65,8 @@ public class fragmentPagos extends Fragment {
     PaymentsModel pays=new PaymentsModel();
 //    Notificaciones notify = new Notificaciones();
 //    WaterBillsModel waterBillsModel = new WaterBillsModel();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentPagos.this);
+    Handler handler = new Handler();
 
 
 
@@ -80,6 +91,9 @@ public class fragmentPagos extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AmountPay=view.findViewById(R.id.txtAbonoPagos);
+        ActivityCompat.requestPermissions(fragmentPagos.this.getActivity(),new String[]{READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+        StrictMode.VmPolicy.Builder builder=new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         if(getArguments()!=null){
             getValues(view);
 
@@ -130,23 +144,32 @@ public class fragmentPagos extends Fragment {
             btnPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    la acccion numero uno se refiere al pago total y el numero dos se refiere a un abono
-                    if(TypePayment.isChecked()){
-                        pays.setAmountPay(Float.parseFloat(AmountPay.getText().toString()));
-                        new BusinessPayments().RegisterPayment(pays,2,fragmentPagos.this.getContext());
-//                        notify.createMailPay(waterBillsModel.getEmail());
-//                        notify.checkSMSStatePermissionPayments(getContext(),getActivity(),waterBillsModel.getPhone());
+                    loadingDialog.startLoadingDialogFragment(getContext(),"Realizando el pago...");
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //                    la acccion numero uno se refiere al pago total y el numero dos se refiere a un abono
+                            if(TypePayment.isChecked()){
+                                pays.setAmountPay(Float.parseFloat(AmountPay.getText().toString()));
+                                new BusinessPayments().RegisterPayment(pays,2,fragmentPagos.this.getContext());
+                                sendTicked();
 
 
-                    }else{
-                        pays.setAmountPay(Float.parseFloat("0"));
-                        new BusinessPayments().RegisterPayment(pays,1,fragmentPagos.this.getContext());
-//                        notify.createMailPay(waterBillsModel.getEmail());
-//                        notify.checkSMSStatePermissionPayments(getContext(),getActivity(),waterBillsModel.getPhone());
 
-                    }
-                    new Messages().messageToast(getContext(),pays.getValidationMessage());
-                    findNavController(v).navigate(R.id.info_Pagos);
+                            }else{
+                                pays.setAmountPay(Float.parseFloat("0"));
+                                new BusinessPayments().RegisterPayment(pays,1,fragmentPagos.this.getContext());
+                                sendTicked();
+
+
+                            }
+                            new Messages().messageToast(getContext(),pays.getValidationMessage());
+                            findNavController(v).navigate(R.id.info_Pagos);
+                            loadingDialog.dismissDialog();
+                        }
+                    },50);
+
+
                 }
             });
 
@@ -154,6 +177,16 @@ public class fragmentPagos extends Fragment {
         }
 
 
+    }
+
+    private void sendTicked() {
+       //Uri uri = Uri.fromFile(pays.getFilepath());
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("application/pdf");
+        share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"+pays.getFilepath()));
+//        share.setPackage("com.whatsapp");
+//        startActivity(share);
+        startActivity(Intent.createChooser(share,"Compartir archivo..."));
     }
 
     // Relacionar las variables con los componentes

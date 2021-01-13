@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.FloatRange;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class PaymentsModel implements Parcelable {
     private String street;
     private Integer houseNumber;
     private Float amountPay;
+    private File filepath;
 
     //Informacion de adeudos
     private  List<PaymentsModel> Debits;//Ordenados de manera descendente
@@ -312,6 +314,14 @@ public class PaymentsModel implements Parcelable {
 
     public void setDataPays(List<PaymentsModel> dataPays) {
         this.dataPays = dataPays;
+    }
+
+    public File getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(File filepath) {
+        this.filepath = filepath;
     }
 
     @Override

@@ -492,9 +492,17 @@ public class GenaratorPDF {
             mypaint.setTextSize(12.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("TOTAL:",50,ysecond,mypaint);
+            canvas.drawText("DEBIA:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$"+pays.getDebitTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            canvas.drawText("$"+pays.getTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            ysecond+=15;
+
+            mypaint.setTextSize(12.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("PAGO:",50,ysecond,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$"+pays.getAmountPay()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
             ysecond+=15;
 
             mypaint.setTextSize(12.0f);
@@ -502,7 +510,7 @@ public class GenaratorPDF {
             mypaint.setTypeface(Typeface.DEFAULT);
             canvas.drawText("SALDO RESTANTE:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$"+pays.getTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            canvas.drawText("$"+pays.getDebitTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
             ysecond+=30;
 
             mypaint.setTextAlign(Paint.Align.CENTER);
@@ -519,8 +527,11 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
+
+
             File file=new File(context.getExternalFilesDir("/"),"/PAGO "+
                    pays.getOwner()+new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf");
+            pays.setFilepath(file);
             mypdfDocument.writeTo(new FileOutputStream(file));
             mypdfDocument.close();
             return false;

@@ -29,8 +29,9 @@ public class DAPayments {
         List<PaymentsModel> datapays =new ArrayList<>();
         switch(action) {
             case 1:
-                pays.setDebitTotal(pays.getTotal());
-                pays.setTotal(pays.getTotal()-pays.getTotal());
+                pays.setAmountPay(pays.getTotal());
+                pays.setDebitTotal(pays.getTotal()-pays.getAmountPay());
+
 
                 for (int i = (pays.getDebits().size() - 1); i >= 0; i--) {
                     pays.setPayTotal(pays.getDebits().get(i).getRate());
@@ -41,13 +42,13 @@ public class DAPayments {
                             pays.getDebits().get(i).getRate(),"PAGO TOTAL"));
                 }
                 pays.setDataPays(datapays);
-                new GenaratorPDF().createTicketPDF(context, pays);
+
                 break;
 
             case 2:
                 float total = pays.getAmountPay();
-                pays.setDebitTotal(pays.getAmountPay());
-                pays.setTotal(pays.getTotal()-pays.getAmountPay());
+                pays.setDebitTotal(pays.getTotal()-pays.getAmountPay());
+
 
                for (int i = (pays.getDebits().size() - 1); i >= 0; i--) {
                     if (total < 0) {
@@ -67,6 +68,7 @@ public class DAPayments {
                             new scPayments().RegisterPayment(pays, action);
                             datapays.add(new PaymentsModel(pays.getDebits().get(i).getReadDate(),
                                     pays.getDebits().get(i).getRate() - total,"ABONO"));
+                            pays.setDataPays(datapays);
                             total = 0;
 
                         }
@@ -88,10 +90,11 @@ public class DAPayments {
                             datapays.add(new PaymentsModel(pays.getDebits().get(i).getReadDate(),
                                     pays.getDebits().get(i).getRate() - total,"ABONO"));
                             total = 0;
+                            pays.setDataPays(datapays);
 
                         }
                     } else if (total == 0) {
-                        pays.setDataPays(datapays);
+
                         new GenaratorPDF().createTicketPDF(context, pays);
                         return;
                     }

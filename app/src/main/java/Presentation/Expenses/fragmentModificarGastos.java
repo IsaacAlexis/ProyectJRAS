@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,10 @@ import java.util.Date;
 import BusinessLogic.BusinessExpense;
 import Data.Models.ExpensesModel;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.Validations;
+import Presentation.Consumptions.fragmentConsumo;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -41,6 +44,8 @@ public class fragmentModificarGastos extends Fragment {
     //Instancias de clases
     ExpensesModel expenses = new ExpensesModel();
     Validations validate = new Validations();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentModificarGastos.this);
+    Handler handler = new Handler();
     UsersModel data = new UsersModel();
 
 
@@ -71,28 +76,43 @@ public class fragmentModificarGastos extends Fragment {
         if(getArguments() != null){
             getValues(view);
             save.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    if(!save.getText().toString().equals("Editar")){
-                        if (validate.IsValidTextbox(NameExp, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
-                                "Debes ingresar un nombre de gasto")
-                                | validate.IsValidTextbox(Descript, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
-                                "Debes ingresar una descripcion del gasto")
-                                | validate.IsValidTextbox(total, "^[0-9]+(\\.[0-9]{1,4})?$", "Debes ingresar un monto")) {
-                            new Messages().messageToast(getContext(), "Debes llenar todos los campos correctamente");
-                        } else {
-                        setValues();
-                            new BusinessExpense().BridgeExpenModify(expenses);
-                            if (!expenses.isRegisterExpens()) {
-                                new Messages().messageAlert(getContext(), expenses.getValidationMessage(), "Cambios guardados con exito", view, R.id.fragmentGastos2);
-                            } else {
-                                new Messages().messageAlert(getContext(), expenses.getValidationMessage(), "Error en guardar los cambios", view, R.id.fragmentGastos2);
 
+
+                            if(!save.getText().toString().equals("Editar")){
+                                loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (validate.IsValidTextbox(NameExp, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
+                                                "Debes ingresar un nombre de gasto")
+                                                | validate.IsValidTextbox(Descript, "^([A-Za-zÁÉÍÓÚñáéíóúÑ]((\\s[A-Za-zÁÉÍÓÚñáéíóúÑ])*)){1,30}?$",
+                                                "Debes ingresar una descripcion del gasto")
+                                                | validate.IsValidTextbox(total, "^[0-9]+(\\.[0-9]{1,4})?$", "Debes ingresar un monto")) {
+                                            new Messages().messageToast(getContext(), "Debes llenar todos los campos correctamente");
+                                        } else {
+                                            setValues();
+                                            new BusinessExpense().BridgeExpenModify(expenses);
+                                            if (!expenses.isRegisterExpens()) {
+                                                new Messages().messageAlert(getContext(), expenses.getValidationMessage(), "Cambios guardados con exito", view, R.id.fragmentGastos2);
+                                            } else {
+                                                new Messages().messageAlert(getContext(), expenses.getValidationMessage(), "Error en guardar los cambios", view, R.id.fragmentGastos2);
+
+                                            }
+                                        }
+                                        loadingDialog.dismissDialog();
+                                    }
+                                },50);
+
+                            }else{
+                                fieldsEnable();
                             }
-                        }
-                    }else{
-                        fieldsEnable();
-                    }
+                            loadingDialog.dismissDialog();
+
+
+
 
                 }
             });

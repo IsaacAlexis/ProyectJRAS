@@ -34,15 +34,16 @@ import static androidx.navigation.Navigation.findNavController;
 
 public class HomeFragment extends Fragment {
     public static final int CODE_PERMISSION_CAMERA = 1,CODE_PERMISSION_INTERNET=3,
-            CODE_PERMISSION_WRITE=4,CODE_PERMISSION_READ=5;
+            CODE_PERMISSION_WRITE=4,CODE_PERMISSION_READ=5,CODE_PERMISSION_SMS=2;
     public boolean permissionCamera;
     public boolean permissionWrite;
     public boolean permissionInternet;
     public boolean permissionRead;
+    public boolean permissionSendSMS;
 
 
     public FloatingActionButton fabConsumo;
-    public boolean permisoCamaraConcedido = false;
+
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
         permissions();
 
         fabConsumo=view.findViewById(R.id.fabConsumo);
-        permission();
+        permissions();
 
 
         fabConsumo.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +98,13 @@ public class HomeFragment extends Fragment {
                 new Messages().messageToast(getContext(),"Debes permitir el acceso a la escritura para obtner los beneficios de la aplicacion");
             }
 
+        }else if(requestCode==CODE_PERMISSION_SMS){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionWrite=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la SMS para obtner los beneficios de la aplicacion");
+            }
+
         }
 
     }
@@ -105,6 +113,7 @@ public class HomeFragment extends Fragment {
         permissionWrite=isWritePermissionGranted();
         permissionInternet=isInternetPermissionGranted();
         permissionRead=isReadPermissionGranted();
+        permissionSendSMS=isSMSPermissionGranted();
     }
     public  boolean isWritePermissionGranted() {
         int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -162,17 +171,21 @@ public class HomeFragment extends Fragment {
             return true;
         }
     }
-
-    private void permission() {
+    public  boolean isSMSPermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.SEND_SMS}, CODE_PERMISSION_SMS);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
     }
-//    public void verificaryPedirPermisosDeCamara(){
-//        int estadoDePermiso = ContextCompat.checkSelfPermission(HomeFragment.this.getContext(), Manifest.permission.CAMERA);
-//        if (estadoDePermiso == PackageManager.PERMISSION_GRANTED){
-//            permisoCamaraConcedido = true;
-//        }
-//        else{
-//            ActivityCompat.requestPermissions(HomeFragment.this.getActivity(),new String[]{Manifest.permission.CAMERA},CODIGO_PERMISOS_CAMARA);
-//        }
-//    }
+
+
 
 }//Fin HomeFragment

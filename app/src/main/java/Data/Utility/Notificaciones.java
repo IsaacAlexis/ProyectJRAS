@@ -63,7 +63,7 @@ public class Notificaciones {
                 //Correo de destino
                 message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(correoDestino));
                 //Texto del correo
-                message.setContent("Su recibo del periodo "+periodo+" ya se encuentra disponible, consulte la " +
+                message.setContent("Su recibo del periodo "+new Dates().LastDates()+" ya se encuentra disponible, consulte la " +
                         "aplicacion de JRAS para verlo.","text/html;charset=utf-8");
                 Transport.send(message);
             }
@@ -102,7 +102,7 @@ public class Notificaciones {
                 //Correo de destino
                 message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(correoDestino));
                 //Texto del correo
-                message.setContent("Su recibo de pago del periodo "+periodo+" ya se encuentra disponible, consulte la " +
+                message.setContent("Su recibo de pago del periodo "+new Dates().LastDates()+" ya se encuentra disponible, consulte la " +
                         "aplicacion de JRAS para verlo.","text/html;charset=utf-8");
                 Transport.send(message);
             }
@@ -121,7 +121,7 @@ public class Notificaciones {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 225);
         } else {
             Log.i("Mensaje", "Se tiene permiso para enviar SMS!");
-            enviaSMS(Numero,"Su recibo del periodo "+periodo+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
+            enviaSMS(Numero,"Su recibo del periodo "+new Dates().LastDates()+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
         }
     }
 
@@ -134,7 +134,7 @@ public class Notificaciones {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, 225);
         } else {
             Log.i("Mensaje", "Se tiene permiso para enviar SMS!");
-            enviaSMS(Numero,"Su recibo de pago del periodo "+periodo+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
+            enviaSMS(Numero,"Su recibo de pago del periodo "+new Dates().LastDates()+" ya se encuentra disponible, consulte la aplicacion de JRAS para verlo.",context);
         }
     }
 
@@ -143,10 +143,10 @@ public class Notificaciones {
             SmsManager sms = SmsManager.getDefault();
             sms.sendTextMessage(numero, null, mensaje , null, null);
 
-            Toast.makeText(context,"Mensaje Enviado",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,"Mensaje Enviado",Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Toast.makeText(context,"Mensaje no enviado, verifique los datos",Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }

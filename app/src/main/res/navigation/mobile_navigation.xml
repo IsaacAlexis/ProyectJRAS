@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
@@ -42,7 +42,7 @@
         android:id="@+id/fragmentViviendas"
         android:name="Presentation.Houses.fragmentViviendas"
         android:label="Viviendas"
-        tools:layout="@layout/fragment_viviendas" >
+        tools:layout="@layout/fragment_viviendas">
         <action
             android:id="@+id/action_fragmentViviendas_to_fragmentRegistrasViviendas"
             app:destination="@id/fragmentRegistrasViviendas" />
@@ -54,7 +54,7 @@
         android:id="@+id/fragmentUsuarios"
         android:name="Presentation.Users.fragmentUsuarios"
         android:label="Usuarios"
-        tools:layout="@layout/fragment_usuarios" >
+        tools:layout="@layout/fragment_usuarios">
         <action
             android:id="@+id/action_fragmentUsuarios_to_fragmentRegistroUsuarios"
             app:destination="@id/fragmentRegistroUsuarios" />
@@ -66,17 +66,26 @@
         android:id="@+id/fragmentPagos"
         android:name="Presentation.Payments.fragmentPagos"
         android:label="Registrar Pago"
-        tools:layout="@layout/fragment_pagos" />
+        tools:layout="@layout/fragment_pagos">
+        <argument
+            android:name="pays"
+            app:argType="Data.Models.PaymentsModel"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentReportes"
         android:name="Presentation.Reports.fragmentReportes"
         android:label="Reportes"
-        tools:layout="@layout/fragment_reportes" />
+        tools:layout="@layout/fragment_reportes" >
+        <action
+            android:id="@+id/action_fragmentReportes_to_fragmentViewReportes"
+            app:destination="@id/fragmentViewReportes" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentGastos2"
         android:name="Presentation.Expenses.fragmentGastos"
         android:label="Gastos"
-        tools:layout="@layout/fragment_gastos" >
+        tools:layout="@layout/fragment_gastos">
         <action
             android:id="@+id/action_fragmentGastos2_to_fragmentModificarGastos"
             app:destination="@id/fragmentModificarGastos" />
@@ -98,13 +107,23 @@
         android:id="@+id/fragementModificarUsuarios"
         android:name="Presentation.Users.fragementModificarUsuarios"
         android:label="Modificar usuarios"
-        tools:layout="@layout/fragment_modificar_usuarios" />
+        tools:layout="@layout/fragment_modificar_usuarios" >
+        <argument
+            android:name="user"
+            app:argType="Data.Models.UsersModel"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentModificarViviendas"
         android:name="Presentation.Houses.fragmentModificarViviendas"
         android:label="Modificar viviendas"
-        tools:layout="@layout/fragment_modificar_viviendas" />
+        tools:layout="@layout/fragment_modificar_viviendas" >
+        <argument
+            android:name="houses"
+            app:argType="Data.Models.HousesModel"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/fagmentConsumo"
         android:name="Presentation.Consumptions.fragmentConsumo"
@@ -114,7 +133,12 @@
         android:id="@+id/fragmentModificarGastos"
         android:name="Presentation.Expenses.fragmentModificarGastos"
         android:label="Modificar gastos"
-        tools:layout="@layout/fragment_modificar_gastos" />
+        tools:layout="@layout/fragment_modificar_gastos" >
+        <argument
+            android:name="expenses"
+            app:argType="Data.Models.ExpensesModel"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentRegistrarGastos"
         android:name="Presentation.Expenses.fragmentRegistrarGastos"
@@ -124,7 +148,7 @@
         android:id="@+id/recibosFragment"
         android:name="Presentation.WaterBills.recibosFragment"
         android:label="Recibos de Consumo"
-        tools:layout="@layout/fragment_recibos" >
+        tools:layout="@layout/fragment_recibos">
         <action
             android:id="@+id/action_recibosFragment_to_fragmentInfoRecibo"
             app:destination="@id/fragmentInfoRecibo" />
@@ -138,14 +162,29 @@
         android:id="@+id/info_Pagos"
         android:name="Presentation.Payments.Info_Pagos"
         android:label="Pagos"
-        tools:layout="@layout/fragment_info_pagos" />
-    <action
-        android:id="@+id/action_info_Pagos_to_fragmentPagos"
-        app:destination="@id/fragmentPrePago" />
+        tools:layout="@layout/fragment_info_pagos">
+        <action
+            android:id="@+id/action_info_Pagos_to_fragmentPrePago"
+            app:destination="@id/fragmentPrePago" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentPrePago"
         android:name="Presentation.Payments.FragmentPrePago"
         android:label="Pagos"
-        tools:layout="@layout/fragment_pre_pago" />
+        tools:layout="@layout/fragment_pre_pago">
+        <action
+            android:id="@+id/action_fragmentPrePago_to_fragmentPagos"
+            app:destination="@id/fragmentPagos" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentViewReportes"
+        android:name="Presentation.Reports.FragmentViewReportes"
+        android:label="Informacion del reporte"
+        tools:layout="@layout/fragment_view_reportes" >
+        <argument
+            android:name="reports"
+            app:argType="Data.Models.ReportsModel"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

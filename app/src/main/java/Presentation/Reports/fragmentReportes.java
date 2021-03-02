@@ -1,53 +1,81 @@
 package Presentation.Reports;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.jras.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import BusinessLogic.BusinessReports;
+import Data.Models.ReportsModel;
+import Data.Utility.LoadingDialog;
+import Data.Utility.Messages;
+import Presentation.Payments.FragmentPrePago;
+import Presentation.Payments.fragmentPagos;
+
+import static androidx.navigation.Navigation.findNavController;
 
 
 public class fragmentReportes extends Fragment {
 
     //Variables
-    private EditText Fecha;
-    private EditText SegundaFecha;
-    private String date1;
-    private String date2;
+    private EditText firstDate;
+    private EditText secondDate;
+    private Button btngenerateReport;
+    private String datemin;
+    private String datemax;
+    FragmentManager fragmentManager;
+
     private FloatingActionButton fabFecha;
+    private FloatingActionButton fabFechafinal;
+    int action=0;
 
 
     DatePickerDialog.OnDateSetListener setListener;
+    ReportsModel reports=new ReportsModel();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentReportes.this);
+    Handler handler = new Handler();
 
 
     public fragmentReportes() {
         // Required empty public constructor
     }
 
-    public void getValues(View view) {
-        //Relacionar variables con los componentes
-        Fecha = view.findViewById(R.id.txtFecha1);
-        SegundaFecha = view.findViewById(R.id.txtFecha2);
-        fabFecha = view.findViewById(R.id.fabFechaReportes);
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_reportes, container, false);
+        return inflater.inflate(R.layout.fragment_reportes, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getValues(view);
         //crear instancia del calendario
         Calendar calendar = Calendar.getInstance();
@@ -61,31 +89,96 @@ public class fragmentReportes extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
                         ,setListener,year,month,day);
+                action=1;
+
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
+            }
+        });
+        fabFechafinal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext() ,android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                        ,setListener,year,month,day);
+                action=2;
+
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+        btngenerateReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingDialog.startLoadingDialogFragment(getContext(),"Generando reporte...");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        reports.setDateMin(datemin);
+                        reports.setDateMax(datemax);
+                        if(new BusinessReports().generateRepor(fragmentReportes.this.getContext(),reports)){
+
+                            new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                            fragmentReportesDirections.ActionFragmentReportesToFragmentViewReportes action=
+                                    fragmentReportesDirections.actionFragmentReportesToFragmentViewReportes(reports);
+
+                            findNavController(view).navigate(action);
+
+                        }else{
+                            new Messages().messageToast(fragmentReportes.this.getContext(),reports.getValidationMessage());
+                        }
+                        loadingDialog.dismissDialog();
+                    }
+                },50);
+
             }
         });
 
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
-                date1 = dayOfMonth+"/"+month+"/"+year;
-                if (month==12){
-                    month=1;
-                    year=year+1;
-                    date2 = dayOfMonth+"/"+month+"/"+year;
-                }else{
-                    date2 = dayOfMonth+"/"+(month+1)+"/"+year;
+                switch (action){
+                    case 1:
+                            firstDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                            datemin = year+"/"+(month+1)+"/"+dayOfMonth;
+                            fabFechafinal.setVisibility(View.VISIBLE);
+
+
+                        break;
+                    case 2:
+                        try {
+                            Date datefirst=new SimpleDateFormat("dd/MM/yyyy").parse(firstDate.getText().toString());
+                            Date datelast=new SimpleDateFormat("dd/MM/yyyy").parse(""+dayOfMonth+"/"+(month+1)+"/"+year);
+                            if(datefirst.before(datelast)){
+
+                                secondDate.setText(""+dayOfMonth+"/"+(month+1)+"/"+year);
+                                datemax = year+"/"+(month+1)+"/"+dayOfMonth;
+                            }else{
+                                secondDate.setText("");
+                                new Messages().messageToast(getContext(),"Debes ingresar una fecha mayor a la anterior");
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        break;
+                    default:
+                        break;
                 }
-                Fecha.setText(date1);
-                SegundaFecha.setText(date2);
+
+
+
             }
         };
 
-
-        return view;
     }
-
-
+    public void getValues(View view) {
+        //Relacionar variables con los componentes
+        firstDate = view.findViewById(R.id.txtFecha1);
+        secondDate = view.findViewById(R.id.txtFecha2);
+        fabFecha = view.findViewById(R.id.fabFechaReportes);
+        fabFechafinal=view.findViewById(R.id.fabFechaReportesFinal);
+        btngenerateReport=view.findViewById(R.id.btnConsultar);
+    }
 }

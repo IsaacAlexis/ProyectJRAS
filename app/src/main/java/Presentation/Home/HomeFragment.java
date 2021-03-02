@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +26,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import BusinessLogic.BusinessConsumption;
 import Data.Models.HousesModel;
 import Data.Models.WaterBillsModel;
+import Data.Utility.Messages;
 import Presentation.Houses.activityScanner;
 
+import static android.content.ContentValues.TAG;
 import static androidx.navigation.Navigation.findNavController;
 
 public class HomeFragment extends Fragment {
+    public static final int CODE_PERMISSION_CAMERA = 1,CODE_PERMISSION_INTERNET=3,
+            CODE_PERMISSION_WRITE=4,CODE_PERMISSION_READ=5,CODE_PERMISSION_SMS=2;
+    public boolean permissionCamera;
+    public boolean permissionWrite;
+    public boolean permissionInternet;
+    public boolean permissionRead;
+    public boolean permissionSendSMS;
+
 
     public FloatingActionButton fabConsumo;
+
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,8 +51,10 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
+        permissions();
 
         fabConsumo=view.findViewById(R.id.fabConsumo);
+        permissions();
 
 
         fabConsumo.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +68,124 @@ public class HomeFragment extends Fragment {
 
         return view;
     }//fin onCreateView
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==CODE_PERMISSION_CAMERA){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionCamera=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la camara para obtner los beneficios de la aplicacion");
+            }
+        }else if(requestCode==CODE_PERMISSION_INTERNET){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionInternet=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la camara para obtner los beneficios de la aplicacion");
+            }
+
+        }else if(requestCode==CODE_PERMISSION_READ){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionRead=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la lectura para obtner los beneficios de la aplicacion");
+            }
+
+        }else if(requestCode==CODE_PERMISSION_WRITE){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionWrite=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la escritura para obtner los beneficios de la aplicacion");
+            }
+
+        }else if(requestCode==CODE_PERMISSION_SMS){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionWrite=true;
+            } else {
+                new Messages().messageToast(getContext(),"Debes permitir el acceso a la SMS para obtner los beneficios de la aplicacion");
+            }
+
+        }
+
+    }
+    public void permissions(){
+        permissionCamera=isCameraPermissionGranted();
+        permissionWrite=isWritePermissionGranted();
+        permissionInternet=isInternetPermissionGranted();
+        permissionRead=isReadPermissionGranted();
+        permissionSendSMS=isSMSPermissionGranted();
+    }
+    public  boolean isWritePermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_PERMISSION_WRITE);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+    public  boolean isCameraPermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.CAMERA}, CODE_PERMISSION_CAMERA);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+    public  boolean isReadPermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CODE_PERMISSION_READ);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+    public  boolean isInternetPermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.INTERNET);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.INTERNET}, CODE_PERMISSION_INTERNET);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+    public  boolean isSMSPermissionGranted() {
+        int estadoDePermiso = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (estadoDePermiso == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.SEND_SMS}, CODE_PERMISSION_SMS);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+
+
 
 }//Fin HomeFragment

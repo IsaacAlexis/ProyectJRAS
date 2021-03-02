@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 
 import Data.Models.WaterBillsModel;
+import Data.Utility.Dates;
 
 
 public class WaterBillsAdapter  extends RecyclerView.Adapter<WaterBillsAdapter.ViewHolder> {
@@ -55,8 +56,17 @@ public class WaterBillsAdapter  extends RecyclerView.Adapter<WaterBillsAdapter.V
             String readDate = new SimpleDateFormat("yyyy-MM").format(bills.getbReadDate());
             iconView.setColorFilter(Color.parseColor("#6DC36D"));
             nameOwner.setText(bills.getbOwner());
-            ReadDate.setText(readDate);
-            Total.setText("$"+ String.valueOf(bills.getbNowRate())+"0");
+            ReadDate.setText("PERIODO");
+            Total.setTextColor(Color.BLUE);
+            Total.setText(new Dates().LastDates(bills.getbReadDate()));
+//            if(bills.getNowRate()==0){
+//                Total.setTextColor(Color.GREEN);
+//                Total.setText("SALDADO");
+//            }else{
+//                Total.setTextColor(Color.RED);
+//                Total.setText("ADEUDO");
+//            }
+//            Total.setText("$"+ String.valueOf(bills.getbNowRate())+"0");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

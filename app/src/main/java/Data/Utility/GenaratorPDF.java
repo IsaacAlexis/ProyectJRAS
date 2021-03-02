@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 
 import android.net.Uri;
+import android.os.Environment;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import java.util.List;
 import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.PaymentsModel;
+import Data.Models.ReportsModel;
 import Data.Models.UsersModel;
 import Data.Models.WaterBillsModel;
 
@@ -46,7 +48,7 @@ public class GenaratorPDF {
 
 
     float total=0;
-    public boolean createPDFWaterBills(Context context, List<WaterBillsModel> debits, StorageReference storageReference){
+    public boolean createPDFWaterBills(Context context, WaterBillsModel waterBills, StorageReference storageReference){
         try {
             PdfDocument mypdfDocument=new PdfDocument();
             Paint mypaint=new Paint();
@@ -71,7 +73,7 @@ public class GenaratorPDF {
             canvas.drawText("JUNTA RURAL DE AGUA Y SANEAMIENTO ",(myPageInfo.getPageWidth()/2),40,mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(9.0f);
-            canvas.drawText(new WaterBillsModel().getColony().toUpperCase(),(myPageInfo.getPageWidth()/2),70,mypaint);
+            canvas.drawText(waterBills.getColony().toUpperCase(),(myPageInfo.getPageWidth()/2),70,mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(9.0f);
             canvas.drawText("CALLE QUINTA #254",(myPageInfo.getPageWidth()/2),85,mypaint);
@@ -111,22 +113,22 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(new WaterBillsModel().getBarCode(),120,155,mypaint);
+            canvas.drawText(waterBills.getBarCode(),120,155,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(new WaterBillsModel().getOwner().toUpperCase(),30,170,mypaint);
+            canvas.drawText(waterBills.getOwner().toUpperCase(),30,170,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(new WaterBillsModel().getStreet().toUpperCase()+" #"+new WaterBillsModel().getHouseNumber()+" CP:"+new WaterBillsModel().getZipCode(),30,185,mypaint);
+            canvas.drawText(waterBills.getStreet().toUpperCase()+" #"+waterBills.getHouseNumber()+" CP:"+waterBills.getZipCode(),30,185,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(new WaterBillsModel().getColony().toUpperCase(),30,200,mypaint);
+            canvas.drawText(waterBills.getColony().toUpperCase(),30,200,mypaint);
             //Parte dos de Datos Usuarios
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -156,7 +158,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText("$"+new WaterBillsModel().getPreviousRate()+"0",298,185,mypaint);//----------------------------------------------REALIZAR PARTE POR PARTE
+            canvas.drawText("$"+waterBills.getPreviousRate()+"0",298,185,mypaint);//----------------------------------------------REALIZAR PARTE POR PARTE
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -241,7 +243,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(""+new WaterBillsModel().getReadLast(),62,283,mypaint);
+            canvas.drawText(""+waterBills.getReadLast(),62,283,mypaint);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
@@ -250,7 +252,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(""+new WaterBillsModel().getReadNow(),130,283,mypaint);
+            canvas.drawText(""+waterBills.getReadNow(),130,283,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -260,7 +262,7 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText(""+(new WaterBillsModel().getReadNow()-new WaterBillsModel().getReadLast()),95,330,mypaint);
+            canvas.drawText(""+(waterBills.getReadNow()-waterBills.getReadLast()),95,330,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -280,22 +282,25 @@ public class GenaratorPDF {
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(8.0f);
-            canvas.drawText("$"+new WaterBillsModel().getNowRate()+"0",330,268,mypaint);
-            total+=new WaterBillsModel().getNowRate();
+            canvas.drawText("$"+waterBills.getNowRate()+"0",330,268,mypaint);
+            total+=waterBills.getNowRate();
             int valueY=283;
-            for(WaterBillsModel debit : debits){
-                mypaint.setTextAlign(Paint.Align.LEFT);
-                mypaint.setColor(Color.BLACK);
-                mypaint.setTextSize(8.0f);
-                canvas.drawText("REZAGO AGUA ["+new Dates().getLastBill(debit.getbReadDate())+"]",220,valueY,mypaint);
+            if(waterBills.getBills().size()>0){
+                for(WaterBillsModel debit : waterBills.getBills()){
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.BLACK);
+                    mypaint.setTextSize(8.0f);
+                    canvas.drawText("REZAGO AGUA ["+new Dates().getLastBill(debit.getbReadDate())+"]",220,valueY,mypaint);
 
-                mypaint.setTextAlign(Paint.Align.LEFT);
-                mypaint.setColor(Color.BLACK);
-                mypaint.setTextSize(8.0f);
-                canvas.drawText("$"+debit.getbNowRate()+"0",330,valueY,mypaint);
-                total+=debit.getbNowRate();
-                valueY+=15;
+                    mypaint.setTextAlign(Paint.Align.LEFT);
+                    mypaint.setColor(Color.BLACK);
+                    mypaint.setTextSize(8.0f);
+                    canvas.drawText("$"+debit.getbNowRate()+"0",330,valueY,mypaint);
+                    total+=debit.getbNowRate();
+                    valueY+=15;
+                }
             }
+
 
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setColor(Color.BLACK);
@@ -339,7 +344,7 @@ public class GenaratorPDF {
             canvas.drawText("$"+total+"0",330,575,mypaint);
             mypaint.setTypeface(Typeface.DEFAULT);
             //Codigo de barras
-            canvas.drawBitmap(GenerateCodeBar(context,new WaterBillsModel().getBarCode()),15,myPageInfo.getPageHeight()-90,mypaint);
+            canvas.drawBitmap(GenerateCodeBar(context,waterBills.getBarCode()),15,myPageInfo.getPageHeight()-90,mypaint);
             mypaint.setColor(Color.parseColor("#354591"));
             mypaint.setStyle(Paint.Style.STROKE);
             mypaint.setStrokeWidth(9);
@@ -349,7 +354,8 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
-            String test=""+new WaterBillsModel().getOwner().toString().toUpperCase()+" PERIODO "+ NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
+            String test=""+waterBills.getOwner().toString().toUpperCase()+" PERIODO "+
+                    NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf";
             File file=new File(context.getExternalFilesDir("/"),"/"+test);
             mypdfDocument.writeTo(new  FileOutputStream(file));
             mypdfDocument.close();
@@ -376,7 +382,7 @@ public class GenaratorPDF {
             return true;
         }
     }
-    public boolean createTicketPDF(Context context, List<PaymentsModel> pays){
+    public boolean createTicketPDF(Context context, PaymentsModel pays){
         try {
             PdfDocument mypdfDocument=new PdfDocument();
             Paint mypaint=new Paint();
@@ -407,7 +413,7 @@ public class GenaratorPDF {
             canvas.drawText("Calle: ",50,170,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText(new PaymentsModel().getStreet(),(myPageInfo.getPageWidth()-20),170,mypaint);
+            canvas.drawText(pays.getStreet(),(myPageInfo.getPageWidth()-20),170,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
@@ -416,7 +422,7 @@ public class GenaratorPDF {
             canvas.drawText("No de Vivienda:",50,185,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("#"+new PaymentsModel().getHouseNumber(),(myPageInfo.getPageWidth()-20),185,mypaint);
+            canvas.drawText("#"+pays.getHouseNumber(),(myPageInfo.getPageWidth()-20),185,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
@@ -425,7 +431,7 @@ public class GenaratorPDF {
             canvas.drawText("Nombre del Propietario:",50,200,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText(new PaymentsModel().getOwner(),(myPageInfo.getPageWidth()-20),200,mypaint);
+            canvas.drawText(pays.getOwner(),(myPageInfo.getPageWidth()-20),200,mypaint);
 
             mypaint.setTextAlign(Paint.Align.LEFT);
 
@@ -460,7 +466,7 @@ public class GenaratorPDF {
             int ysecond=310;
 
 
-            for(PaymentsModel pay :pays){
+            for(PaymentsModel pay :pays.getDataPays()){
                 mypaint.setTextAlign(Paint.Align.LEFT);
                 mypaint.setTypeface(Typeface.DEFAULT);
                 canvas.drawText(pay.getDescription()+" DEL",50,yfirst,mypaint);
@@ -486,9 +492,17 @@ public class GenaratorPDF {
             mypaint.setTextSize(12.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText("TOTAL:",50,ysecond,mypaint);
+            canvas.drawText("DEBIA:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$"+new PaymentsModel().getDebitTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            canvas.drawText("$"+pays.getTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            ysecond+=15;
+
+            mypaint.setTextSize(12.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT);
+            canvas.drawText("PAGO:",50,ysecond,mypaint);
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$"+pays.getAmountPay()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
             ysecond+=15;
 
             mypaint.setTextSize(12.0f);
@@ -496,7 +510,7 @@ public class GenaratorPDF {
             mypaint.setTypeface(Typeface.DEFAULT);
             canvas.drawText("SALDO RESTANTE:",50,ysecond,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$"+new PaymentsModel().getTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
+            canvas.drawText("$"+pays.getDebitTotal()+"0",(myPageInfo.getPageWidth()-20),ysecond,mypaint);
             ysecond+=30;
 
             mypaint.setTextAlign(Paint.Align.CENTER);
@@ -513,18 +527,23 @@ public class GenaratorPDF {
 
             mypdfDocument.finishPage(mypage1);
 
+
+
             File file=new File(context.getExternalFilesDir("/"),"/PAGO "+
-                    new PaymentsModel().getOwner()+new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf");
+                   pays.getOwner()+new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(new Date())))+".pdf");
+            pays.setFilepath(file);
             mypdfDocument.writeTo(new FileOutputStream(file));
             mypdfDocument.close();
             return false;
         } catch (IOException e) {
-            new PaymentsModel().setValidationMessage("No se pudo generar el recibo");
+            pays.setValidationMessage("No se pudo generar el recibo");
             return true;
         }
     }
 
-    public boolean createReportPDF(Context context){
+    public boolean createReportPDF(Context context, ReportsModel reports){
+        int paystotal=0;
+        int expensestotal=0;
         try {
             PdfDocument mypdfDocument = new PdfDocument();
             Paint mypaint = new Paint();
@@ -544,58 +563,92 @@ public class GenaratorPDF {
             canvas.drawText("JUNTA RURAL DE AGUA Y SANEAMIENTO ", (myPageInfo.getPageWidth() / 2), 30, mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(12.0f);
-            canvas.drawText("COL. BELLAVISTA", (myPageInfo.getPageWidth() / 2), 45, mypaint);
+            canvas.drawText(new UsersModel().getCurrentColony(), (myPageInfo.getPageWidth() / 2), 45, mypaint);
             mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTextSize(12.0f);
             canvas.drawText("CALLE QUINTA #254", (myPageInfo.getPageWidth() / 2), 60, mypaint);
             mypaint.setTextSize(12.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText("Reporte de Utilidad", (myPageInfo.getPageWidth() / 2), 90, mypaint);
-            canvas.drawText("PERIODO " + "DICIEMBRE " + "[2020-12]", (myPageInfo.getPageWidth() / 2), 105, mypaint);
+            canvas.drawText("DESDE:"+reports.getDateMin()+" HASTA:"+reports.getDateMax(), (myPageInfo.getPageWidth() / 2), 105, mypaint);
 
 
             mypaint.setTextSize(11.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText("INGRESOS ", 50, 140, mypaint);
+            int valuey=155;
+            int indicePays=1;
+            for(ReportsModel pays:reports.getPays()){
 
-            mypaint.setTypeface(Typeface.DEFAULT);
-            mypaint.setTextSize(10.0f);
-            canvas.drawText("1.- " + " Brayan Espinoza Fernandez ", 50, 155, mypaint);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$50.00", (myPageInfo.getPageWidth() - 50), 155, mypaint);
+                mypaint.setTypeface(Typeface.DEFAULT);
+                mypaint.setTextSize(10.0f);
+                mypaint.setTextAlign(Paint.Align.LEFT);
+                canvas.drawText(""+indicePays+".-"+"PAGO DEL PROPIETARIO:"+pays.getOwner()+"["+new SimpleDateFormat("dd-MM-yyyy").format(pays.getPayDate())+"]", 50, valuey, mypaint);
+                mypaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText("$"+pays.getPayTotal(), (myPageInfo.getPageWidth() - 50), valuey, mypaint);
+                valuey+=10;
+                indicePays+=1;
+                paystotal+=pays.getPayTotal();
+            }
 
-            mypaint.setTextSize(11.0f);
-            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("TOTAL INGRESOS:   "+ " $50.00",(myPageInfo.getPageWidth()-50),180,mypaint);
 
             mypaint.setTextSize(11.0f);
             mypaint.setTextAlign(Paint.Align.LEFT);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            canvas.drawText("EGRESOS ", 50, 210, mypaint);
-
-            mypaint.setTypeface(Typeface.DEFAULT);
-            mypaint.setTextSize(10.0f);
-            canvas.drawText("1.- " + " Gasto en Purificador ", 50, 225, mypaint);
+            canvas.drawText("TOTAL INGRESOS",50,360,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("$40.00", (myPageInfo.getPageWidth() - 50), 225, mypaint);
+            canvas.drawText("$"+paystotal, (myPageInfo.getPageWidth() - 50), 360, mypaint);
+
+            mypaint.setTextSize(11.0f);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText("EGRESOS ", 50, 390, mypaint);
+
+
+            valuey=400;
+            int indiceExpenses=1;
+            for(ReportsModel expenses:reports.getExpenses()){
+                mypaint.setTypeface(Typeface.DEFAULT);
+                mypaint.setTextSize(10.0f);
+                mypaint.setTextAlign(Paint.Align.LEFT);
+                canvas.drawText(""+indiceExpenses+".-"+expenses.getTitle()+
+                        "("+expenses.getDescription()+"["+new SimpleDateFormat("dd-MM-yyyy").format(expenses.getEspenseDate())+"]"+")",
+                        50, valuey, mypaint);
+                mypaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText("$"+expenses.getExpenseTotal(), (myPageInfo.getPageWidth() - 50), valuey, mypaint);
+                valuey+=10;
+                indiceExpenses+=1;
+                expensestotal+=expenses.getExpenseTotal();
+            }
+
+
 
             mypaint.setTextSize(11.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+            mypaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText("TOTAL EGRESOS",50,605,mypaint);
             mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("TOTAL EGRESOS:   "+ " $40.00",(myPageInfo.getPageWidth()-50),250,mypaint);
+            canvas.drawText("$"+expensestotal, (myPageInfo.getPageWidth() - 50), 605, mypaint);
 
             mypaint.setTextSize(12.0f);
             mypaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mypaint.setTextAlign(Paint.Align.RIGHT);
-            canvas.drawText("UTILIDAD NETA:   "+ " $10.00",(myPageInfo.getPageWidth()-50),300,mypaint);
-
-
             mypaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText("UTILIDAD NETA",50,660,mypaint);
+            if((paystotal-expensestotal)<0){
+                mypaint.setColor(Color.RED);
+            }else{
+                mypaint.setColor(Color.GREEN);
+            }
+            mypaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText("$"+(paystotal-expensestotal), (myPageInfo.getPageWidth() - 50), 660, mypaint);
+
+
+            mypaint.setTextAlign(Paint.Align.CENTER);
             mypaint.setTypeface(Typeface.DEFAULT);
+            mypaint.setColor(Color.BLACK);
             mypaint.setTextSize(10.0f);
-            canvas.drawText("Todos los Derechos Reservados ", 50, myPageInfo.getPageHeight()-10, mypaint);
+            canvas.drawText("Todos los Derechos Reservados ", (myPageInfo.getPageWidth()/2), myPageInfo.getPageHeight()-10, mypaint);
 
 
 
@@ -603,14 +656,15 @@ public class GenaratorPDF {
 
 
             mypdfDocument.finishPage(mypage1);
+            reports.setDateMin(""+System.currentTimeMillis());
 
-            File file=new File(context.getExternalFilesDir("/"),"/Reporte.pdf");
+            File file=new File(context.getExternalFilesDir("/"),"/"+reports.getDateMin()+".pdf");
             mypdfDocument.writeTo(new FileOutputStream(file));
             mypdfDocument.close();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
             return true;
+        } catch (IOException e) {
+            reports.setValidationMessage("Ocurrio un error al generar el reporte");
+            return false;
         }
     }
 

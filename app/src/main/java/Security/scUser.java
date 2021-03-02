@@ -272,12 +272,12 @@ public class scUser {
 
     public void updateUsers(UsersModel data) {
         try{
-            UserUpdateExist(data);
-            if(data.getUserExist()){
-                data.setValidationMessage("Ya existe un usuario con el mismo Nombre de Usuario y/o Correo electronico");
-                data.setRegisterUser(true);
-
-            }else{
+//            UserUpdateExist(data);
+//            if(data.getUserExist()){
+//                data.setValidationMessage("Ya existe un usuario con el mismo Nombre de Usuario y/o Correo electronico");
+//                data.setRegisterUser(true);
+//
+//            }else{
                 bd.ConnectionwithSQL().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
                 CallableStatement cs =bd.connection.prepareCall("{call updateUsers(?,?,?,?,?,?,?,?,?,?)}");
                 cs.setLong(1,data.getIdUser());
@@ -295,7 +295,7 @@ public class scUser {
                 data.setRegisterUser(false);
                 cs.close();
                 bd.CloseConnection();
-            }
+//            }
 
 
         }catch(SQLException e){

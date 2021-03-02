@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -22,10 +23,12 @@ import com.example.jras.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import Data.Models.HousesModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
 import BusinessLogic.BusinessHouse;
+import Presentation.Expenses.fragmentRegistrarGastos;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -47,6 +50,8 @@ public class fragmentModificarViviendas extends Fragment {
     Validations validations=new Validations();
     Messages messages=new Messages();
     RegExValidations regEx = new RegExValidations();
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentModificarViviendas.this);
+    Handler handler = new Handler();
 
     public static fragmentModificarViviendas newInstance() {
         return new fragmentModificarViviendas();
@@ -56,35 +61,51 @@ public class fragmentModificarViviendas extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View view= inflater.inflate(R.layout.fragment_modificar_viviendas, container, false);
-        getvalues(view);
-        savechanges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!savechanges.getText().toString().equals("Editar")){
-                    textboxEmpty();
 
-                    if(!validations.isInvalid){
-                        messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
-                    }else{
-                        assignValuesModificate();
-                        new BusinessHouse().BridgeHouseUpdate(house);
-                        if(house.isStatusActivity()){
-                            messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
-                        }else{
-                            messages.messageToast(getContext(),house.getMessage());
-                            findNavController(view).navigate(R.id.fragmentViviendas);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(getArguments() !=null){
+            getvalues(view);
+            savechanges.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(!savechanges.getText().toString().equals("Editar")){
+                        loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                textboxEmpty();
+
+                                if(!validations.isInvalid){
+                                    assignValuesModificate();
+                                    new BusinessHouse().BridgeHouseUpdate(house);
+                                    if(house.isStatusActivity()){
+                                        messages.messageAlert(getContext(),house.getMessage(),"Cambios realizados con exito",view,R.id.fragmentViviendas);
+                                    }else{
+                                        messages.messageToast(getContext(),house.getMessage());
+                                        findNavController(view).navigate(R.id.fragmentViviendas);
+                                    }
+                            }
+                                loadingDialog.dismissDialog();
                         }
 
+
+
+                        },50);
+                    }else{
+                        fieldsEnable();
                     }
-                }else{
-                    fieldsEnable();
+
+
                 }
 
-
-            }
-
-        });
-        return view;
+            });
+        }
     }
 
     private void textboxEmpty() {
@@ -99,23 +120,25 @@ public class fragmentModificarViviendas extends Fragment {
 
 
     public void assignValues(){
-        owner.setText(house.getModifyowner());
-        phoneNumber.setText(house.getModifyphoneNumber().toString());
-        email.setText(house.getModifyemail());
-        street.setText(house.getModifystreet());
+        owner.setText(house.getOwner());
+        phoneNumber.setText(house.getPhoneNumber().toString());
+        email.setText(house.getEmail());
+        street.setText(house.getStreet());
         street.setEnabled(false);
-        houseNumber.setText(house.getModifyhouseNumber().toString());
+        houseNumber.setText(house.getHouseNumber().toString());
         houseNumber.setEnabled(false);
-        zipCode.setText(house.getModifyzipCode().toString());
-        colony.setText(house.getModifycolony());
+        zipCode.setText(house.getZipCode().toString());
+        colony.setText(house.getColony());
         colony.setEnabled(false);
-        city.setText(house.getModifycity());
-        state.setText(house.getModifystate());
-        statusHouse.setText(house.getModifystatusHouse());
+        city.setText(house.getCity());
+        state.setText(house.getState());
+        statusHouse.setText(house.getStatusHouse());
     }
 
     public void getvalues(View view){
         //**********Edit Text's**********
+        fragmentModificarViviendasArgs args=fragmentModificarViviendasArgs.fromBundle(getArguments());
+        house=args.getHouses();
         owner= view.findViewById(R.id.txtPropietario);
         phoneNumber=view.findViewById(R.id.txtTelefonoViv);
         email=view.findViewById(R.id.txtEmail);
@@ -141,7 +164,6 @@ public class fragmentModificarViviendas extends Fragment {
         assignValues();
     }
     public void assignValuesModificate(){
-        house.setBarCode(house.getModifybarCode());
         house.setOwner(owner.getText().toString());
         house.setPhoneNumber(Long.parseLong(phoneNumber.getText().toString()));
         house.setEmail(email.getText().toString());

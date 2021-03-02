@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jras.R;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,6 +39,7 @@ import BusinessLogic.BusinessConsumption;
 import Data.Models.ConsumptionsModel;
 import Data.Models.UsersModel;
 import Data.Utility.LoadingDialog;
+import Data.Utility.Notificaciones;
 import Presentation.Houses.activityScanner;
 import Data.Models.WaterBillsModel;
 import Data.Utility.Dates;
@@ -50,14 +52,20 @@ public class fragmentConsumo extends Fragment {
 
     //Comunes
     private EditText tvBarCode;
+
     private TextView tvOwner;
+    private TextInputLayout tilOwner;
     private TextView tvHouseNum;
+    private TextInputLayout tilHouseNumber;
     private EditText etConsumption;
+    private TextInputLayout tilConsumption;
     private TextView tvFechaConsumo;
     private Button btnEscanear;
     public Button btnBuscar;
     private EditText etLastConsumption;
+    private TextInputLayout tilLastConsumption;
     private EditText etLastRate;
+    private TextInputLayout tilLastRate;
     private Button btnRegistrar;
     private String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String codigo;
@@ -67,6 +75,7 @@ public class fragmentConsumo extends Fragment {
     //Variables para el escaner
     public static final int CODIGO_PERMISOS_CAMARA = 1, CODIGO_INTENT = 2;
     public boolean permisoCamaraConcedido = false, permisoSolicitadoDesdeBoton = false;
+    int action=0;
 
     //Instancias de otras clases
     WaterBillsModel waterBillsModel = new WaterBillsModel();
@@ -75,6 +84,7 @@ public class fragmentConsumo extends Fragment {
     List<WaterBillsModel> bill=new ArrayList<>();
     List<ConsumptionsModel> consumptionsModelList=new ArrayList<>();
     Messages messages = new Messages();
+    Notificaciones notify = new Notificaciones();
 
     //Clase de pantalla de carga
     LoadingDialog loadingDialog = new LoadingDialog(fragmentConsumo.this);
@@ -90,7 +100,8 @@ public class fragmentConsumo extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_consumo, container, false);
         getValues(view);
-        storageReference= FirebaseStorage.getInstance().getReference();
+
+
 
         btnEscanear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,12 +144,43 @@ public class fragmentConsumo extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+                loadingDialog.startLoadingDialogFragment(getContext(),"Buscando...");
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mostrarInfoViv(view);
+                        if(btnBuscar.getText().equals("CANCELAR")){
+                            btnBuscar.setText("BUSCAR");
+                            btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                            tilHouseNumber.setVisibility(View.INVISIBLE);
+                            tilOwner.setVisibility(View.INVISIBLE);
+                            tilLastConsumption.setVisibility(View.INVISIBLE);
+                            tilLastRate.setVisibility(View.INVISIBLE);
+                            tilConsumption.setVisibility(View.INVISIBLE);
+                            btnRegistrar.setVisibility(View.INVISIBLE);
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                            btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                            tvBarCode.setText("");
+                            tvBarCode.setEnabled(true);
+
+
+                        }else{
+                            mostrarInfoViv(view);
+                            if(waterBillsModel.isCorrectHouse()){
+                                if(waterBillsModel.isExistFirstRegister()){
+                                    avibleButton(etConsumption,btnRegistrar);
+                                }else{
+                                    avibleButton(etConsumption,btnRegistrar);
+                                    avibleButton(etLastConsumption,btnRegistrar);
+                                    avibleButton(etLastRate,btnRegistrar);
+                                }
+                                btnBuscar.setText("CANCELAR");
+                                btnBuscar.setBackgroundResource(R.drawable.bordes_redondos_azul);
+                            }
+
+                        }
+
 
                         loadingDialog.dismissDialog();
                     }
@@ -149,20 +191,23 @@ public class fragmentConsumo extends Fragment {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+                loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if(!waterBillsModel.isExistFirstRegister()){
                             registrar(false);
-                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,consumptionsModelList,storageReference);
-
+                            new BusinessConsumption().BridgeConsumptionFirstReading(getContext(),cm,waterBillsModel,consumptionsModelList,storageReference);
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
                         }else {
                             registrar(true);
 
-                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,storageReference);
+                            new BusinessConsumption().BridgeConsumptionReading(getContext(),cm,waterBillsModel,storageReference);
+                            notify.createMailConsumptions(waterBillsModel.getEmail());
+                            notify.checkSMSStatePermission(getContext(),getActivity(),waterBillsModel.getPhone());
 
 
                         }
@@ -187,8 +232,14 @@ public class fragmentConsumo extends Fragment {
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Metodos>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<
 
     public void getValues(View view){
+        storageReference= FirebaseStorage.getInstance().getReference();
         tvBarCode = view.findViewById(R.id.txtBarCodeConsumo);
         tvOwner = view.findViewById(R.id.txtPropietarioC);
+        tilOwner=view.findViewById(R.id.tilPropietario);
+        tilHouseNumber=view.findViewById(R.id.tilNumerocasa);
+        tilConsumption=view.findViewById(R.id.tilConsumo);
+        tilLastConsumption=view.findViewById(R.id.tilConsumoAnterior);
+        tilLastRate=view.findViewById(R.id.tilPagosAnterior);
         tvHouseNum = view.findViewById(R.id.txtNumeroCasaConsumo);
         tvFechaConsumo = view.findViewById(R.id.txFechaConsumo);
         etConsumption = view.findViewById(R.id.txtConsumo);
@@ -210,18 +261,35 @@ public class fragmentConsumo extends Fragment {
         }else{
             if(!waterBillsModel.isExistFirstRegister()){
                 new Messages().messageAlert(getContext(),"Debes registrar el ultimo y el actual consumo de agua","No existe registros de consumo en esta vivienda",view);
+                tilHouseNumber.setVisibility(View.VISIBLE);
+                tilOwner.setVisibility(View.VISIBLE);
                 tvBarCode.setText(waterBillsModel.getBarCode());
+                tvBarCode.setEnabled(false);
                 tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
                 tvOwner.setText(waterBillsModel.getOwner());
-                etLastConsumption.setVisibility(View.VISIBLE);
-                etLastRate.setVisibility(View.VISIBLE);
+                tilLastConsumption.setVisibility(View.VISIBLE);
+                tilLastRate.setVisibility(View.VISIBLE);
+                tilConsumption.setVisibility(View.VISIBLE);
+                btnRegistrar.setVisibility(View.VISIBLE);
+                btnRegistrar.setEnabled(false);
+                btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                action=1;
 
 
             }else{
+                tilHouseNumber.setVisibility(View.VISIBLE);
+                tilOwner.setVisibility(View.VISIBLE);
+                tilConsumption.setVisibility(View.VISIBLE);
                 tvBarCode.setText(waterBillsModel.getBarCode());
                 tvHouseNum.setText(""+waterBillsModel.getHouseNumber());
                 tvOwner.setText(waterBillsModel.getOwner());
+                btnRegistrar.setVisibility(View.VISIBLE);
+                btnRegistrar.setEnabled(false);
+                btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+
+                action=2;
                 //new Emails().createMailConsumptions(waterBillsModel.getEmail());
+
             }
         }
     }//fin de mostrarInfoViv(View view)
@@ -289,13 +357,52 @@ public class fragmentConsumo extends Fragment {
 
                     btnBuscar.callOnClick();
                     btnBuscar.setVisibility(View.INVISIBLE);
-
-
-                    if (!waterBillsModel.isCorrectHouse()){
-                        Toast.makeText(getContext(), waterBillsModel.getValidationMessage(), Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
         }
     }//fin de onActivityResult
+    public void avibleButton(EditText field, Button btn){
+        field.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                switch (action){
+                    case 1:
+                        if(etLastConsumption.getText().length()!=0&&etConsumption.getText().length()!=0&&etLastRate.getText().length()!=0){
+                            if(Integer.parseInt(etLastConsumption.getText().toString())<=Integer.parseInt(etConsumption.getText().toString())){
+                                btnRegistrar.setEnabled(true);
+                                btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                                tilConsumption.setError("");
+                            }else{
+                                tilConsumption.setError("El consumo actual no debe ser menor al anterior");
+                            }
+
+                        }else{
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                        }
+                        break;
+                    case 2:
+                        if(etConsumption.getText().length()!=0){
+                            btnRegistrar.setEnabled(true);
+                            btnRegistrar.setBackgroundResource(R.drawable.bordes_redondos_rojo);
+                        }else{
+                            btnRegistrar.setEnabled(false);
+                            btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
 }//fin de fragmentConsumo

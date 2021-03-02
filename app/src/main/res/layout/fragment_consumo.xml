@@ -22,75 +22,93 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConsumoAnterior"
+            android:layout_width="171dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
+            app:layout_constraintTop_toBottomOf="@+id/tilPropietario" >
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtConsumoAnterior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_baseline_assessment_24"
+            android:hint="Consumo anterior (m³)"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="5" />
+    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPagosAnterior"
             android:layout_width="171dp"
             android:layout_height="63dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Consumo anterior"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="5"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+            app:layout_constraintTop_toBottomOf="@+id/tilConsumoAnterior">
 
-        <EditText
-            android:id="@+id/txtPagoAnterior"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPagoAnterior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_baseline_assessment_24"
+                android:hint="Ultimo pago realizado"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConsumo"
             android:layout_width="171dp"
             android:layout_height="63dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Pago anterior"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="5"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/txtConsumoAnterior" />
+            app:layout_constraintTop_toBottomOf="@+id/tilPagosAnterior">
 
-        <EditText
-            android:id="@+id/txtConsumo"
-            android:layout_width="171dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_baseline_assessment_24"
-            android:hint="Consumo actual (m³)"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="5"
-            app:layout_constraintEnd_toEndOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="@+id/btnRegistrarConsumo"
-            app:layout_constraintTop_toBottomOf="@+id/txtPagoAnterior" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtConsumo"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableLeft="@drawable/ic_baseline_assessment_24"
+                android:hint="Consumo actual (m³)"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="5" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
 
             android:id="@+id/btnRegistrarConsumo"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bordes_redondos_rojo"
             android:text="Registrar"
             android:textColor="@android:color/black"
             android:textSize="20dp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtConsumo" />
+            app:layout_constraintTop_toBottomOf="@+id/tilConsumo" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout5"
+            android:id="@+id/tilNumerocasa"
             android:layout_width="284dp"
             android:layout_height="83dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -104,12 +122,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout6"
+            android:id="@+id/tilPropietario"
             android:layout_width="284dp"
             android:layout_height="83dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/tilNumerocasa">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtPropietarioC"
@@ -150,7 +169,7 @@
                 android:layout_width="195dp"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtBarCodeConsumo"
                     android:layout_width="match_parent"
                     android:layout_height="63dp"

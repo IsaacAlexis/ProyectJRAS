@@ -74,14 +74,14 @@ public class fragmentRegistrarGastos extends Fragment {
         registerexp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+                loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         textboxEmpty();
 
-                        if(!validate.isInvalid){
+                        if(validate.isInvalid){
                             new Messages().messageToast(getContext(),"Debes llenar todo los campos correctamente");
                         }
                         else {

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:saveEnabled="false"
-        app:layout_anchor="@+id/constraintLayout"
         app:layout_anchorGravity="center"
         tools:context=".Usuarios_Activity">
 
@@ -25,77 +24,90 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtFecha1"
+                android:layout_width="200dp"
+                android:layout_height="47dp"
+                android:clickable="false"
+                android:editable="false"
+                android:hint="De la fecha:" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInputLayout31"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/txtFecha2"
+                android:layout_width="200dp"
+                android:layout_height="47dp"
+                android:editable="false"
+                android:clickable="false"
+                android:hint="Hasta la fecha:" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFechaReportes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/textInputLayout31"
+            android:clickable="true"
+            app:backgroundTint="@color/colorAzul"
+            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFechaReportesFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fabFechaReportes"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:visibility="invisible"
+            android:layout_toEndOf="@+id/textInputLayout36"
+            android:clickable="true"
+            app:backgroundTint="@color/colorRojo"
+            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnConsultar"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_below="@+id/textInputLayout36"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="60dp"
             android:background="@drawable/bordes_redondos_azul"
             android:text="Consultar"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="323dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.195"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="0dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtFecha1"
-                    android:layout_width="200dp"
-                    android:layout_height="47dp"
-                    android:hint="De la fecha:" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabFechaReportes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:clickable="true"
-                app:backgroundTint="@color/colorAzul"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textInputLayout31"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_date_range_24" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.195"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout31">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtFecha2"
-                    android:layout_width="200dp"
-                    android:layout_height="47dp"
-                    android:hint="Hasta la fecha:" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="20sp" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>

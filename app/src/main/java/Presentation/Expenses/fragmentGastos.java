@@ -2,6 +2,8 @@ package Presentation.Expenses;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +44,12 @@ public class fragmentGastos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_gastos, container, false);
+        return inflater.inflate(R.layout.fragment_gastos, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         expenses= BusinessExpense.getallexpenses();
         mRecycleView=view.findViewById(R.id.RecycleViewGastos);
         mLayoutManger= new LinearLayoutManager(getContext());
@@ -51,8 +58,9 @@ public class fragmentGastos extends Fragment {
         expensesAdapter=new ExpensesAdapter(expenses, getContext(), new ExpensesAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Long IdExpenses, String NameExpenses, String Description, float Total) {
-                new ExpensesModel().assignValuesModify(IdExpenses,NameExpenses,Description,Total);
-                findNavController(view).navigate(R.id.fragmentModificarGastos);
+                ExpensesModel expenses=new ExpensesModel(IdExpenses,NameExpenses,Description,Total);
+                fragmentGastosDirections.ActionFragmentGastos2ToFragmentModificarGastos action=fragmentGastosDirections.actionFragmentGastos2ToFragmentModificarGastos(expenses);
+                findNavController(view).navigate(action);
 
             }
         });
@@ -81,7 +89,5 @@ public class fragmentGastos extends Fragment {
 
             }
         });
-
-        return view;
     }
 }

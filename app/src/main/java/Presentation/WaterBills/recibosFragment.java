@@ -80,7 +80,7 @@ public class recibosFragment extends Fragment {
 
                 download("RECIBO DE AGUA PD: "+
                         new Dates().NameMonth(Integer.parseInt(new SimpleDateFormat("MM").format(readDate)))+
-                        "["+new Dates().getLastBill(readDate)+"]",nameFile);
+                        "["+new Dates().getLastBill(readDate)+"]"+""+new SimpleDateFormat("dd/MM/yyyy hh:mm a").format(new Date()),nameFile);
 
             }
         });

@@ -3,6 +3,8 @@ package Presentation.Users;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -66,53 +68,64 @@ public class fragementModificarUsuarios extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_modificar_usuarios, container, false);
-        getvalues(view);
-        validateFields();
-        fieldsavailability(true);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(getArguments() !=null){
+            fragementModificarUsuariosArgs args=fragementModificarUsuariosArgs.fromBundle(getArguments());
+            users=args.getUser();
+            getvalues(view);
+            validateFields();
+            fieldsavailability(true);
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingDialog.startLoadingDialogFragment(getContext());
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(!edit){
-                            fieldsavailability(false);
-                            save.setText("Guardar");
-                            edit=true;
-                        }else{
-                            textboxEmpty();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!edit){
+                                fieldsavailability(false);
+                                save.setText("Guardar");
+                                edit=true;
+                            }else{
+                                textboxEmpty();
 
-                            if (!validations.isInvalid){
-                                setValues();
-                                new BusinessUser().BridgeUserUpdate(users);
-                                if(!users.isRegisterUser()){
-                                    messages.messageAlert(getContext(),users.getValidationMessage(),"Los cambios se realizarion exito",view,R.id.fragmentUsuarios);
-                                }else{
-                                    if(users.getUserExist()){
-                                        messages.messageToast(getContext(),users.getValidationMessage());
+                                if (!validations.isInvalid){
+                                    setValues();
+                                    new BusinessUser().BridgeUserUpdate(users);
+                                    if(!users.isRegisterUser()){
+                                        messages.messageAlert(getContext(),users.getValidationMessage(),"Los cambios se realizarion exito",view,R.id.fragmentUsuarios);
                                     }else{
-                                        messages.messageToast(getContext(),users.getValidationMessage());
-                                        findNavController(view).navigate(R.id.fragmentUsuarios);
+                                        if(users.getUserExist()){
+                                            messages.messageToast(getContext(),users.getValidationMessage());
+                                        }else{
+                                            messages.messageToast(getContext(),users.getValidationMessage());
+                                            findNavController(view).navigate(R.id.fragmentUsuarios);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        loadingDialog.dismissDialog();
-                    }//fin de run()
-                },50);//fin de postDelayed
-            }//fin de onClick
-        });//fin de save.setOnClickListener
+                            loadingDialog.dismissDialog();
+                        }//fin de run()
+                    },50);//fin de postDelayed
+                }//fin de onClick
+            });//fin de save.setOnClickListener
+        }
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_modificar_usuarios, container, false);
+
         return view;
     }
 
 
-    //****************************************************************Metodos***********************************************************
+    //****************************************************************  Metodos  ***********************************************************
 
     public void getvalues(View view){
         lastname=view.findViewById(R.id.txtApellidosM);
@@ -135,14 +148,14 @@ public class fragementModificarUsuarios extends Fragment {
     }//fin de  getvalues(View view)
 
     public void assignValues(){
-        if (users.getModifyStatus().equals("ACTIVO")||users.getModifyStatus().equals("ACTIVA")){
+        if (users.getUserStatus().equals("ACTIVO")||users.getUserStatus().equals("ACTIVA")){
             selectedStatus();
             spinnerStatus.setSelection(0);
         }else{
             selectedStatus();
             spinnerStatus.setSelection(1);
         }
-        if(users.getModifyRole().equals("Administrador")||users.getModifyRole().equals("Admin")){
+        if(users.getRole().equals("Administrador")||users.getRole().equals("Admin")){
             selectedRole();
             spinnerRole.setSelection(0);
         }
@@ -150,10 +163,10 @@ public class fragementModificarUsuarios extends Fragment {
             selectedRole();
             spinnerRole.setSelection(1);
         }
-        firstname.setText(users.getModifyFirstName());
-        lastname.setText(users.getModifyLastName());
-        email.setText(users.getModifyEmail());
-        username.setText(users.getModifyUsername());
+        firstname.setText(users.getFirstName());
+        lastname.setText(users.getLastName());
+        email.setText(users.getEmail());
+        username.setText(users.getUserName());
 
     }//fin de assignValues()
 
@@ -227,7 +240,6 @@ public class fragementModificarUsuarios extends Fragment {
     public void setValues(){
         users.setRole(spnSeleccionRole);
         users.setUserStatus(spnSelectionStatus.toUpperCase());
-        users.setIdUser(users.getModifyIdUser());
         users.setFirstName(firstname.getText().toString());
         users.setLastName(lastname.getText().toString());
         users.setEmail(email.getText().toString());

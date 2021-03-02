@@ -25,9 +25,7 @@ public class ConsumptionsModel {
 
     public ConsumptionsModel() {
     }
-    public ConsumptionsModel(String Url) {
-        pdf=Url;
-    }
+
 
 
     public ConsumptionsModel(String readDate, float m3) {

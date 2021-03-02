@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.sax.TextElementListener;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import BusinessLogic.BusinessConsumption;
 import BusinessLogic.BusinessHouse;
 import Data.Models.HousesModel;
 import Data.Models.UsersModel;
+import Data.Utility.LoadingDialog;
 import Data.Utility.Messages;
 import Data.Utility.RegExValidations;
 import Data.Utility.Validations;
@@ -58,7 +60,8 @@ public class fragmentRegistrarViviendas extends Fragment {
     Validations validations = new Validations();
     Messages messages=new Messages();
     RegExValidations regEx = new RegExValidations();
-
+    LoadingDialog loadingDialog = new LoadingDialog(fragmentRegistrarViviendas.this);
+    Handler handler = new Handler();
 
     public fragmentRegistrarViviendas() {
         // Required empty public constructor
@@ -80,21 +83,29 @@ public class fragmentRegistrarViviendas extends Fragment {
             @Override
             public void onClick(View v) {
                 textboxEmpty();
+                loadingDialog.startLoadingDialogFragment(getContext(),"Guardando...");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(validations.isInvalid){
+                            messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
+                        }else{
+                            setValues();
+                            new BusinessHouse().BridgeHomeRegister(house);
+                            if(!house.isStatusActivity()){
+                                messages.messageAlert(getContext(),house.getMessage(),"Registro exitoso",view,R.id.fragmentViviendas);
+                                CleanFields();
+                            }else{
+                                messages.messageToast(getContext(),house.getMessage());
+                                findNavController(view).navigate(R.id.fragmentViviendas);
+                            }
 
-                if(!validations.isInvalid){
-                    messages.messageToast(getContext(),"Debes llenar los campos con los formatos establecidos");
-                }else{
-                    setValues();
-                    new BusinessHouse().BridgeHomeRegister(house);
-                    if(!house.isStatusActivity()){
-                        messages.messageAlert(getContext(),house.getMessage(),"Registro exitoso",view,R.id.fragmentViviendas);
-                        CleanFields();
-                    }else{
-                        messages.messageToast(getContext(),house.getMessage());
-                        findNavController(view).navigate(R.id.fragmentViviendas);
+                        }
+                        loadingDialog.dismissDialog();
                     }
+                },50);
 
-                }
+
             }
         });//fin btnRegistrar
 
@@ -160,7 +171,7 @@ public class fragmentRegistrarViviendas extends Fragment {
         tilState=view.findViewById(R.id.textInputLayout28);
 
         //**********Validations**********
-        validations.IsValidTextboxOnClick(measurer,tilMeasurer,regEx.ValidNumbers(1,8),"Ingresa un numero de medidor valido",btnRegistrar);
+
         validations.IsValidTextboxOnClick(owner,tilOwner,regEx.validNamesComplete,"Ingresa el nombre completo del propietario correctamente",btnRegistrar);
         validations.IsValidTextboxOnClick(phoneNumber,tilPhoneNum,"^\\d{10}$","Ingresa un número de telefono valido",btnRegistrar);
         validations.IsValidTextboxOnClick(email,tilEmail,regEx.validEmail,"Ingresar un correo electronico valido",btnRegistrar);

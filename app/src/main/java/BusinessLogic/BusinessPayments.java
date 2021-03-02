@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import Data.Models.PaymentsModel;
+import Data.Utility.GenaratorPDF;
 import DataAccess.DAPayments;
 
 public class BusinessPayments {
@@ -12,25 +13,32 @@ public class BusinessPayments {
         return new DAPayments().getPayments();
     }
 
-    public boolean AccessToRegisterPayment(String codigo) {
-       return new DAPayments().PostGetDataPay(codigo);
+    public boolean AccessToRegisterPayment(PaymentsModel pay) {
+       return new DAPayments().PostGetDataPay(pay);
     }
 
-    public void RegisterPayment(float AmountPay, int action, Context context) {
+    public void RegisterPayment(PaymentsModel pays, int action, Context context) {
         switch (action){
             case 1:
-                new DAPayments().PostRegisterPayment(AmountPay,action,context);
+                new DAPayments().PostRegisterPayment(pays,action,context);
+                new GenaratorPDF().createTicketPDF(context, pays);
                 break;
             case 2:
-              if(AmountPay==new PaymentsModel().getTotal()){
-                  RegisterPayment(AmountPay,1,context);
+              if(pays.getAmountPay().equals(pays.getTotal())){
+                  RegisterPayment(pays,1,context);
                   return;
               }
-                if(new PaymentsModel().getTotal()<AmountPay){
-                    new PaymentsModel().setValidationMessage("No se puede ingresar una cantidad mayor al total");
+                if(pays.getTotal()<pays.getAmountPay()){
+                    pays.setValidationMessage("No se puede ingresar una cantidad mayor al total");
                     return;
                 }
-                new DAPayments().PostRegisterPayment(AmountPay,action,context);
+                if(pays.getTotal().equals(pays.getAmountPay())){
+                    new DAPayments().PostRegisterPayment(pays,action,context);
+                    new GenaratorPDF().createTicketPDF(context, pays);
+                    return;
+                }
+                new DAPayments().PostRegisterPayment(pays,action,context);
+                new GenaratorPDF().createTicketPDF(context, pays);
                 break;
             default:
         }

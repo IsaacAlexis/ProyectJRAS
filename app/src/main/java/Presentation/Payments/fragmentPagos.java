@@ -63,6 +63,8 @@ public class fragmentPagos extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_pagos, container, false);
        getValues(view);
+        btnPay.setEnabled(false);
+        btnPay.setBackgroundResource(R.drawable.boton_desabilitado);
         new Validations().IsValidTextboxOnClick(AmountPay,tilAmountPay,new RegExValidations().
                 validNumberDecimal,"Debes escribir numeros, no se aceptan caracteres",btnPay);
 

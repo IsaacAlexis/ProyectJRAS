@@ -73,6 +73,9 @@ public class fragmentRegistrarViviendas extends Fragment {
         //Obtencion de los componentes y validacion de datos.
         getValues(view);
 
+        btnRegistrar.setEnabled(false);
+        btnRegistrar.setBackgroundResource(R.drawable.boton_desabilitado);
+
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
